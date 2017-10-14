@@ -1,8 +1,7 @@
 // Import the Libraries needed
 #include "CurieIMU.h"
-#include <SPI.h>
-#include <Wire.h>
-#include <Adafruit_GFX.h>
+#include "SPI.h"
+#include "Wire.h"
 
 int lastOrientation = - 1;  // Previous orientation (for comparison)
 
