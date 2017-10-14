@@ -3,7 +3,7 @@
 #include "SPI.h"
 #include "Wire.h"
 
-int lastOrientation = - 1;  // Previous orientation (for comparison)
+int mainLastOrient = - 1;  // Previous orientation (for comparison)
 
 void setup() {
 // Start Serial Monitor
@@ -36,8 +36,8 @@ void setup() {
   */
 
 void loop() {
-  int orientation = - 1;    // the board's orientation
-  String orientationString; // string for printing description of orientation
+  int mainOrientation = - 1;    // the board's orientation
+  String mainOrientationString; // string for printing description of orientation
 
   // Read accelerometer:
   int x = CurieIMU.readAccelerometer(X_AXIS);
@@ -52,36 +52,36 @@ void loop() {
   if ( (absZ > absX) && (absZ > absY)) {
     // base orientation on Z
     if (z > 0) {
-      orientationString = "up";
-      orientation = 0;
+      mainOrientationString = "up";
+      mainOrientation = 0;
  
     } else {
-      orientationString = "down";
-      orientation = 1;
+      mainOrientationString = "down";
+      mainOrientation = 1;
     }
   } else if ( (absY > absX) && (absY > absZ)) {
     // base orientation on Y
     if (y > 0) {
-      orientationString = "digital pins up";
-      orientation = 2;      
+      mainOrientationString = "digital pins up";
+      mainOrientation = 2;      
     } else {
-      orientationString = "analog pins up";
-      orientation = 3;  
+      mainOrientationString = "analog pins up";
+      mainOrientation = 3;  
     }
   } else {
     // base orientation on X
     if (x < 0) {
-      orientationString = "connector up";
-      orientation = 4;
+      mainOrientationString = "connector up";
+      mainOrientation = 4;
     } else {
-      orientationString = "connector down";
-      orientation = 5;              
+      mainOrientationString = "connector down";
+      mainOrientation = 5;              
     }
   }
 
   // if the orientation has changed, print out a description:
-  if (orientation != lastOrientation) {
-    Serial.println(orientationString);
-    lastOrientation = orientation;
+  if (mainOrientation != mainLastOrient) {
+    Serial.println(mainOrientationString);
+    mainLastOrient = mainOrientation;
   }
 }

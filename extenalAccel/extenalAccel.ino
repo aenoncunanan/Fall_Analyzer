@@ -13,6 +13,8 @@ int16_t gx, gy, gz;
 int ax1,ay1,az1;
 int gx1,gy1,gz1;
 
+int extLastOrient = -1; //Previous orientation of external Accel
+
 void setup() {
     // join I2C bus (I2Cdev library doesn't do this automatically)
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
@@ -39,39 +41,49 @@ void setup() {
 
 }
 
+  /*
+  The orientations of the accel sensor:
+  0: flat, processor facing up
+  1: flat, processor facing down
+  2: Y axis pointing upwards
+  3: Y axis pointing downwards
+  4: X axis pointing upwards
+  5: X axis pointing downwards
+  */
+
 void loop() {
-    // read raw accel/gyro measurements from device
-    accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-    ax1=ax/81;
-    ay1=ay/81;
-    az1=az/81;
+  int extOrientation = -1; // the accel sensor's orientation
+  String extOrientationString; //string for printing the accelerometer sensor's orientation
+  
+  // read raw accel/gyro measurements from device
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+  ax1=ax/81;
+  ay1=ay/81;
+  az1=az/81;
 
-    // display tab-separated accel/gyro x/y/z values
-   if (ax1 <= 20 && ay1 <= 20 && az1 >= 89)
-   { 
-    Serial.print("z top"); Serial.print("\n");
-   }
-   if (ax1 <= 20 && ay1 <= 20 && az1 <= -89)
-   { 
-    Serial.print("z down"); Serial.print("\n");
-   }
-   
-    if (ax1 <= 20 && ay1 >= 89 && az1 <= 20)
-   { 
-    Serial.print("y top"); Serial.print("\n");
-   }
-    if (ax1 <= 20 && ay1 <= -89 && az1 <= 20)
-   { 
-    Serial.print("y down"); Serial.print("\n");
-   }
+  if (ax1 <= 20 && ay1 <= 20 && az1 >= 89) { 
+    extOrientationString = "ext UP";
+    extOrientation = 0;
+  } else if (ax1 <= 20 && ay1 <= 20 && az1 <= -89) { 
+    extOrientationString = "ext DOWN";
+    extOrientation = 1;
+  } else if (ax1 <= 20 && ay1 >= 89 && az1 <= 20) { 
+    extOrientationString = "ext Y_UP";
+    extOrientation = 2;
+  } else if (ax1 <= 20 && ay1 <= -89 && az1 <= 20) { 
+    extOrientationString = "ext Y_DOWN";
+    extOrientation = 3;
+  } else if (ax1 >= 89 && ay1 <= 20 && az1 <= 20) { 
+    extOrientationString = "ext X_UP";
+    extOrientation = 4;
+  } else if (ax1 <= -89 && ay1 <= 20 && az1 <= 20) {
+    extOrientationString = "ext X_DOWN";
+    extOrientation = 5;
+  }
 
-    if (ax1 >= 89 && ay1 <= 20 && az1 <= 20)
-   { 
-    Serial.print("x top"); Serial.print("\n");
-   }
-    if (ax1 <= -89 && ay1 <= 20 && az1 <= 20)
-   { 
-    Serial.print("x down"); Serial.print("\n");
-   }
+  if (extOrientation != extLastOrient) {
+    Serial.println(extOrientationString);
+    extLastOrient = extOrientation;
+  }
 
 }
