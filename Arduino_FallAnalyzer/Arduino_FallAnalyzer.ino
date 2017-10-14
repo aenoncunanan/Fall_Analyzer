@@ -26,14 +26,16 @@ void setup() {
   
 // Initialize the serial communication
   Serial.begin(38400);
-  delay(2000);
+  delay(1000);
   
 // Initialize the devices
   Serial.println("Initializing IMU device...");
   CurieIMU.begin();
+  delay(1000);
 
   Serial.println("Initializing I2C devices...");
   accelgyro.initialize();
+  delay(1000);
 
 // Verify Connection with the external accelerometer
   Serial.println("Testing external accelerometer connection...");
@@ -77,6 +79,11 @@ void loop() {
   String mainOrientationString; // string for printing description of orientation
   String extOrientationString; //string for printing the accelerometer sensor's orientation
 
+  onBoardAccelerometer(mainOrientation, mainOrientationString);
+  externalAccelerometer(extOrientation, extOrientationString);
+}
+
+void onBoardAccelerometer(int mainOrientation, String mainOrientationString) {
   // Read accelerometer:
   int x = CurieIMU.readAccelerometer(X_AXIS);
   int y = CurieIMU.readAccelerometer(Y_AXIS);
@@ -86,12 +93,6 @@ void loop() {
   int absX = abs(x);
   int absY = abs(y);
   int absZ = abs(z);
-
-  // Read raw external accel/gyro:
-  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-  ax1=ax/81;
-  ay1=ay/81;
-  az1=az/81;
 
   if ( (absZ > absX) && (absZ > absY)) {
     // base orientation on Z
@@ -123,6 +124,19 @@ void loop() {
     }
   }
 
+  // if the orientation has changed, print out a description:
+  if (mainOrientation != mainLastOrient) {
+    Serial.println(mainOrientationString);
+    mainLastOrient = mainOrientation;
+  }  
+}
+
+void externalAccelerometer(int extOrientation, String extOrientationString){
+  // Read raw external accel/gyro:
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+  ax1=ax/81;
+  ay1=ay/81;
+  az1=az/81;
 
   if (ax1 <= 20 && ay1 <= 20 && az1 >= 89) { 
     extOrientationString = "ext UP";
@@ -144,15 +158,9 @@ void loop() {
     extOrientation = 5;
   }
 
-
-  // if the orientation has changed, print out a description:
-  if (mainOrientation != mainLastOrient) {
-    Serial.println(mainOrientationString);
-    mainLastOrient = mainOrientation;
-  }
-
   if (extOrientation != extLastOrient) {
     Serial.println(extOrientationString);
   extLastOrient = extOrientation;
-  }
+  }  
 }
+
