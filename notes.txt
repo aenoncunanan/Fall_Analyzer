@@ -1,0 +1,26 @@
+PROPER WEAR:
+-Main Board should be on the side waist
+-External sensor must be on the side hip
+-both devices must be on the same side of the body
+
+-The Main board must be worn with the usb connector at the top
+-The external sensor must be worn with the VCC pin at the top
+
+===========================================
+
+Main Board ; External Accelerometer:
+
+X_UP ; X_UP	--->	Sitting Position (Device on the right waist and hip)
+X_UP ; X_DOWN	--->	Sitting Position (Device on the left waist and hip)
+
+X_UP ; Y_UP	--->	Standing Position (Device on either side of waist and hip)
+
+Y_UP ; X_UP	--->	Lying Flat Postion (Stomach Up, dev on right)
+Y_DOWN ; X_DOWN	--->	Lying Flat Position (Stomach Bottom, on right)
+Z_UP ; Z_UP	--->	Lying Postion (Facing Left, on right)
+Z_DOWN ; Z_DOWN	--->	Lying Position (Facing right, on right)
+
+Y_DOWN ; X_DOWN	--->	Lying Flat Postion (Stomach Up, dev on left)
+Y_UP ; X_UP	--->	Lying Flat Position (Stomach Bottom, on left)
+Z_DOWN ; Z_DOWN	--->	Lying Postion (Facing Left, on left)
+Z_UP ; Z_UP	--->	Lying Position (Facing right, on left)

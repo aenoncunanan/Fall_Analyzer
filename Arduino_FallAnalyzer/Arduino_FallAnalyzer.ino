@@ -13,8 +13,7 @@ int16_t gx, gy, gz;
 int ax1,ay1,az1;
 int gx1,gy1,gz1;
 
-int mainLastOrient = - 1;  // Previous orientation (for comparison)
-int extLastOrient = -1; //Previous orientation of external Accel
+int lastOrient = -1; //Previous orientation of the user (for comparison)
 
 void setup() {
   // join I2C bus (I2Cdev library doesn't do this automatically)
@@ -40,6 +39,13 @@ void setup() {
 // Verify Connection with the external accelerometer
   Serial.println("Testing external accelerometer connection...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+
+  while(accelgyro.testConnection() == 0){
+    accelgyro.initialize();
+    delay(1000);
+    Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+    accelgyro.setSleepEnabled(false);
+  }
   
 // Set the accelerometer range to 2G
   CurieIMU.setAccelerometerRange(2);
@@ -52,38 +58,39 @@ void setup() {
   delay(3000);
 }
 
-  /*
-  The orientations of the board:
-  0: flat, processor facing up
-  1: flat, processor facing down
-  2: landscape, analog pins down
-  3: landscape, analog pins up
-  4: portrait, USB connector up
-  5: portrait, USB connector down
-  */
-
-  /*
-  The orientations of the accel sensor:
-  0: flat, processor facing up
-  1: flat, processor facing down
-  2: Y axis pointing upwards
-  3: Y axis pointing downwards
-  4: X axis pointing upwards
-  5: X axis pointing downwards
-  */
-
-void loop() {
-  int mainOrientation = - 1;    // the board's orientation
-  int extOrientation = -1; // the accel sensor's orientation
+void loop() { 
+ 
+  String userOrientation = "";
+  String onBoardAccel = "";
+  String extAccel = "";  
   
-  String mainOrientationString; // string for printing description of orientation
-  String extOrientationString; //string for printing the accelerometer sensor's orientation
+  int orientation = -1;
+  
+  onBoardAccel = onBoardAccelerometer();
+  extAccel = externalAccelerometer();
 
-  onBoardAccelerometer(mainOrientation, mainOrientationString);
-  externalAccelerometer(extOrientation, extOrientationString);
+  if (onBoardAccel == "X_UP" && extAccel == "X_UP"){
+    userOrientation = "Sitting Position";
+    orientation = 0;
+  } else if (onBoardAccel == "X_UP" && extAccel == "X_DOWN"){
+    userOrientation = "Sitting Position";
+    orientation = 1;
+  } else if (onBoardAccel == "X_UP" && extAccel == "Y_UP"){
+    userOrientation = "Standing Position";
+    orientation = 2;
+  }
+
+  // if the orientation has changed, print out a description:
+  if (orientation != lastOrient) {
+    Serial.println("User Orientation: " + userOrientation);
+    lastOrient = orientation;
+  } 
+  
 }
 
-void onBoardAccelerometer(int mainOrientation, String mainOrientationString) {
+String onBoardAccelerometer() {
+  String mainOrientationString; // string for printing description of orientation  
+  
   // Read accelerometer:
   int x = CurieIMU.readAccelerometer(X_AXIS);
   int y = CurieIMU.readAccelerometer(Y_AXIS);
@@ -97,41 +104,32 @@ void onBoardAccelerometer(int mainOrientation, String mainOrientationString) {
   if ( (absZ > absX) && (absZ > absY)) {
     // base orientation on Z
     if (z > 0) {
-      mainOrientationString = "up";
-      mainOrientation = 0;
- 
+      mainOrientationString = "Z_UP";
     } else {
-      mainOrientationString = "down";
-      mainOrientation = 1;
+      mainOrientationString = "Z_DOWN";
     }
   } else if ( (absY > absX) && (absY > absZ)) {
     // base orientation on Y
     if (y > 0) {
-      mainOrientationString = "digital pins up";
-      mainOrientation = 2;      
+      mainOrientationString = "Y_UP";     
     } else {
-      mainOrientationString = "analog pins up";
-      mainOrientation = 3;  
+      mainOrientationString = "Y_DOWN"; 
     }
   } else {
     // base orientation on X
     if (x < 0) {
-      mainOrientationString = "connector up";
-      mainOrientation = 4;
+      mainOrientationString = "X_UP";
     } else {
-      mainOrientationString = "connector down";
-      mainOrientation = 5;              
+      mainOrientationString = "X_DOWN";            
     }
-  }
+  } 
 
-  // if the orientation has changed, print out a description:
-  if (mainOrientation != mainLastOrient) {
-    Serial.println(mainOrientationString);
-    mainLastOrient = mainOrientation;
-  }  
+  return mainOrientationString;
 }
 
-void externalAccelerometer(int extOrientation, String extOrientationString){
+String externalAccelerometer(){
+  String extOrientationString; //string for printing the accelerometer sensor's orientation
+  
   // Read raw external accel/gyro:
   accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
   ax1=ax/81;
@@ -139,28 +137,18 @@ void externalAccelerometer(int extOrientation, String extOrientationString){
   az1=az/81;
 
   if (ax1 <= 20 && ay1 <= 20 && az1 >= 89) { 
-    extOrientationString = "ext UP";
-    extOrientation = 0;
+    extOrientationString = "Z_UP";
   } else if (ax1 <= 20 && ay1 <= 20 && az1 <= -89) { 
-    extOrientationString = "ext DOWN";
-    extOrientation = 1;
+    extOrientationString = "Z_DOWN";
   } else if (ax1 <= 20 && ay1 >= 89 && az1 <= 20) { 
-    extOrientationString = "ext Y_UP";
-    extOrientation = 2;
+    extOrientationString = "Y_UP";
   } else if (ax1 <= 20 && ay1 <= -89 && az1 <= 20) { 
-    extOrientationString = "ext Y_DOWN";
-    extOrientation = 3;
+    extOrientationString = "Y_DOWN";
   } else if (ax1 >= 89 && ay1 <= 20 && az1 <= 20) { 
-    extOrientationString = "ext X_UP";
-    extOrientation = 4;
+    extOrientationString = "X_UP";
   } else if (ax1 <= -89 && ay1 <= 20 && az1 <= 20) {
-    extOrientationString = "ext X_DOWN";
-    extOrientation = 5;
-  }
+    extOrientationString = "X_DOWN";
+  } 
 
-  if (extOrientation != extLastOrient) {
-    Serial.println(extOrientationString);
-  extLastOrient = extOrientation;
-  }  
+   return extOrientationString;
 }
-
