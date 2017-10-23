@@ -7,6 +7,12 @@
 
 MPU6050 accelgyro;
 
+boolean blinkState = false;          // state of the LED
+unsigned long loopTime = 0;          // get the time since program started
+unsigned long interruptsTime = 0;    // get the time when free fall event is detected
+
+String onBoardFall = ""; 
+
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
@@ -26,16 +32,23 @@ void setup() {
 // Initialize the serial communication
   Serial.begin(38400);
   delay(1000);
+  while(!Serial) ;    // wait for serial port to connect.
   
 // Initialize the devices
   Serial.println("Initializing IMU device...");
   CurieIMU.begin();
   delay(1000);
+  CurieIMU.attachInterrupt(eventCallback);
 
   Serial.println("Initializing I2C devices...");
   accelgyro.initialize();
   delay(1000);
 
+// Enable Free Fall Detection
+  CurieIMU.setDetectionThreshold(CURIE_IMU_FREEFALL, 1000); // 1g=1000mg
+  CurieIMU.setDetectionDuration(CURIE_IMU_FREEFALL, 50);  // 50ms
+  CurieIMU.interrupts(CURIE_IMU_FREEFALL);  
+  
 // Verify Connection with the external accelerometer
   Serial.println("Testing external accelerometer connection...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
@@ -62,13 +75,15 @@ void loop() {
  
   String userOrientation = "";
   String onBoardAccel = "";
-  String extAccel = "";  
+  String extAccel = ""; 
+
   
   int orientation = -1;
   
   onBoardAccel = onBoardAccelerometer();
-  extAccel = externalAccelerometer();
-
+  extAccel = externalAccelerometer();  
+  onBoardFallSense();
+  
   if (onBoardAccel == "X_UP" && extAccel == "X_UP"){
     userOrientation = "Sitting Position";
     orientation = 0;
@@ -79,13 +94,31 @@ void loop() {
     userOrientation = "Standing Position";
     orientation = 2;
   }
+  
+  if (onBoardFall == "Falling!"){
+    userOrientation = "Falling!";
+    orientation = 3;
+  }
 
   // if the orientation has changed, print out a description:
   if (orientation != lastOrient) {
     Serial.println("User Orientation: " + userOrientation);
     lastOrient = orientation;
   } 
-  
+
+}
+
+static void onBoardFallSense(){
+    //Check if falling
+  loopTime = millis();
+  if(abs(loopTime -interruptsTime) < 1000 ){    
+    blinkState = true;
+    onBoardFall = "Falling!";
+  } else {
+    blinkState = false;
+    onBoardFall = "";
+    digitalWrite(13, blinkState);
+  }
 }
 
 String onBoardAccelerometer() {
@@ -151,4 +184,10 @@ String externalAccelerometer(){
   } 
 
    return extOrientationString;
+}
+
+static void eventCallback(){
+  if (CurieIMU.getInterruptStatus(CURIE_IMU_FREEFALL)) {
+    interruptsTime = millis(); 
+  }
 }
