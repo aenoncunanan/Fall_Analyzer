@@ -1,17 +1,13 @@
 // Import the Libraries needed
+//Libraries for Genuino101
 #include "CurieIMU.h"
-#include "SPI.h"
-#include "Wire.h"
+
+//Libraries for External Accelerometer
 #include "I2Cdev.h"
 #include "MPU6050.h"
+#include "Wire.h"
 
 MPU6050 accelgyro;
-
-boolean blinkState = false;          // state of the LED
-unsigned long loopTime = 0;          // get the time since program started
-unsigned long interruptsTime = 0;    // get the time when free fall event is detected
-
-String onBoardFall = ""; 
 
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
@@ -19,57 +15,78 @@ int16_t gx, gy, gz;
 int ax1,ay1,az1;
 int gx1,gy1,gz1;
 
-int lastOrient = -1; //Previous orientation of the user (for comparison)
+unsigned long loopTime = 0;          // get the time since program started
+unsigned long interruptsTime = 0;    // get the time when free fall event is detected
 
 void setup() {
-  // join I2C bus (I2Cdev library doesn't do this automatically)
-  #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-      Wire.begin();
-  #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-      Fastwire::setup(400, true);
-  #endif
-  
-// Initialize the serial communication
+  // Initialize the serial communication
   Serial.begin(38400);
   delay(1000);
   while(!Serial) ;    // wait for serial port to connect.
   
-// Initialize the devices
+  initMainBoard();
+  initExtAccel();
+  
+  // Prompt a welcome message  
+  Serial.println("Device is ready!"); 
+  delay(3000);
+}
+
+void initMainBoard(){
+  // Initialize the devices
   Serial.println("Initializing IMU device...");
   CurieIMU.begin();
   delay(1000);
+  
   CurieIMU.attachInterrupt(eventCallback);
 
+  // Enable Free Fall Detection
+  CurieIMU.setDetectionThreshold(CURIE_IMU_FREEFALL, 1000); // 1g=1000mg
+  CurieIMU.setDetectionDuration(CURIE_IMU_FREEFALL, 50);  // 50ms
+  CurieIMU.interrupts(CURIE_IMU_FREEFALL);   
+  
+  // Set the accelerometer range to 2G
+  CurieIMU.setAccelerometerRange(2);  
+}
+
+void initExtAccel(){
+  // Join I2C bus (I2Cdev library doesn't do this automatically)
+  #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
+    Wire.begin();
+  #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
+    Fastwire::setup(400, true);
+  #endif
+  
+  //Initialize I2C device
   Serial.println("Initializing I2C devices...");
   accelgyro.initialize();
   delay(1000);
 
-// Enable Free Fall Detection
-  CurieIMU.setDetectionThreshold(CURIE_IMU_FREEFALL, 1000); // 1g=1000mg
-  CurieIMU.setDetectionDuration(CURIE_IMU_FREEFALL, 50);  // 50ms
-  CurieIMU.interrupts(CURIE_IMU_FREEFALL);  
-  
-// Verify Connection with the external accelerometer
+  //Verify Connection with the external accelerometer
   Serial.println("Testing external accelerometer connection...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
-
-  while(accelgyro.testConnection() == 0){
+  accelgyro.setSleepEnabled(false);
+  
+/*  while(accelgyro.testConnection() == 0){
     accelgyro.initialize();
     delay(1000);
     Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
     accelgyro.setSleepEnabled(false);
+  } */
+  
+  if(accelgyro.testConnection() == 0){
+    Serial.println("Restarting the device!");
+    delay(500);
+    Serial.write(12);
+    setup();
   }
-  
-// Set the accelerometer range to 2G
-  CurieIMU.setAccelerometerRange(2);
 
-// Change the accel/gyro offset values
+  // Change the accel/gyro offset values
   accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_4);
-  
-// Prompt a welcome message  
-  Serial.println("Device is ready!"); 
-  delay(3000);
 }
+
+String onBoardFall = ""; 
+int lastOrient = -1; //Previous orientation of the user (for comparison)
 
 void loop() { 
  
@@ -77,7 +94,6 @@ void loop() {
   String onBoardAccel = "";
   String extAccel = ""; 
 
-  
   int orientation = -1;
   
   onBoardAccel = onBoardAccelerometer();
@@ -112,12 +128,9 @@ static void onBoardFallSense(){
     //Check if falling
   loopTime = millis();
   if(abs(loopTime -interruptsTime) < 1000 ){    
-    blinkState = true;
     onBoardFall = "Falling!";
   } else {
-    blinkState = false;
     onBoardFall = "";
-    digitalWrite(13, blinkState);
   }
 }
 

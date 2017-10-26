@@ -24,3 +24,23 @@ Y_DOWN ; X_DOWN	--->	Lying Flat Postion (Stomach Up, dev on left)
 Y_UP ; X_UP	--->	Lying Flat Position (Stomach Bottom, on left)
 Z_DOWN ; Z_DOWN	--->	Lying Postion (Facing Left, on left)
 Z_UP ; Z_UP	--->	Lying Position (Facing right, on left)
+
+===============================================
+
+Pins:
+
+Accelerometer to Genuino:
+VCC	--->	5v
+GND	--->	GND
+SCL	--->	A5
+SDA	--->	A4
+INT	--->	2
+
+LCD to Genuino:
+DO	--->	12
+D1	--->	11
+RES	--->	10
+DC	--->	9
+CS	--->	8
+GND	--->	GND
+VCC	--->	
