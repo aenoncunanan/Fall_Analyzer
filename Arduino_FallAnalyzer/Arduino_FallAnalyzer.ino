@@ -124,16 +124,6 @@ void loop() {
 
 }
 
-static void onBoardFallSense(){
-    //Check if falling
-  loopTime = millis();
-  if(abs(loopTime -interruptsTime) < 1000 ){    
-    onBoardFall = "Falling!";
-  } else {
-    onBoardFall = "";
-  }
-}
-
 String onBoardAccelerometer() {
   String mainOrientationString; // string for printing description of orientation  
   
@@ -197,6 +187,16 @@ String externalAccelerometer(){
   } 
 
    return extOrientationString;
+}
+
+static void onBoardFallSense(){
+    //Check if falling
+  loopTime = millis();
+  if(abs(loopTime -interruptsTime) < 1000 ){    
+    onBoardFall = "Falling!";
+  } else {
+    onBoardFall = "";
+  }
 }
 
 static void eventCallback(){
