@@ -1,7 +1,6 @@
 package dlsu;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -93,7 +92,7 @@ public class setUp2Controller implements Initializable {
 
     public void onFirst(ActionEvent actionEvent) throws IOException {
         dlsu.changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup1.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
     }
 
     public void onSecond(ActionEvent actionEvent) {
@@ -128,14 +127,14 @@ public class setUp2Controller implements Initializable {
             }finally {
                 feedbackLabel.setText("");
                 dlsu.changeScene changeScene = new changeScene();
-                changeScene.setScene("Setup3.fxml", "style.css", actionEvent);
+                changeScene.setScene("Setup3.fxml", "style.css", actionEvent,"Fall Analyzer | Responders Setup");
             }
         }
     }
 
     public void onFourth(ActionEvent actionEvent) throws IOException {
         dlsu.changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup4.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
     }
 
     public void onFinish(ActionEvent actionEvent) {

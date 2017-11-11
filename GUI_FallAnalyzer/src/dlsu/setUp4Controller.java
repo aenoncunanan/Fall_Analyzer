@@ -59,25 +59,23 @@ public class setUp4Controller implements Initializable {
 
     public void onFirst(ActionEvent actionEvent) throws IOException {
         changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup1.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
     }
 
     public void onSecond(ActionEvent actionEvent) throws IOException {
         changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup2.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup2.fxml", "style.css", actionEvent, "Fall Analyzer | Profile Setup");
     }
 
     public void onThird(ActionEvent actionEvent) throws IOException {
         changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup3.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup3.fxml", "style.css", actionEvent, "Fall Analyzer | Responders Setup");
     }
 
     public void onFourth(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup4.fxml", "style.css", actionEvent);
     }
 
-    public void onFinish(ActionEvent actionEvent) {
+    public void onFinish(ActionEvent actionEvent) throws IOException {
         String user = "";
         String pass = "";
 
@@ -108,7 +106,8 @@ public class setUp4Controller implements Initializable {
                 feedbackLabel.setText("Invalid password!");
             }else{
                 feedbackLabel.setText("");
-                System.out.println("changeScene");
+                changeScene changeScene = new changeScene();
+                changeScene.setScene("SetupFinish.fxml", "style.css", actionEvent, "Fall Analyzer | Remove card");
             }
         }
     }

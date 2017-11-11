@@ -2,7 +2,6 @@ package dlsu;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -167,12 +166,12 @@ public class setUp3Controller implements Initializable {
 
     public void onFirst(ActionEvent actionEvent) throws IOException {
         changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup1.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
     }
 
     public void onSecond(ActionEvent actionEvent) throws IOException {
         changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup2.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup2.fxml", "style.css", actionEvent, "Fall Analyzer | Profile Setup");
     }
 
     public void onThird(ActionEvent actionEvent) {
@@ -203,7 +202,7 @@ public class setUp3Controller implements Initializable {
             }
             feedbackLabel.setText("");
             dlsu.changeScene changeScene = new changeScene();
-            changeScene.setScene("Setup4.fxml", "style.css", actionEvent);
+            changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
         }
 
     }

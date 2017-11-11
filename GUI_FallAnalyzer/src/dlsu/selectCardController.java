@@ -78,7 +78,7 @@ public class selectCardController implements Initializable{
                 /*if setup.txt exists, explore*/
             } else{
                 dlsu.changeScene changeScene = new changeScene();
-                changeScene.setScene("SetupHome.fxml", "style.css", actionEvent);
+                changeScene.setScene("SetupHome.fxml", "style.css", actionEvent, "Fall Analyzer | Home Setup");
             }
 
         } catch (Exception e){

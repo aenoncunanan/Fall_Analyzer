@@ -2,17 +2,12 @@ package dlsu;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -121,7 +116,7 @@ public class setUp1Controller implements Initializable {
                 }
 
                 dlsu.changeScene changeScene = new changeScene();
-                changeScene.setScene("Setup2.fxml", "style.css", actionEvent);
+                changeScene.setScene("Setup2.fxml", "style.css", actionEvent, "Fall Analyzer | Profile Setup");
 
             }else {
                 feedbackLabel.setText("Your passwords doesn't match!");
@@ -132,12 +127,12 @@ public class setUp1Controller implements Initializable {
 
     public void onThird(ActionEvent actionEvent) throws IOException {
         changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup3.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup3.fxml", "style.css", actionEvent, "Fall Analyzer | Responders Setup");
     }
 
     public void onFourth(ActionEvent actionEvent) throws IOException {
         changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup4.fxml", "style.css", actionEvent);
+        changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
     }
 
     public void onFinish(ActionEvent actionEvent) {

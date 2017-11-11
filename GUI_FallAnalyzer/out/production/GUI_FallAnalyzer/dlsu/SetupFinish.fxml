@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane id="selectCard" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUpFinishController">
+    <children>
+        <Label id="header1Label" layoutX="401.0" layoutY="292.0" stylesheets="@style.css" text="Congratulations!" textAlignment="CENTER" />
+        <Label id="header2Label" layoutX="381.0" layoutY="341.0" stylesheets="@style.css" text="You have successfully setup your card!" textAlignment="CENTER" />
+        <Label id="header2Label" layoutX="337.0" layoutY="365.0" stylesheets="@style.css" text="Please remove the card and insert it to your device." textAlignment="CENTER" />
+        <Button id="start" fx:id="onFinish" layoutX="490.0" layoutY="431.0" mnemonicParsing="false" onAction="#onFinish" prefHeight="38.0" prefWidth="88.0" stylesheets="@style.css" text="finish" />
+    </children>
+</Pane>

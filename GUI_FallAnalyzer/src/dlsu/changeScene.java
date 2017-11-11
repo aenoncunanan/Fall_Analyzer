@@ -16,12 +16,13 @@ import java.io.IOException;
 
 public class changeScene {
 
-    public void setScene(String fxmlFile, String cssFile, ActionEvent actionEvent) throws IOException {
+    public void setScene(String fxmlFile, String cssFile, ActionEvent actionEvent, String title) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource(fxmlFile));
         parent.getStylesheets().addAll(this.getClass().getResource(cssFile).toExternalForm());
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        stage.setTitle(title);
         stage.show();
     }
 }
