@@ -2,17 +2,9 @@ package dlsu;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 
 import java.io.*;
 import java.net.URL;
@@ -21,32 +13,33 @@ import java.util.ResourceBundle;
 /**
  * Created by aenon on 11/11/2017.
  */
-public class setUp1Controller implements Initializable {
+public class setUp2Controller implements Initializable {
     public Button first;
     public Button second;
     public Button third;
     public Button fourth;
-    @FXML
-    private TextField username;
-    @FXML
-    private PasswordField confirm;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private Label feedbackLabel;
+    public ChoiceBox gender;
+    public TextField firstName;
+    public TextField LastName;
+    public TextField age;
+    public TextField address;
+    public TextField contactNumber;
+    public Label feedbackLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        File loginFile = new File(selectCardController.driveLetter + "login.txt");
-        if(loginFile.exists()){
+        File file = new File(selectCardController.driveLetter + "profile.txt");
+        if(file.exists()){
             BufferedReader br = null;
             try {
-                br = new BufferedReader(new FileReader(selectCardController.driveLetter + "login.txt"));
+                br = new BufferedReader(new FileReader(selectCardController.driveLetter + "profile.txt"));
 
-                username.setText(br.readLine());
-                String temp = br.readLine();
-                password.setText(temp);
-                confirm.setText(temp);
+                firstName.setText(br.readLine());
+                LastName.setText(br.readLine());
+                gender.setValue(br.readLine());
+                age.setText(br.readLine());
+                address.setText(br.readLine());
+                contactNumber.setText(br.readLine());
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -61,10 +54,8 @@ public class setUp1Controller implements Initializable {
             }
         }
 
-        File profileFile = new File(selectCardController.driveLetter + "profile.txt");
-        if (!profileFile.exists()){
-            third.setDisable(true);
-        }
+        gender.getItems().add("male");
+        gender.getItems().add("female");
 
         File respondentsFile = new File(selectCardController.driveLetter + "respondents.txt");
         if (!respondentsFile.exists()){
@@ -92,37 +83,44 @@ public class setUp1Controller implements Initializable {
         fourth.setOnMouseExited(event -> fourth.setCursor(Cursor.DEFAULT));
     }
 
-    public void onFirst(ActionEvent actionEvent) {
+    public void onFirst(ActionEvent actionEvent) throws IOException {
+        dlsu.changeScene changeScene = new changeScene();
+        changeScene.setScene("Setup1.fxml", "style.css", actionEvent);
     }
 
-    public void onSecond(ActionEvent actionEvent) throws IOException {
-        if (username.getText().isEmpty() || password.getText().isEmpty() || confirm.getText().isEmpty()){
-            feedbackLabel.setText("All fields are required!");
-        }else{
-            if(password.getText().equals(confirm.getText())){
-                feedbackLabel.setText("");
-                BufferedWriter writer = null;
-
-                try{
-                    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "login.txt"), "utf-8"));
-                    writer.write(username.getText());
-                    writer.newLine();
-                    writer.write(password.getText());
-                    writer.close();
-                }catch(Exception e){
-                }
-
-                dlsu.changeScene changeScene = new changeScene();
-                changeScene.setScene("Setup2.fxml", "style.css", actionEvent);
-
-            }else {
-                feedbackLabel.setText("Your passwords doesn't match!");
-            }
-        }
-
+    public void onSecond(ActionEvent actionEvent) {
     }
 
     public void onThird(ActionEvent actionEvent) {
+        if(firstName.getText().isEmpty() || LastName.getText().isEmpty() || age.getText().isEmpty() || address.getText().isEmpty() || contactNumber.getText().isEmpty()){
+            feedbackLabel.setText("All fields are required!");
+        } else{
+            try{
+                Integer.parseInt(age.getText());
+
+                BufferedWriter writer = null;
+                try{
+                    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "profile.txt"), "utf-8"));
+                    writer.write(firstName.getText());
+                    writer.newLine();
+                    writer.write(LastName.getText());
+                    writer.newLine();
+                    writer.write(gender.getValue().toString());
+                    writer.newLine();
+                    writer.write(age.getText());
+                    writer.newLine();
+                    writer.write(address.getText());
+                    writer.newLine();
+                    writer.write(contactNumber.getText());
+                    writer.close();
+                    feedbackLabel.setText("");
+                                    System.out.println("change scene");
+                } catch(Exception e){
+                }
+            }catch(Exception e){
+                feedbackLabel.setText("Your age is invalid!");
+            }
+        }
     }
 
     public void onFourth(ActionEvent actionEvent) {

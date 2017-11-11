@@ -34,12 +34,8 @@ public class setUpHomeController implements Initializable {
 
     @FXML
     private void onNext(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("Setup1.fxml"));
-        parent.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        dlsu.changeScene changeScene = new changeScene();
+        changeScene.setScene("Setup1.fxml", "style.css", actionEvent);
     }
 
 }

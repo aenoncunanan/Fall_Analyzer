@@ -30,7 +30,7 @@ public class selectCardController implements Initializable{
     @FXML
     private ComboBox selectCard;
 
-    public String driveLetter;
+    public static String driveLetter;
 
 
     @Override
@@ -77,12 +77,8 @@ public class selectCardController implements Initializable{
             if(false){
                 /*if setup.txt exists, explore*/
             } else{
-                Parent parent = FXMLLoader.load(getClass().getResource("SetupHome.fxml"));
-                parent.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
-                Scene scene = new Scene(parent);
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
+                dlsu.changeScene changeScene = new changeScene();
+                changeScene.setScene("SetupHome.fxml", "style.css", actionEvent);
             }
 
         } catch (Exception e){

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -10,9 +11,9 @@
 
 <Pane id="selectCard" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUp1Controller">
     <children>
-      <Group layoutX="1.0" layoutY="27.0">
+      <Group layoutX="1.0" layoutY="42.0">
          <children>
-              <Label id="pleaseLabel" layoutX="380.0" layoutY="261.0" stylesheets="@style.css" text="Let's setup your login credentials!" textAlignment="JUSTIFY" />
+              <Label id="header2Label" layoutX="380.0" layoutY="254.0" stylesheets="@style.css" text="Let's setup your login credentials!" textAlignment="JUSTIFY" />
             <GridPane hgap="10.0" layoutX="380.0" layoutY="288.0" prefHeight="90.0" prefWidth="263.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="91.0" />
@@ -24,17 +25,28 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label id="pleaseLabel" stylesheets="@style.css" text="Username:" />
-                  <Label id="pleaseLabel" stylesheets="@style.css" text="Password:" GridPane.rowIndex="1" />
-                   <Label id="pleaseLabel" stylesheets="@style.css" text="Confirm:" GridPane.rowIndex="2" />
-                  <TextField prefHeight="25.0" prefWidth="162.0" promptText="username" GridPane.columnIndex="1" />
-                  <PasswordField promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <PasswordField prefHeight="25.0" prefWidth="117.0" promptText="confirm password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Username:" />
+                  <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Password:" GridPane.rowIndex="1" />
+                   <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Confirm:" GridPane.rowIndex="2" />
+                  <TextField fx:id="username" prefHeight="25.0" prefWidth="162.0" promptText="username" GridPane.columnIndex="1" />
+                  <PasswordField fx:id="password" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <PasswordField fx:id="confirm" prefHeight="25.0" prefWidth="117.0" promptText="confirm password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
+              <Label id="errorLabel" fx:id="feedbackLabel" layoutX="497.0" layoutY="387.0" stylesheets="@style.css" textAlignment="CENTER" />
          </children>
       </Group>
-        <Label id="feedbackLabel" layoutX="498.0" layoutY="425.0" stylesheets="@style.css" text="Label" />
-        <Button id="next" fx:id="onNext" layoutX="472.0" layoutY="524.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="start" />
+      <Group layoutX="-33.0">
+         <children>
+            <HBox layoutX="426.0" layoutY="491.0" prefHeight="45.0" prefWidth="227.0" spacing="10.0">
+               <children>
+                    <Button id="selected" fx:id="first" mnemonicParsing="false" onAction="#onFirst" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="1" />
+                  <Button id="idle" fx:id="second" mnemonicParsing="false" onAction="#onSecond" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="2" />
+                  <Button id="idle" fx:id="third" mnemonicParsing="false" onAction="#onThird" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="3" />
+                  <Button id="idle" fx:id="fourth" mnemonicParsing="false" onAction="#onFourth" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="4" />
+               </children>
+            </HBox>
+         </children>
+      </Group>
     </children>
 </Pane>

@@ -9,8 +9,8 @@
    <children>
       <TilePane alignment="CENTER" layoutX="414.0" layoutY="320.0" prefHeight="4.0" prefWidth="200.0">
          <children>
-            <Label id="headerLabel" stylesheets="@style.css" text="Hello!" />
-            <Label id="pleaseLabel" stylesheets="@style.css" text="Please choose your card:" />
+            <Label id="header1Label" stylesheets="@style.css" text="Hello!" />
+            <Label id="header2Label" stylesheets="@style.css" text="Please choose your card:" />
             <GridPane hgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />

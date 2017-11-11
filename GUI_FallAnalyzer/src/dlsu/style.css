@@ -9,17 +9,25 @@
     -fx-background-position: center center;
 }
 
-#headerLabel{
+#header1Label{
     -fx-font-family: Asimov;
     -fx-text-fill: orange;
     -fx-font-size: 30;
     -fx-font-position: center center;
 }
 
-#pleaseLabel{
+#header2Label{
     -fx-font-family: Asimov;
     -fx-text-fill: #2c3e50;
     -fx-font-size: 15;
+    -fx-font-position: center center;
+    -fx-text-alignment: justify;
+}
+
+#fieldsLabelLabel{
+    -fx-font-family: Asimov;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 13;
     -fx-font-position: center center;
     -fx-text-alignment: justify;
 }
@@ -31,10 +39,43 @@
     -fx-font-position: center center;
 }
 
-#next{
+#errorLabel{
+    -fx-font-family: Asimov;
+    -fx-text-fill: red;
+    -fx-font-size: 10;
+    -fx-font-position: center center;
+}
+
+#start{
         -fx-font-family: Asimov;
         -fx-text-fill: orange;
         -fx-font-size: 20;
         -fx-font-position: center center;
         -fx-background-color: white;
+}
+
+#selected{
+        -fx-font-family: Asimov;
+        -fx-text-fill: white;
+        -fx-font-size: 20;
+        -fx-font-position: center center;
+        -fx-background-color: #009fe0;
+        -fx-background-radius: 5em;
+        -fx-max-height: 45px;
+        -fx-max-width: 45px;
+        -fx-min-height: 45px;
+        -fx-min-width: 45px;
+}
+
+#idle{
+        -fx-font-family: Asimov;
+        -fx-text-fill: orange;
+        -fx-font-size: 20;
+        -fx-font-position: center center;
+        -fx-background-color: white;
+        -fx-background-radius: 5em;
+        -fx-max-height: 45px;
+        -fx-max-width: 45px;
+        -fx-min-height: 45px;
+        -fx-min-width: 45px;
 }
