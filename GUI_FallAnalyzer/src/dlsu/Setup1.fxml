@@ -36,17 +36,18 @@
               <Label id="errorLabel" fx:id="feedbackLabel" layoutX="497.0" layoutY="387.0" stylesheets="@style.css" textAlignment="CENTER" />
          </children>
       </Group>
-      <Group layoutX="-33.0">
-         <children>
-            <HBox layoutX="426.0" layoutY="491.0" prefHeight="45.0" prefWidth="227.0" spacing="10.0">
-               <children>
-                    <Button id="selected" fx:id="first" mnemonicParsing="false" onAction="#onFirst" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="1" />
-                  <Button id="idle" fx:id="second" mnemonicParsing="false" onAction="#onSecond" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="2" />
-                  <Button id="idle" fx:id="third" mnemonicParsing="false" onAction="#onThird" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="3" />
-                  <Button id="idle" fx:id="fourth" mnemonicParsing="false" onAction="#onFourth" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="4" />
-               </children>
-            </HBox>
-         </children>
-      </Group>
+        <Group layoutX="-33.0">
+            <children>
+                <HBox layoutX="376.0" layoutY="484.0" prefHeight="45.0" prefWidth="310.0" spacing="10.0">
+                    <children>
+                        <Button id="selected" fx:id="first" mnemonicParsing="false" onAction="#onFirst" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="1" />
+                        <Button id="idle" fx:id="second" mnemonicParsing="false" onAction="#onSecond" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="2" />
+                        <Button id="idle" fx:id="third" mnemonicParsing="false" onAction="#onThird" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="3" />
+                        <Button id="idle" fx:id="fourth" mnemonicParsing="false" onAction="#onFourth" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="4" />
+                        <Button id="start" fx:id="finish" mnemonicParsing="false" onAction="#onFinish" prefHeight="61.0" prefWidth="88.0" stylesheets="@style.css" text="finish" />
+                    </children>
+                </HBox>
+            </children>
+        </Group>
     </children>
 </Pane>

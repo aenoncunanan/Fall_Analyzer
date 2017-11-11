@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane id="selectCard" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUp4Controller">
+    <children>
+      <Group layoutX="1.0" layoutY="40.0">
+         <children>
+              <Label id="header2Label" layoutX="409.0" layoutY="259.0" stylesheets="@style.css" text="To finish setup, enter your" textAlignment="CENTER" />
+            <GridPane hgap="10.0" layoutX="380.0" layoutY="315.0" prefHeight="68.0" prefWidth="263.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="91.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="162.0" minWidth="10.0" prefWidth="162.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Username:" />
+                  <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Password:" GridPane.rowIndex="1" />
+                  <TextField fx:id="username" prefHeight="25.0" prefWidth="162.0" promptText="username" GridPane.columnIndex="1" />
+                  <PasswordField fx:id="password" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+              <Label id="errorLabel" fx:id="feedbackLabel" layoutX="497.0" layoutY="393.0" stylesheets="@style.css" textAlignment="CENTER" />
+            <Label id="header2Label" layoutX="389.0" layoutY="278.0" stylesheets="@style.css" text="username and password below:" textAlignment="CENTER" />
+         </children>
+      </Group>
+      <Group layoutX="-33.0">
+         <children>
+            <HBox layoutX="376.0" layoutY="484.0" prefHeight="45.0" prefWidth="310.0" spacing="10.0">
+               <children>
+                    <Button id="idle" fx:id="first" mnemonicParsing="false" onAction="#onFirst" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="1" />
+                  <Button id="idle" fx:id="second" mnemonicParsing="false" onAction="#onSecond" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="2" />
+                  <Button id="idle" fx:id="third" mnemonicParsing="false" onAction="#onThird" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="3" />
+                  <Button id="selected" fx:id="fourth" mnemonicParsing="false" onAction="#onFourth" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="4" />
+                  <Button id="start" fx:id="finish" mnemonicParsing="false" onAction="#onFinish" prefHeight="61.0" prefWidth="88.0" stylesheets="@style.css" text="finish" />
+               </children>
+            </HBox>
+         </children>
+      </Group>
+    </children>
+</Pane>

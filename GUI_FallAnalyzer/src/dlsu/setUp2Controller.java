@@ -25,6 +25,7 @@ public class setUp2Controller implements Initializable {
     public TextField address;
     public TextField contactNumber;
     public Label feedbackLabel;
+    public Button finish;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +63,8 @@ public class setUp2Controller implements Initializable {
             fourth.setDisable(true);
         }
 
+        finish.setDisable(true);
+
         first.setOnMouseEntered(event -> first.setCursor(Cursor.HAND));
         first.setOnMousePressed(event -> first.setCursor(Cursor.CLOSED_HAND));
         first.setOnMouseReleased(event -> first.setCursor(Cursor.HAND));
@@ -81,6 +84,11 @@ public class setUp2Controller implements Initializable {
         fourth.setOnMousePressed(event -> fourth.setCursor(Cursor.CLOSED_HAND));
         fourth.setOnMouseReleased(event -> fourth.setCursor(Cursor.HAND));
         fourth.setOnMouseExited(event -> fourth.setCursor(Cursor.DEFAULT));
+
+        finish.setOnMouseEntered(event -> finish.setCursor(Cursor.HAND));
+        finish.setOnMousePressed(event -> finish.setCursor(Cursor.CLOSED_HAND));
+        finish.setOnMouseReleased(event -> finish.setCursor(Cursor.HAND));
+        finish.setOnMouseExited(event -> finish.setCursor(Cursor.DEFAULT));
     }
 
     public void onFirst(ActionEvent actionEvent) throws IOException {
@@ -91,7 +99,7 @@ public class setUp2Controller implements Initializable {
     public void onSecond(ActionEvent actionEvent) {
     }
 
-    public void onThird(ActionEvent actionEvent) {
+    public void onThird(ActionEvent actionEvent) throws IOException {
         if(firstName.getText().isEmpty() || LastName.getText().isEmpty() || age.getText().isEmpty() || address.getText().isEmpty() || contactNumber.getText().isEmpty()){
             feedbackLabel.setText("All fields are required!");
         } else{
@@ -113,16 +121,24 @@ public class setUp2Controller implements Initializable {
                     writer.newLine();
                     writer.write(contactNumber.getText());
                     writer.close();
-                    feedbackLabel.setText("");
-                                    System.out.println("change scene");
                 } catch(Exception e){
                 }
             }catch(Exception e){
                 feedbackLabel.setText("Your age is invalid!");
+            }finally {
+                feedbackLabel.setText("");
+                dlsu.changeScene changeScene = new changeScene();
+                changeScene.setScene("Setup3.fxml", "style.css", actionEvent);
             }
         }
     }
 
-    public void onFourth(ActionEvent actionEvent) {
+    public void onFourth(ActionEvent actionEvent) throws IOException {
+        dlsu.changeScene changeScene = new changeScene();
+        changeScene.setScene("Setup4.fxml", "style.css", actionEvent);
+    }
+
+    public void onFinish(ActionEvent actionEvent) {
+
     }
 }
