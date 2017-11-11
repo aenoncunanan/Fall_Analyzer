@@ -1,0 +1,40 @@
+.root{
+    -fx-background-color: #ecf0f1;
+}
+
+#selectCard{
+    -fx-background-image: url("Main.png");
+    -fx-background-size: 1030;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
+#headerLabel{
+    -fx-font-family: Asimov;
+    -fx-text-fill: orange;
+    -fx-font-size: 30;
+    -fx-font-position: center center;
+}
+
+#pleaseLabel{
+    -fx-font-family: Asimov;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 15;
+    -fx-font-position: center center;
+    -fx-text-alignment: justify;
+}
+
+#feedbackLabel{
+    -fx-font-family: Asimov;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 10;
+    -fx-font-position: center center;
+}
+
+#next{
+        -fx-font-family: Asimov;
+        -fx-text-fill: orange;
+        -fx-font-size: 20;
+        -fx-font-position: center center;
+        -fx-background-color: white;
+}
