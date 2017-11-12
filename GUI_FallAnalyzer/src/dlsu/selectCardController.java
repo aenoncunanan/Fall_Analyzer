@@ -14,7 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -74,9 +74,15 @@ public class selectCardController implements Initializable{
             System.out.println("Selected Drive: " + drive);
             System.out.println("Selected Drive Letter: " + driveLetter);
 
-            if(false){
-                /*if setup.txt exists, explore*/
+            File loginFile = new File(driveLetter + "login.txt");
+            if(loginFile.exists()){
+                System.out.println("EXISTS!");
+                feedbackLabel.setText("");
+                dlsu.changeScene changeScene = new changeScene();
+                changeScene.setScene("Explore.fxml", "style.css", actionEvent, "Fall Analyzer");
             } else{
+                System.out.println("DOESNT EXIST!");
+                feedbackLabel.setText("");
                 dlsu.changeScene changeScene = new changeScene();
                 changeScene.setScene("SetupHome.fxml", "style.css", actionEvent, "Fall Analyzer | Home Setup");
             }

@@ -9,6 +9,13 @@
     -fx-background-position: center center;
 }
 
+#explorePane{
+    -fx-background-image: url("Explore.png");
+    -fx-background-size: 1030;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
 #header1Label{
     -fx-font-family: Asimov;
     -fx-text-fill: orange;
@@ -22,6 +29,13 @@
     -fx-font-size: 15;
     -fx-font-position: center center;
     -fx-text-alignment: justify;
+}
+
+#header3Label{
+    -fx-font-family: Asimov;
+    -fx-text-fill: orange;
+    -fx-font-size: 20;
+    -fx-font-position: center center;
 }
 
 #fieldsLabelLabel{
