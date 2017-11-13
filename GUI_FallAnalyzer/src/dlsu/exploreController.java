@@ -1,8 +1,13 @@
 package dlsu;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.*;
 import java.net.URL;
@@ -28,6 +33,59 @@ public class exploreController implements Initializable{
     public Button editProfile;
     public Button saveProfile;
 
+    public Group editResponders;
+    public TableView respondersTable;
+    public TableColumn firstName;
+    public TableColumn lastName;
+    public TableColumn contactNumber;
+
+    public TextField firstNameResponders;
+    public TextField LastNameResponders;
+    public TextField contactNumberResponders;
+    public Button saveResponder;
+    public Label allFieldsError;
+    public Label successful;
+    public Button deleteResponder;
+    public Button editResponder;
+    public Button addResponder;
+
+    public final ObservableList<responders> data = FXCollections.observableArrayList();
+
+    public static class responders{
+        private SimpleStringProperty firstName;
+        private SimpleStringProperty lastName;
+        private SimpleStringProperty contactNumber;
+
+        private responders(String first, String last, String contact){
+            this.firstName = new SimpleStringProperty(first);
+            this.lastName = new SimpleStringProperty(last);
+            this.contactNumber = new SimpleStringProperty(contact);
+        }
+
+        public String getFirstName(){
+            return firstName.get();
+        }
+
+        public void setFirstName(String first){
+            firstName.set(first);
+        }
+
+        public String getLastName(){
+            return lastName.get();
+        }
+
+        public void setLastName(String last){
+            lastName.set(last);
+        }
+
+        public String getContactNumber(){
+            return contactNumber.get();
+        }
+
+        public void setContactNumber(String contact){
+            contactNumber.set(contact);
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,19 +109,43 @@ public class exploreController implements Initializable{
 //        }
     }
 
-    private void initRepondersTab() {
+    private void initRepondersTab(){
         //insert here. if respondents file does not exist, do something.
+
         BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(selectCardController.driveLetter + "respondents.txt"));
-            String temp = br.readLine();
-        } catch (IOException e) {
-        } finally {
             try {
-                br.close();
+                br = new BufferedReader(new FileReader(selectCardController.driveLetter + "respondents.txt"));
+
+                Boolean end = false;
+                String line = "";
+                String first = "";
+                String last = "";
+                String contact = "";
+                while(end == false){
+                    line = br.readLine();
+                    if (line.equals("-end-")){
+                        end = true;
+                    } else if (line.equals("breakLine")){
+                        //just do nothing
+                    } else{
+                        first = line;
+                        last = br.readLine();
+                        contact = br.readLine();
+                        data.add(new responders(first, last, contact));
+                        firstName.setCellValueFactory(new PropertyValueFactory<responders, String>("firstName"));
+                        lastName.setCellValueFactory(new PropertyValueFactory<responders, String>("lastName"));
+                        contactNumber.setCellValueFactory(new PropertyValueFactory<responders, String>("contactNumber"));
+                        respondersTable.getItems().setAll(this.data);
+                    }
+                }
             } catch (IOException e) {
+            } finally {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                }
             }
-        }
+
     }
 
     private void initProfileTab() {
@@ -187,15 +269,80 @@ public class exploreController implements Initializable{
         }
     }
 
+    public void saveResponder(){
+        BufferedWriter writer = null;
+        try{
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "respondents.txt"), "utf-8"));
+
+            int size = data.size();
+            for (int i = 0; i < size; i++){
+                writer.write(data.get(i).getFirstName());
+                writer.newLine();
+                writer.write(data.get(i).getLastName());
+                writer.newLine();
+                writer.write(data.get(i).getContactNumber());
+                writer.newLine();
+                writer.write("breakLine");
+                writer.newLine();
+            }
+            writer.write("-end-");
+            writer.close();
+        } catch(Exception e){
+        }
+    }
+
     public void onSaveResponder(ActionEvent actionEvent) {
+        if (firstNameResponders.getText().isEmpty() || LastNameResponders.getText().isEmpty() || contactNumberResponders.getText().isEmpty()){
+            allFieldsError.setText("All fields are required!");
+            successful.setText("");
+        } else {
+            allFieldsError.setText("");
+
+            data.add(new responders(firstNameResponders.getText(), LastNameResponders.getText(), contactNumberResponders.getText()));
+            firstName.setCellValueFactory(new PropertyValueFactory<responders, String>("firstName"));
+            lastName.setCellValueFactory(new PropertyValueFactory<responders, String>("lastName"));
+            contactNumber.setCellValueFactory(new PropertyValueFactory<responders, String>("contactNumber"));
+            respondersTable.getItems().setAll(this.data);
+
+            firstNameResponders.setText("");
+            LastNameResponders.setText("");
+            contactNumberResponders.setText("");
+
+            successful.setText("Responders were successfully modified!");
+            editResponders.setDisable(true);
+            saveResponder();
+        }
     }
 
     public void onDeleteResponder(ActionEvent actionEvent) {
+        int selectedIndex = respondersTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0){
+            respondersTable.getItems().remove(selectedIndex);
+            data.remove(selectedIndex);
+            allFieldsError.setText("");
+            successful.setText("Responders were successfully modified!");
+            saveResponder();
+        }
     }
 
     public void onEditResponder(ActionEvent actionEvent) {
+        int selectedIndex = respondersTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0){
+            respondersTable.getItems().remove(selectedIndex);
+            firstNameResponders.setText(data.get(selectedIndex).getFirstName());
+            LastNameResponders.setText(data.get(selectedIndex).getLastName());
+            contactNumberResponders.setText(data.get(selectedIndex).getContactNumber());
+            data.remove(selectedIndex);
+        }
+
+        allFieldsError.setText("");
+        successful.setText("");
+        editResponders.setDisable(false);
     }
 
     public void onAddResponder(ActionEvent actionEvent) {
+        allFieldsError.setText("");
+        successful.setText("");
+        editResponders.setDisable(false);
     }
 }

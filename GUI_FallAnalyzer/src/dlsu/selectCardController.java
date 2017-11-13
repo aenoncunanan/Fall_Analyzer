@@ -76,12 +76,10 @@ public class selectCardController implements Initializable{
 
             File loginFile = new File(driveLetter + "login.txt");
             if(loginFile.exists()){
-                System.out.println("EXISTS!");
                 feedbackLabel.setText("");
                 dlsu.changeScene changeScene = new changeScene();
                 changeScene.setScene("Explore.fxml", "style.css", actionEvent, "Fall Analyzer");
             } else{
-                System.out.println("DOESNT EXIST!");
                 feedbackLabel.setText("");
                 dlsu.changeScene changeScene = new changeScene();
                 changeScene.setScene("SetupHome.fxml", "style.css", actionEvent, "Fall Analyzer | Home Setup");
