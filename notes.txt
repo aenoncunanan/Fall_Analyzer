@@ -34,7 +34,15 @@ VCC	--->	5v
 GND	--->	GND
 SCL	--->	A5
 SDA	--->	A4
-INT	--->	2
+INT	--->	D2
+
+SD to Genuino:
+MISO		--->	D12
+SCK		--->	D13
+SS chipSelect	--->	D4
+MOSI		--->	D11
+GND		--->	GND
+VCC		--->	5V
 
 LCD to Genuino:
 DO	--->	12
