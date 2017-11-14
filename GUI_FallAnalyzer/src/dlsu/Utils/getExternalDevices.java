@@ -1,8 +1,4 @@
-package dlsu;
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+package dlsu.Utils;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;

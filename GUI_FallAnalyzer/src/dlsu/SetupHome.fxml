@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane id="selectCard" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUpHomeController">
+<Pane id="setupPane" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUpHomeController">
     <children>
         <Label id="header1Label" layoutX="467.0" layoutY="288.0" stylesheets="@style.css" text="Hello!" />
         <Label id="header2Label" layoutX="382.0" layoutY="337.0" stylesheets="@style.css" text="Thank you for using fall analyzer! " textAlignment="JUSTIFY" />

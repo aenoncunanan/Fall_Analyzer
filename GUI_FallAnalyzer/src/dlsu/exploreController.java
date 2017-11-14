@@ -1,5 +1,6 @@
 package dlsu;
 
+import dlsu.Utils.logInDialog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +49,8 @@ public class exploreController implements Initializable{
     public Button deleteResponder;
     public Button editResponder;
     public Button addResponder;
+
+    dlsu.Utils.logInDialog logInDialog = new logInDialog();
 
     public final ObservableList<responders> data = FXCollections.observableArrayList();
 
@@ -150,6 +153,18 @@ public class exploreController implements Initializable{
 
     private void initProfileTab() {
         //insert here. if login file does not exist, do something.
+
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("ALERT!");
+//        String s = "Confirm to clear text in text field !";
+//        alert.setContentText(s);
+//
+//        Optional<ButtonType> result = alert.showAndWait();
+//
+//        if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
+//            System.out.println("OK DAW");
+//        }
+
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(selectCardController.driveLetter + "login.txt"));
@@ -187,19 +202,22 @@ public class exploreController implements Initializable{
     }
 
     public void onEditLogin(ActionEvent actionEvent) {
-        usernameLogin.setEditable(true);
-        passwordLogin.setEditable(true);
-        confirmLogin.setEditable(true);
-        saveLogin.setDisable(false);
-        feedbackLabelLogin.setText("");
+        if(logInDialog.logIn()){
+            usernameLogin.setEditable(true);
+            passwordLogin.setEditable(true);
+            confirmLogin.setEditable(true);
+            saveLogin.setDisable(false);
+            feedbackLabelLogin.setText("");
+        }
     }
 
     public void onSaveLogin(ActionEvent actionEvent) {
         if(usernameLogin.getText().isEmpty() || passwordLogin.getText().isEmpty() || confirmLogin.getText().isEmpty()){
-            feedbackLabel.setText("All fields are required!");
+            feedbackLabelLogin.setText("All fields are required!");
         } else if (!passwordLogin.getText().equals(confirmLogin.getText())){
             feedbackLabelLogin.setText("Passwords do not match!");
         } else {
+            usernameHello.setText(usernameLogin.getText() + "!");
             BufferedWriter writer = null;
             try {
                 writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "login.txt"), "utf-8"));
@@ -220,14 +238,16 @@ public class exploreController implements Initializable{
     }
 
     public void onEditProfile(ActionEvent actionEvent) {
-        firstNameProfile.setEditable(true);
-        LastNameProfile.setEditable(true);
-        genderProfile.setDisable(false);
-        ageProfile.setEditable(true);
-        addressProfile.setEditable(true);
-        contactNumberProfile.setEditable(true);
-        saveProfile.setDisable(false);
-        feedbackLabel.setText("");
+        if(logInDialog.logIn()){
+            firstNameProfile.setEditable(true);
+            LastNameProfile.setEditable(true);
+            genderProfile.setDisable(false);
+            ageProfile.setEditable(true);
+            addressProfile.setEditable(true);
+            contactNumberProfile.setEditable(true);
+            saveProfile.setDisable(false);
+            feedbackLabel.setText("");
+        }
     }
 
     public void onSaveProfile(ActionEvent actionEvent) {
@@ -317,32 +337,39 @@ public class exploreController implements Initializable{
     public void onDeleteResponder(ActionEvent actionEvent) {
         int selectedIndex = respondersTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0){
-            respondersTable.getItems().remove(selectedIndex);
-            data.remove(selectedIndex);
-            allFieldsError.setText("");
-            successful.setText("Responders were successfully modified!");
-            saveResponder();
+            if (logInDialog.logIn()){
+                respondersTable.getItems().remove(selectedIndex);
+                data.remove(selectedIndex);
+                allFieldsError.setText("");
+                successful.setText("Responders were successfully modified!");
+                saveResponder();
+            }
         }
     }
 
     public void onEditResponder(ActionEvent actionEvent) {
-        int selectedIndex = respondersTable.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0){
-            respondersTable.getItems().remove(selectedIndex);
-            firstNameResponders.setText(data.get(selectedIndex).getFirstName());
-            LastNameResponders.setText(data.get(selectedIndex).getLastName());
-            contactNumberResponders.setText(data.get(selectedIndex).getContactNumber());
-            data.remove(selectedIndex);
-        }
+        if(logInDialog.logIn()){
+            int selectedIndex = respondersTable.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0){
+                respondersTable.getItems().remove(selectedIndex);
+                firstNameResponders.setText(data.get(selectedIndex).getFirstName());
+                LastNameResponders.setText(data.get(selectedIndex).getLastName());
+                contactNumberResponders.setText(data.get(selectedIndex).getContactNumber());
+                data.remove(selectedIndex);
+            }
 
-        allFieldsError.setText("");
-        successful.setText("");
-        editResponders.setDisable(false);
+            allFieldsError.setText("");
+            successful.setText("");
+            editResponders.setDisable(false);
+        }
     }
 
     public void onAddResponder(ActionEvent actionEvent) {
-        allFieldsError.setText("");
-        successful.setText("");
-        editResponders.setDisable(false);
+        if (logInDialog.logIn()){
+            allFieldsError.setText("");
+            successful.setText("");
+            editResponders.setDisable(false);
+        }
     }
+
 }

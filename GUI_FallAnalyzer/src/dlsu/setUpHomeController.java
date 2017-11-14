@@ -28,7 +28,7 @@ public class setUpHomeController implements Initializable {
 
     @FXML
     private void onNext(ActionEvent actionEvent) throws IOException {
-        dlsu.changeScene changeScene = new changeScene();
+        changeScene changeScene = new changeScene();
         changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
     }
 

@@ -115,7 +115,7 @@ public class setUp1Controller implements Initializable {
                 }catch(Exception e){
                 }
 
-                dlsu.changeScene changeScene = new changeScene();
+                changeScene changeScene = new changeScene();
                 changeScene.setScene("Setup2.fxml", "style.css", actionEvent, "Fall Analyzer | Profile Setup");
 
             }else {

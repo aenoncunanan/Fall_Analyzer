@@ -140,7 +140,9 @@ public class setUp3Controller implements Initializable {
             list.getItems().add(firstName.getText() + " " + LastName.getText());
             data.add(new responders(firstName.getText(), LastName.getText(), contactNumber.getText()));
         }
-
+        firstName.setText("");
+        LastName.setText("");
+        contactNumber.setText("");
     }
 
     public void onDelete(ActionEvent actionEvent) {
@@ -201,7 +203,7 @@ public class setUp3Controller implements Initializable {
             } catch(Exception e){
             }
             feedbackLabel.setText("");
-            dlsu.changeScene changeScene = new changeScene();
+            changeScene changeScene = new changeScene();
             changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
         }
 

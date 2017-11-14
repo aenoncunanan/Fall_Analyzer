@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane id="selectCard" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUpFinishController">
+<Pane id="setupPane" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUpFinishController">
     <children>
         <Label id="header1Label" layoutX="401.0" layoutY="292.0" stylesheets="@style.css" text="Congratulations!" textAlignment="CENTER" />
         <Label id="header2Label" layoutX="381.0" layoutY="341.0" stylesheets="@style.css" text="You have successfully setup your card!" textAlignment="CENTER" />

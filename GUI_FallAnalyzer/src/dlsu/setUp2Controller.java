@@ -91,7 +91,7 @@ public class setUp2Controller implements Initializable {
     }
 
     public void onFirst(ActionEvent actionEvent) throws IOException {
-        dlsu.changeScene changeScene = new changeScene();
+        changeScene changeScene = new changeScene();
         changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
     }
 
@@ -126,14 +126,14 @@ public class setUp2Controller implements Initializable {
                 feedbackLabel.setText("Your age is invalid!");
             }finally {
                 feedbackLabel.setText("");
-                dlsu.changeScene changeScene = new changeScene();
+                changeScene changeScene = new changeScene();
                 changeScene.setScene("Setup3.fxml", "style.css", actionEvent,"Fall Analyzer | Responders Setup");
             }
         }
     }
 
     public void onFourth(ActionEvent actionEvent) throws IOException {
-        dlsu.changeScene changeScene = new changeScene();
+        changeScene changeScene = new changeScene();
         changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
     }
 

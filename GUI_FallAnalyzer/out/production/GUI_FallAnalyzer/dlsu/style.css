@@ -2,7 +2,7 @@
     -fx-background-color: #ecf0f1;
 }
 
-#selectCard{
+#setupPane{
     -fx-background-image: url("Main.png");
     -fx-background-size: 1030;
     -fx-background-repeat: stretch;
@@ -64,6 +64,14 @@
         -fx-font-family: Asimov;
         -fx-text-fill: orange;
         -fx-font-size: 20;
+        -fx-font-position: center center;
+        -fx-background-color: white;
+}
+
+#respondButtons{
+        -fx-font-family: Asimov;
+        -fx-text-fill: orange;
+        -fx-font-size: 15;
         -fx-font-position: center center;
         -fx-background-color: white;
 }

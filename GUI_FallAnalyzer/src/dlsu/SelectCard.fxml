@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane id="selectCard" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.selectCardController">
+<Pane id="setupPane" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.selectCardController">
    <children>
-      <TilePane alignment="CENTER" layoutX="414.0" layoutY="320.0" prefHeight="4.0" prefWidth="200.0">
+      <TilePane alignment="CENTER" layoutX="352.0" layoutY="317.0" prefHeight="152.0" prefWidth="321.0">
          <children>
             <Label id="header1Label" stylesheets="@style.css" text="Hello!" />
             <Label id="header2Label" stylesheets="@style.css" text="Please choose your card:" />
@@ -33,5 +34,5 @@
             <Label id="feedbackLabel" fx:id="feedbackLabel" stylesheets="@style.css" />
          </children>
       </TilePane>
-   </children>
+         </children>
 </Pane>

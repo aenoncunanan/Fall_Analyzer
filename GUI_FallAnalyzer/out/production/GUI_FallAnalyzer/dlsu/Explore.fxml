@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -10,8 +11,12 @@
    <children>
       <Group layoutX="802.0" layoutY="91.0">
          <children>
-            <Label id="header1Label" fx:id="usernameHello" layoutX="11.0" layoutY="20.0" stylesheets="@style.css" text="Username!" />
-            <Label id="header2Label" layoutX="24.0" layoutY="7.0" stylesheets="@style.css" text="Hello," />
+            <Label id="header2Label" layoutX="154.0" layoutY="10.0" stylesheets="@style.css" text="Hello," />
+            <TilePane alignment="CENTER_RIGHT" layoutX="-227.0" layoutY="21.0" prefHeight="19.0" prefWidth="434.0">
+               <children>
+                  <Label id="header1Label" fx:id="usernameHello" stylesheets="@style.css" text="Username!" textAlignment="RIGHT" />
+               </children>
+            </TilePane>
          </children>
       </Group>
       <TabPane layoutY="144.0" prefHeight="438.0" prefWidth="1025.0" tabClosingPolicy="UNAVAILABLE">
@@ -22,6 +27,18 @@
                 <children>
                         <Group layoutX="499.0" layoutY="-8.0">
                            <children>
+                              <TilePane layoutX="97.0" layoutY="260.0" prefHeight="75.0" prefWidth="161.0">
+                                 <children>
+                                    <Line endX="100.0" startX="-100.0" stroke="#009fe0" />
+                                    <Label id="errorLabel" fx:id="feedbackLabelLogin" stylesheets="@style.css" textAlignment="CENTER" />
+                                    <HBox alignment="CENTER" prefHeight="25.0" prefWidth="78.0" spacing="5.0">
+                                       <children>
+                                          <Button fx:id="editLogin" mnemonicParsing="false" onAction="#onEditLogin" text="edit" />
+                                          <Button fx:id="saveLogin" disable="true" mnemonicParsing="false" onAction="#onSaveLogin" text="save" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </TilePane>
                           <GridPane hgap="10.0" layoutX="66.0" layoutY="160.0" prefHeight="90.0" prefWidth="263.0">
                               <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="91.0" />
@@ -41,15 +58,7 @@
                                   <PasswordField fx:id="confirmLogin" editable="false" prefHeight="25.0" prefWidth="117.0" promptText="confirm password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               </children>
                           </GridPane>
-                              <Line endX="100.0" layoutX="203.0" layoutY="274.0" startX="-100.0" stroke="#009fe0" />
                           <Label id="header3Label" layoutX="66.0" layoutY="126.0" stylesheets="@style.css" text="Login credentials:" textAlignment="JUSTIFY" />
-                              <Label id="errorLabel" fx:id="feedbackLabelLogin" layoutX="135.0" layoutY="261.0" stylesheets="@style.css" textAlignment="CENTER" />
-                              <HBox layoutX="160.0" layoutY="286.0" prefHeight="25.0" prefWidth="81.0" spacing="5.0">
-                                 <children>
-                                    <Button fx:id="editLogin" mnemonicParsing="false" onAction="#onEditLogin" text="edit" />
-                                    <Button fx:id="saveLogin" disable="true" mnemonicParsing="false" onAction="#onSaveLogin" text="save" />
-                                 </children>
-                              </HBox>
                            </children>
                         </Group>
                     <Group layoutX="-235.0" layoutY="-168.0">
@@ -93,14 +102,18 @@
                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                </rowConstraints>
                            </GridPane>
-                              <HBox layoutX="477.0" layoutY="489.0" prefHeight="25.0" prefWidth="81.0" spacing="5.0">
+                              <TilePane layoutX="419.0" layoutY="467.0" prefHeight="57.0" prefWidth="201.0">
                                  <children>
-                                    <Button fx:id="editProfile" mnemonicParsing="false" onAction="#onEditProfile" text="edit" />
-                                    <Button fx:id="saveProfile" disable="true" mnemonicParsing="false" onAction="#onSaveProfile" text="save" />
+                                    <Line endX="100.0" startX="-100.0" stroke="#009fe0" />
+                                 <Label id="errorLabel" fx:id="feedbackLabel" stylesheets="@style.css" textAlignment="CENTER" />
+                                    <HBox alignment="CENTER" prefHeight="25.0" prefWidth="81.0" spacing="5.0">
+                                       <children>
+                                          <Button fx:id="editProfile" mnemonicParsing="false" onAction="#onEditProfile" text="edit" />
+                                          <Button fx:id="saveProfile" disable="true" mnemonicParsing="false" onAction="#onSaveProfile" text="save" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
-                              <Line endX="100.0" layoutX="519.0" layoutY="478.0" startX="-100.0" stroke="#009fe0" />
-                           <Label id="errorLabel" fx:id="feedbackLabel" layoutX="430.0" layoutY="463.0" stylesheets="@style.css" textAlignment="CENTER" />
+                              </TilePane>
                        </children>
                     </Group>
                 </children>
@@ -160,14 +173,61 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="406.0" prefWidth="659.0">
+                        <TableView fx:id="activityTable" prefHeight="402.0" prefWidth="659.0">
                            <columns>
-                              <TableColumn prefWidth="146.33333206176758" text="Date" />
-                              <TableColumn prefWidth="161.6666717529297" text="Time" />
-                              <TableColumn prefWidth="171.33331298828125" text="Activity" />
-                              <TableColumn prefWidth="176.66668701171875" text="Location" />
+                              <TableColumn fx:id="date" prefWidth="146.33333206176758" text="Date" />
+                              <TableColumn fx:id="time" prefWidth="161.6666717529297" text="Time" />
+                              <TableColumn fx:id="activity" prefWidth="171.33331298828125" text="Activity" />
+                              <TableColumn fx:id="location" prefWidth="176.66668701171875" text="Location" />
                            </columns>
                         </TableView>
+                        <TilePane alignment="CENTER" layoutX="671.0" layoutY="318.0" prefHeight="59.0" prefWidth="346.0">
+                           <children>
+                              <Label id="feedbackLabel" fx:id="feedbackData" stylesheets="@style.css" text="Data log was successfully modified!" textAlignment="CENTER" />
+                              <HBox alignment="TOP_CENTER" prefHeight="26.0" prefWidth="241.0" spacing="5.0">
+                                 <children>
+                                    <Button id="respondButtons" fx:id="deleteData" mnemonicParsing="false" prefHeight="30.0" prefWidth="71.0" stylesheets="@style.css" text="delete">
+                                        <tooltip>
+                                            <Tooltip text="Delete high-lighted data log" />
+                                        </tooltip>
+                                    </Button>
+                                     <Button id="respondButtons" fx:id="deleteAllData" mnemonicParsing="false" stylesheets="@style.css" text="clear all">
+                                         <tooltip>
+                                             <Tooltip text="Clear the entire data log" />
+                                         </tooltip>
+                                     </Button>
+                                    <Button id="respondButtons" fx:id="exportData" mnemonicParsing="false" stylesheets="@style.css" text="export">
+                                        <tooltip>
+                                            <Tooltip text="Export data log to an Excel File" />
+                                        </tooltip>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </TilePane>
+                        <Group layoutY="-6.0">
+                           <children>
+                              <Label id="header3Label" layoutX="799.0" layoutY="14.0" text="Storage:" />
+                              <ImageView fitHeight="164.0" fitWidth="217.0" layoutX="735.0" layoutY="42.0">
+                                 <image>
+                                    <Image url="@trialChart.PNG" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Group>
+                        <GridPane layoutX="725.0" layoutY="241.0" prefHeight="30.0" prefWidth="246.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="206.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="13.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label id="header2Label" text="Number of recorded falls:" />
+                              <Label id="header3Label" fx:id="numberOfFalls" text="0" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
                      </children></AnchorPane>
                </content>
             </Tab>

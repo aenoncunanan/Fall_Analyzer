@@ -1,25 +1,21 @@
 package dlsu;
 
 
+import dlsu.Utils.getExternalDevices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
 import java.util.*;
 
 public class selectCardController implements Initializable{
-    dlsu.getExternalDevices getExternalDevices = new getExternalDevices();
+    dlsu.Utils.getExternalDevices getExternalDevices = new getExternalDevices();
 
     @FXML
     private Button onNext;
@@ -75,13 +71,15 @@ public class selectCardController implements Initializable{
             System.out.println("Selected Drive Letter: " + driveLetter);
 
             File loginFile = new File(driveLetter + "login.txt");
-            if(loginFile.exists()){
+            File profileFile = new File(driveLetter + "profile.txt");
+            File respondentsFile = new File(driveLetter + "respondents.txt");
+            if(loginFile.exists() && profileFile.exists() && respondentsFile.exists()){
                 feedbackLabel.setText("");
-                dlsu.changeScene changeScene = new changeScene();
+                changeScene changeScene = new changeScene();
                 changeScene.setScene("Explore.fxml", "style.css", actionEvent, "Fall Analyzer");
             } else{
                 feedbackLabel.setText("");
-                dlsu.changeScene changeScene = new changeScene();
+                changeScene changeScene = new changeScene();
                 changeScene.setScene("SetupHome.fxml", "style.css", actionEvent, "Fall Analyzer | Home Setup");
             }
 
