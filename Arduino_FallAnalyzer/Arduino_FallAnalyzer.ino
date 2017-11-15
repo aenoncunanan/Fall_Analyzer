@@ -120,6 +120,14 @@ void loop() {
   if (orientation != lastOrient) {
     Serial.println("User Orientation: " + userOrientation);
     lastOrient = orientation;
+    //logData here!
+    //get Date through RTC module
+    //get Time through RTC module
+    //get Activity through userOrientation
+//    if (userOrientation == "Falling!"){
+//      //get Location using GSM module
+//    }
+    //add "end_of_activity" string every after activity
   } 
 
 }
