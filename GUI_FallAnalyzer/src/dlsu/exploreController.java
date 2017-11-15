@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.io.*;
 import java.net.URL;
@@ -50,9 +51,67 @@ public class exploreController implements Initializable{
     public Button editResponder;
     public Button addResponder;
 
+    public TableView activityTable;
+    public TableColumn dateCell;
+    public TableColumn timeCell;
+    public TableColumn activityCell;
+    public TableColumn locationCell;
+    public Label feedbackData;
+    public Button deleteData;
+    public Button deleteAllData;
+    public Button exportData;
+    public Label numberOfFalls;
+
     dlsu.Utils.logInDialog logInDialog = new logInDialog();
 
     public final ObservableList<responders> data = FXCollections.observableArrayList();
+    public final ObservableList<activities> log = FXCollections.observableArrayList();
+
+    public static class activities{
+        private SimpleStringProperty date;
+        private SimpleStringProperty time;
+        private SimpleStringProperty activity;
+        private SimpleStringProperty location;
+
+        private activities(String dateLog, String timeLog, String activityLog, String locationLog){
+            this.date = new SimpleStringProperty(dateLog);
+            this.time = new SimpleStringProperty(timeLog);
+            this.activity = new SimpleStringProperty(activityLog);
+            this.location = new SimpleStringProperty(locationLog);
+        }
+
+        public String getDate() {
+            return date.get();
+        }
+
+        public void setDate(String dateLog) {
+            date.set(dateLog);
+        }
+
+        public String getTime() {
+            return time.get();
+        }
+
+        public void setTime(String timeLog) {
+            time.set(timeLog);
+        }
+
+        public String getActivity() {
+            return activity.get();
+        }
+
+        public void setActivity(String activityLog) {
+            activity.set(activityLog);
+        }
+
+        public String getLocation() {
+            return location.get();
+        }
+
+        public void setLocation(String locationLog) {
+            location.set(locationLog);
+        }
+    }
 
     public static class responders{
         private SimpleStringProperty firstName;
@@ -99,17 +158,64 @@ public class exploreController implements Initializable{
 
     private void initActivityTab() {
         //insert here. if log file does not exist, do something.
-//        BufferedReader br = null;
-//        try {
-//            br = new BufferedReader(new FileReader(selectCardController.driveLetter + "log.txt"));
-//            String temp = br.readLine();
-//        } catch (IOException e) {
-//        } finally {
-//            try {
-//                br.close();
-//            } catch (IOException e) {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(selectCardController.driveLetter + "activity.txt"));
+            Boolean end = false;
+            String line = "";
+            String date = "";
+            String time = "";
+            String activity = "";
+            String location = "";
+
+//            while(end == false){
+//                line = br.readLine();
+//                if (line.equals("-end_of_activity-")){
+//                    //do nothing
+//                } else if (line == null){
+//                    end = true;
+//                } else {
+//                    date = line;
+//                    time = br.readLine();
+//                    activity = br.readLine();
+//                    location = br.readLine();
+//                    log.add(new activities(date, time, activity, location));
+//                }
 //            }
-//        }
+
+            while((line = br.readLine()) != null){
+                if (line.equals("-end_of_activity-")){
+                    //do nothing
+                } else {
+                    date = line;
+                    time = br.readLine();
+                    activity = br.readLine();
+                    location = br.readLine();
+                    log.add(new activities(date, time, activity, location));
+                    dateCell.setCellValueFactory(new PropertyValueFactory<activities, String>("date"));
+                    timeCell.setCellValueFactory(new PropertyValueFactory<activities, String>("time"));
+                    activityCell.setCellValueFactory(new PropertyValueFactory<activities, String>("activity"));
+                    locationCell.setCellValueFactory(new PropertyValueFactory<activities, String>("location"));
+                    activityTable.getItems().setAll(this.log);
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        }
+
+        for(int i = 0; i < log.size(); i++){
+            System.out.println(log.get(i).getDate());
+            System.out.println(log.get(i).getTime());
+            System.out.println(log.get(i).getActivity());
+            System.out.println(log.get(i).getLocation());
+        }
     }
 
     private void initRepondersTab(){
@@ -372,4 +478,15 @@ public class exploreController implements Initializable{
         }
     }
 
+    public void onDeleteData(ActionEvent actionEvent){
+        //delete data
+    }
+
+    public void onDeleteAllData(ActionEvent actionEvent) {
+        //Delete all data
+    }
+
+    public void onExportData(ActionEvent actionEvent) {
+        //export to excel file
+    }
 }

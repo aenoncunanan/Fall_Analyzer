@@ -127,7 +127,7 @@ void loop() {
 //    if (userOrientation == "Falling!"){
 //      //get Location using GSM module
 //    }
-    //add "end_of_activity" string every after activity
+    //add "-end_of_activity-" string every after activity
   } 
 
 }

@@ -175,10 +175,10 @@
                      <children>
                         <TableView fx:id="activityTable" prefHeight="402.0" prefWidth="659.0">
                            <columns>
-                              <TableColumn fx:id="date" prefWidth="146.33333206176758" text="Date" />
-                              <TableColumn fx:id="time" prefWidth="161.6666717529297" text="Time" />
-                              <TableColumn fx:id="activity" prefWidth="171.33331298828125" text="Activity" />
-                              <TableColumn fx:id="location" prefWidth="176.66668701171875" text="Location" />
+                              <TableColumn fx:id="dateCell" prefWidth="146.33333206176758" text="Date" />
+                              <TableColumn fx:id="timeCell" prefWidth="161.6666717529297" text="Time" />
+                              <TableColumn fx:id="activityCell" prefWidth="171.33331298828125" text="Activity" />
+                              <TableColumn fx:id="locationCell" prefWidth="176.66668701171875" text="Location" />
                            </columns>
                         </TableView>
                         <TilePane alignment="CENTER" layoutX="671.0" layoutY="318.0" prefHeight="59.0" prefWidth="346.0">
@@ -186,17 +186,17 @@
                               <Label id="feedbackLabel" fx:id="feedbackData" stylesheets="@style.css" text="Data log was successfully modified!" textAlignment="CENTER" />
                               <HBox alignment="TOP_CENTER" prefHeight="26.0" prefWidth="241.0" spacing="5.0">
                                  <children>
-                                    <Button id="respondButtons" fx:id="deleteData" mnemonicParsing="false" prefHeight="30.0" prefWidth="71.0" stylesheets="@style.css" text="delete">
+                                    <Button id="respondButtons" fx:id="deleteData" onAction="#onDeleteData" mnemonicParsing="false" prefHeight="30.0" prefWidth="71.0" stylesheets="@style.css" text="delete">
                                         <tooltip>
                                             <Tooltip text="Delete high-lighted data log" />
                                         </tooltip>
                                     </Button>
-                                     <Button id="respondButtons" fx:id="deleteAllData" mnemonicParsing="false" stylesheets="@style.css" text="clear all">
+                                     <Button id="respondButtons" fx:id="deleteAllData" onAction="#onDeleteAllData" mnemonicParsing="false" stylesheets="@style.css" text="clear all">
                                          <tooltip>
                                              <Tooltip text="Clear the entire data log" />
                                          </tooltip>
                                      </Button>
-                                    <Button id="respondButtons" fx:id="exportData" mnemonicParsing="false" stylesheets="@style.css" text="export">
+                                    <Button id="respondButtons" fx:id="exportData" onAction="#onExportData" mnemonicParsing="false" stylesheets="@style.css" text="export">
                                         <tooltip>
                                             <Tooltip text="Export data log to an Excel File" />
                                         </tooltip>
