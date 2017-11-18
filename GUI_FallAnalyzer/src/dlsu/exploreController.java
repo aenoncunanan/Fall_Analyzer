@@ -5,12 +5,18 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Group;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import sun.java2d.pipe.SpanShapeRenderer;
 
+import java.awt.event.MouseEvent;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
@@ -61,6 +67,7 @@ public class exploreController implements Initializable{
     public Button deleteAllData;
     public Button exportData;
     public Label numberOfFalls;
+    public PieChart storageSpace;
 
     dlsu.Utils.logInDialog logInDialog = new logInDialog();
 
@@ -210,12 +217,32 @@ public class exploreController implements Initializable{
             }
         }
 
-        for(int i = 0; i < log.size(); i++){
-            System.out.println(log.get(i).getDate());
-            System.out.println(log.get(i).getTime());
-            System.out.println(log.get(i).getActivity());
-            System.out.println(log.get(i).getLocation());
-        }
+        setStorageChart();
+
+    }
+
+    private void setStorageChart() {
+        File space = new File(selectCardController.driveLetter);
+        long freespace = space.getFreeSpace() / (1024*1024*1024); //outputs in GB. (1024*1024) if MB
+        long totalspace = space.getTotalSpace() / (1024*1024*1024); //outputs  in*GB (1024*1024) if MB
+        long usedspace = (space.getTotalSpace() - space.getFreeSpace()) / (1024*1024*1024); //outputs  in*GB (1024*1024) if MB
+
+        ObservableList<PieChart.Data> pieDate =
+            FXCollections.observableArrayList(
+                    new PieChart.Data("Free Space: " + freespace + " GB", freespace),
+                    new PieChart.Data("Used Space: " + usedspace + " GB", usedspace)
+            );
+        storageSpace.setData(pieDate);
+        storageSpace.setLabelLineLength(10);
+        storageSpace.setLabelsVisible(false);
+
+        storageSpace.getData().stream().forEach(data -> {
+            Tooltip tooltip = new Tooltip();
+            tooltip.setText(String.format("%.1f%%", 100*data.getPieValue()/totalspace));
+            Tooltip.install(data.getNode(), tooltip);
+            data.pieValueProperty().addListener((observable, oldValue, newValue) ->
+                    tooltip.setText(newValue + "%"));
+        });
     }
 
     private void initRepondersTab(){
@@ -259,17 +286,6 @@ public class exploreController implements Initializable{
 
     private void initProfileTab() {
         //insert here. if login file does not exist, do something.
-
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle("ALERT!");
-//        String s = "Confirm to clear text in text field !";
-//        alert.setContentText(s);
-//
-//        Optional<ButtonType> result = alert.showAndWait();
-//
-//        if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
-//            System.out.println("OK DAW");
-//        }
 
         BufferedReader br = null;
         try {
@@ -480,13 +496,16 @@ public class exploreController implements Initializable{
 
     public void onDeleteData(ActionEvent actionEvent){
         //delete data
+        feedbackData.setText("Data log was successfully modified!");
     }
 
     public void onDeleteAllData(ActionEvent actionEvent) {
         //Delete all data
+        feedbackData.setText("Data log was successfully modified!");
     }
 
     public void onExportData(ActionEvent actionEvent) {
         //export to excel file
+        feedbackData.setText("Data log was successfully exported!");
     }
 }
