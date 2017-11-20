@@ -69,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="exploreController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="exploreController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dlsu/exploreController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="508" column="20" lean-forward="false" selection-start-line="508" selection-start-column="20" selection-end-line="508" selection-end-column="20" />
+            <state relative-caret-position="-343">
+              <caret line="162" column="26" lean-forward="true" selection-start-line="162" selection-start-column="26" selection-end-line="162" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="class#activities#0;class#exploreController#0" expanded="false" />
@@ -96,11 +96,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Explore.fxml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="changeScene.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/dlsu/changeScene.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Explore.fxml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/dlsu/Explore.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="186" column="68" lean-forward="false" selection-start-line="186" selection-start-column="68" selection-end-line="186" selection-end-column="68" />
+            <state relative-caret-position="306">
+              <caret line="218" column="84" lean-forward="false" selection-start-line="218" selection-start-column="84" selection-end-line="218" selection-end-column="84" />
               <folding />
             </state>
           </provider>
@@ -173,8 +183,8 @@
         <option value="$PROJECT_DIR$/src/dlsu/SetupFinish.fxml" />
         <option value="$PROJECT_DIR$/src/dlsu/Utils/getExternalDevices.java" />
         <option value="$PROJECT_DIR$/src/dlsu/style.css" />
-        <option value="$PROJECT_DIR$/src/dlsu/Explore.fxml" />
         <option value="$PROJECT_DIR$/src/dlsu/exploreController.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/Explore.fxml" />
       </list>
     </option>
   </component>
@@ -203,9 +213,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -260,6 +267,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1030,14 +1040,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/changeScene.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/SetupFinish.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1085,25 +1087,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
           <caret line="33" column="13" lean-forward="false" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/Explore.fxml">
+    <entry file="file://$PROJECT_DIR$/src/dlsu/changeScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="186" column="68" lean-forward="false" selection-start-line="186" selection-start-column="68" selection-end-line="186" selection-end-column="68" />
+        <state relative-caret-position="289">
+          <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/exploreController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="508" column="20" lean-forward="false" selection-start-line="508" selection-start-column="20" selection-end-line="508" selection-end-column="20" />
+        <state relative-caret-position="-343">
+          <caret line="162" column="26" lean-forward="true" selection-start-line="162" selection-start-column="26" selection-end-line="162" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="class#activities#0;class#exploreController#0" expanded="false" />
@@ -1123,6 +1121,17 @@
             <element signature="method#onAddResponder#0;class#exploreController#0" expanded="false" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/Explore.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="218" column="84" lean-forward="false" selection-start-line="218" selection-start-column="84" selection-end-line="218" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
   </component>
