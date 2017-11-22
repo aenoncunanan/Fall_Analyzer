@@ -6,9 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import java.io.*;
 import java.net.URL;
@@ -58,11 +56,11 @@ public class selectCardController implements Initializable{
 
         Collections.shuffle(messages);
 
-        try{
+        try {
             String drive = selectCard.getValue().toString();
             driveLetter = "";
-            for (int i = 0; i < drive.length(); i++){
-                if (Objects.equals(drive.charAt(i), '(')){
+            for (int i = 0; i < drive.length(); i++) {
+                if (Objects.equals(drive.charAt(i), '(')) {
                     i++;
                     driveLetter = driveLetter + drive.charAt(i) + ":" + "\\";
                 }
@@ -73,12 +71,27 @@ public class selectCardController implements Initializable{
             File loginFile = new File(driveLetter + "login.txt");
             File profileFile = new File(driveLetter + "profile.txt");
             File respondentsFile = new File(driveLetter + "respondents.txt");
-            if(loginFile.exists() && profileFile.exists() && respondentsFile.exists()){
+            File activityFile = new File(driveLetter + "activity.txt");
+            if (loginFile.exists() && profileFile.exists() && respondentsFile.exists() && activityFile.exists()) {
                 feedbackLabel.setText("");
                 changeScene changeScene = new changeScene();
                 changeScene.setScene("Explore.fxml", "style.css", actionEvent, "Fall Analyzer");
-            } else{
+            } else if (!loginFile.exists() && !profileFile.exists() && !respondentsFile.exists() && !activityFile.exists()){
                 feedbackLabel.setText("");
+                changeScene changeScene = new changeScene();
+                changeScene.setScene("SetupHome.fxml", "style.css", actionEvent, "Fall Analyzer | Home Setup");
+            }else {
+                System.out.println("Some of the important files are missing!\nCard must be initialized again.");
+
+                feedbackLabel.setText("Some of the important files are missing!\nCard must be initialized again.");
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR!");
+                String s = "Some of the important files are missing!\nCard must be initialized again.";
+                alert.setContentText(s);
+
+                Optional<ButtonType> result = alert.showAndWait();
+
                 changeScene changeScene = new changeScene();
                 changeScene.setScene("SetupHome.fxml", "style.css", actionEvent, "Fall Analyzer | Home Setup");
             }
