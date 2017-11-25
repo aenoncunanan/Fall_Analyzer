@@ -1,5 +1,6 @@
 package dlsu;
 
+import dlsu.Utils.checkContactNumber;
 import dlsu.Utils.logInDialog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -349,6 +350,7 @@ public class exploreController implements Initializable{
 
     public void onEditProfile(ActionEvent actionEvent) {
         if(logInDialog.logIn()){
+
             firstNameProfile.setEditable(true);
             LastNameProfile.setEditable(true);
             genderProfile.setDisable(false);
@@ -364,38 +366,42 @@ public class exploreController implements Initializable{
         if(firstNameProfile.getText().isEmpty() || LastNameProfile.getText().isEmpty() || ageProfile.getText().isEmpty() || addressProfile.getText().isEmpty() || contactNumberProfile.getText().isEmpty()){
             feedbackLabel.setText("All fields are required!");
         } else {
-            try {
-                Integer.parseInt(ageProfile.getText());
-
-                BufferedWriter writer = null;
+            if (checkContactNumber.validContactNumber(contactNumberProfile.getText())) {
                 try {
-                    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "profile.txt"), "utf-8"));
-                    writer.write(firstNameProfile.getText());
-                    writer.newLine();
-                    writer.write(LastNameProfile.getText());
-                    writer.newLine();
-                    writer.write(genderProfile.getValue().toString());
-                    writer.newLine();
-                    writer.write(ageProfile.getText());
-                    writer.newLine();
-                    writer.write(addressProfile.getText());
-                    writer.newLine();
-                    writer.write(contactNumberProfile.getText());
-                    writer.close();
+                    Integer.parseInt(ageProfile.getText());
 
-                    feedbackLabel.setText("Profile was successfully modified!");
-                    firstNameProfile.setEditable(false);
-                    LastNameProfile.setEditable(false);
-                    genderProfile.setDisable(true);
-                    ageProfile.setEditable(false);
-                    addressProfile.setEditable(false);
-                    contactNumberProfile.setEditable(false);
-                    saveProfile.setDisable(true);
-                    setStorageChart();
+                    BufferedWriter writer = null;
+                    try {
+                        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "profile.txt"), "utf-8"));
+                        writer.write(firstNameProfile.getText());
+                        writer.newLine();
+                        writer.write(LastNameProfile.getText());
+                        writer.newLine();
+                        writer.write(genderProfile.getValue().toString());
+                        writer.newLine();
+                        writer.write(ageProfile.getText());
+                        writer.newLine();
+                        writer.write(addressProfile.getText());
+                        writer.newLine();
+                        writer.write(contactNumberProfile.getText());
+                        writer.close();
+
+                        feedbackLabel.setText("Profile was successfully modified!");
+                        firstNameProfile.setEditable(false);
+                        LastNameProfile.setEditable(false);
+                        genderProfile.setDisable(true);
+                        ageProfile.setEditable(false);
+                        addressProfile.setEditable(false);
+                        contactNumberProfile.setEditable(false);
+                        saveProfile.setDisable(true);
+                        setStorageChart();
+                    } catch (Exception e) {
+                    }
                 } catch (Exception e) {
+                    feedbackLabel.setText("Your age is invalid!");
                 }
-            } catch (Exception e) {
-                feedbackLabel.setText("Your age is invalid!");
+            } else{
+                feedbackLabel.setText("Your contact number is invalid!");
             }
         }
     }
@@ -428,21 +434,27 @@ public class exploreController implements Initializable{
             allFieldsError.setText("All fields are required!");
             successful.setText("");
         } else {
-            allFieldsError.setText("");
+            if (checkContactNumber.validContactNumber(contactNumberResponders.getText())){
+                allFieldsError.setText("");
 
-            data.add(new responders(firstNameResponders.getText(), LastNameResponders.getText(), contactNumberResponders.getText()));
-            firstName.setCellValueFactory(new PropertyValueFactory<responders, String>("firstName"));
-            lastName.setCellValueFactory(new PropertyValueFactory<responders, String>("lastName"));
-            contactNumber.setCellValueFactory(new PropertyValueFactory<responders, String>("contactNumber"));
-            respondersTable.getItems().setAll(this.data);
+                data.add(new responders(firstNameResponders.getText(), LastNameResponders.getText(), contactNumberResponders.getText()));
+                firstName.setCellValueFactory(new PropertyValueFactory<responders, String>("firstName"));
+                lastName.setCellValueFactory(new PropertyValueFactory<responders, String>("lastName"));
+                contactNumber.setCellValueFactory(new PropertyValueFactory<responders, String>("contactNumber"));
+                respondersTable.getItems().setAll(this.data);
 
-            firstNameResponders.setText("");
-            LastNameResponders.setText("");
-            contactNumberResponders.setText("");
+                firstNameResponders.setText("");
+                LastNameResponders.setText("");
+                contactNumberResponders.setText("");
 
-            successful.setText("Responders were successfully modified!");
-            editResponders.setDisable(true);
-            saveResponder();
+                successful.setText("Responders were successfully modified!");
+                editResponders.setDisable(true);
+                saveResponder();
+            } else {
+                allFieldsError.setText("Contact number is invalid!");
+                successful.setText("");
+            }
+
         }
     }
 
@@ -478,6 +490,7 @@ public class exploreController implements Initializable{
 
     public void onAddResponder(ActionEvent actionEvent) {
         if (logInDialog.logIn()){
+            contactNumberResponders.setText("+639");
             allFieldsError.setText("");
             successful.setText("");
             editResponders.setDisable(false);

@@ -58,18 +58,93 @@ public class setUp4Controller implements Initializable {
     }
 
     public void onFirst(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
+        String user = "";
+        String pass = "";
+
+        File loginFile = new File(selectCardController.driveLetter + "login.txt");
+        if (loginFile.exists()){
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new FileReader(selectCardController.driveLetter + "login.txt"));
+                user = br.readLine();
+                pass = br.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            feedbackLabel.setText("");
+            changeScene changeScene = new changeScene();
+            changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
+
+        }
     }
 
     public void onSecond(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup2.fxml", "style.css", actionEvent, "Fall Analyzer | Profile Setup");
+        String user = "";
+        String pass = "";
+
+        File loginFile = new File(selectCardController.driveLetter + "login.txt");
+        if (loginFile.exists()){
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new FileReader(selectCardController.driveLetter + "login.txt"));
+                user = br.readLine();
+                pass = br.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            feedbackLabel.setText("");
+            changeScene changeScene = new changeScene();
+            changeScene.setScene("Setup2.fxml", "style.css", actionEvent, "Fall Analyzer | Profile Setup");
+
+        }
     }
 
     public void onThird(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup3.fxml", "style.css", actionEvent, "Fall Analyzer | Responders Setup");
+        String user = "";
+        String pass = "";
+
+        File loginFile = new File(selectCardController.driveLetter + "login.txt");
+        if (loginFile.exists()){
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new FileReader(selectCardController.driveLetter + "login.txt"));
+                user = br.readLine();
+                pass = br.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            feedbackLabel.setText("");
+            changeScene changeScene = new changeScene();
+            changeScene.setScene("Setup3.fxml", "style.css", actionEvent, "Fall Analyzer | Responders Setup");
+
+        }
     }
 
     public void onFourth(ActionEvent actionEvent) throws IOException {

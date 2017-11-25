@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -12,8 +13,8 @@
                <children>
                   <ListView fx:id="list" layoutX="708.0" layoutY="310.0" prefHeight="119.0" prefWidth="200.0" />
                   <Label id="header2Label" layoutX="706.0" layoutY="275.0" stylesheets="@style.css" text="Here are your responders:" textAlignment="JUSTIFY" />
-                  <Button onAction="#onEdit" layoutX="817.0" layoutY="445.0" mnemonicParsing="false" text="edit" />
-                  <Button onAction="#onDelete" layoutX="858.0" layoutY="445.0" mnemonicParsing="false" text="delete" />
+                  <Button layoutX="817.0" layoutY="445.0" mnemonicParsing="false" onAction="#onEdit" text="edit" />
+                  <Button layoutX="858.0" layoutY="445.0" mnemonicParsing="false" onAction="#onDelete" text="delete" />
                </children>
             </Group>
             <Group layoutX="-146.0" layoutY="50.0">
@@ -35,10 +36,10 @@
                         <TextField fx:id="firstName" prefHeight="25.0" prefWidth="162.0" promptText="first name" GridPane.columnIndex="1" />
                         <TextField fx:id="LastName" prefHeight="25.0" prefWidth="182.0" promptText="last name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Contact Number:" GridPane.rowIndex="2" />
-                        <TextField fx:id="contactNumber" prefHeight="25.0" prefWidth="117.0" promptText="contact number" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="contactNumber" prefHeight="25.0" prefWidth="117.0" promptText="contact number" text="+639" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <Button fx:id="add" onAction="#onAdd" layoutX="526.0" layoutY="375.0" mnemonicParsing="false" text="add" />
+                  <Button fx:id="add" layoutX="526.0" layoutY="375.0" mnemonicParsing="false" onAction="#onAdd" text="add" />
                </children>
             </Group>
               <Label id="errorLabel" fx:id="feedbackLabel" layoutX="382.0" layoutY="466.0" stylesheets="@style.css" textAlignment="CENTER" />

@@ -1,5 +1,6 @@
 package dlsu;
 
+import dlsu.Utils.checkContactNumber;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -137,12 +138,18 @@ public class setUp3Controller implements Initializable {
         if (firstName.getText().isEmpty() || LastName.getText().isEmpty() || contactNumber.getText().isEmpty()){
             feedbackLabel.setText("All fields are required!");
         }else{
-            list.getItems().add(firstName.getText() + " " + LastName.getText());
-            data.add(new responders(firstName.getText(), LastName.getText(), contactNumber.getText()));
+            if (checkContactNumber.validContactNumber(contactNumber.getText())){
+                list.getItems().add(firstName.getText() + " " + LastName.getText());
+                data.add(new responders(firstName.getText(), LastName.getText(), contactNumber.getText()));
+                firstName.setText("");
+                LastName.setText("");
+                contactNumber.setText("+639");
+                feedbackLabel.setText("");
+            }else {
+                feedbackLabel.setText("Your contact number is invalid!");
+                contactNumber.setText("+639");
+            }
         }
-        firstName.setText("");
-        LastName.setText("");
-        contactNumber.setText("");
     }
 
     public void onDelete(ActionEvent actionEvent) {
@@ -167,13 +174,61 @@ public class setUp3Controller implements Initializable {
     }
 
     public void onFirst(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
+        if (data.isEmpty()){
+            feedbackLabel.setText("You must set at least one (1) responder!");
+        }else {
+            BufferedWriter writer = null;
+            try {
+                writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "respondents.txt"), "utf-8"));
+
+                int size = data.size();
+                for (int i = 0; i < size; i++) {
+                    writer.write(data.get(i).getFirstName());
+                    writer.newLine();
+                    writer.write(data.get(i).getLastName());
+                    writer.newLine();
+                    writer.write(data.get(i).getContactNumber());
+                    writer.newLine();
+                    writer.write("breakLine");
+                    writer.newLine();
+                }
+                writer.write("-end-");
+                writer.close();
+            } catch (Exception e) {
+            }
+            feedbackLabel.setText("");
+            changeScene changeScene = new changeScene();
+            changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
+        }
     }
 
     public void onSecond(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup2.fxml", "style.css", actionEvent, "Fall Analyzer | Profile Setup");
+        if (data.isEmpty()){
+            feedbackLabel.setText("You must set at least one (1) responder!");
+        }else {
+            BufferedWriter writer = null;
+            try {
+                writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "respondents.txt"), "utf-8"));
+
+                int size = data.size();
+                for (int i = 0; i < size; i++) {
+                    writer.write(data.get(i).getFirstName());
+                    writer.newLine();
+                    writer.write(data.get(i).getLastName());
+                    writer.newLine();
+                    writer.write(data.get(i).getContactNumber());
+                    writer.newLine();
+                    writer.write("breakLine");
+                    writer.newLine();
+                }
+                writer.write("-end-");
+                writer.close();
+            } catch (Exception e) {
+            }
+            feedbackLabel.setText("");
+            changeScene changeScene = new changeScene();
+            changeScene.setScene("Setup2.fxml", "style.css", actionEvent, "Fall Analyzer | Profile Setup");
+        }
     }
 
     public void onThird(ActionEvent actionEvent) {

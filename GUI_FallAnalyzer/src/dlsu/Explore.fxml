@@ -91,7 +91,7 @@
                                    <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Contact Number:" GridPane.rowIndex="2" />
                                    <TextField fx:id="ageProfile" editable="false" prefHeight="25.0" prefWidth="162.0" promptText="age" GridPane.columnIndex="1" />
                                    <TextField fx:id="addressProfile" editable="false" prefHeight="25.0" prefWidth="146.0" promptText="address" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                   <TextField fx:id="contactNumberProfile" editable="false" prefHeight="25.0" prefWidth="117.0" promptText="contact number" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                   <TextField fx:id="contactNumberProfile" editable="false" prefHeight="25.0" prefWidth="117.0" promptText="contact number" text="+639" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                </children>
                                <columnConstraints>
                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="120.0" />
@@ -151,7 +151,7 @@
                                          <TextField fx:id="firstNameResponders" prefHeight="25.0" prefWidth="162.0" promptText="first name" GridPane.columnIndex="1" />
                                          <TextField fx:id="LastNameResponders" prefHeight="25.0" prefWidth="182.0" promptText="last name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                          <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Contact Number:" GridPane.rowIndex="2" />
-                                         <TextField fx:id="contactNumberResponders" prefHeight="25.0" prefWidth="117.0" promptText="contact number" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                         <TextField fx:id="contactNumberResponders" prefHeight="25.0" prefWidth="117.0" promptText="contact number" text="+639" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                      </children>
                                  </GridPane>
                                  <Button fx:id="saveResponder" layoutX="526.0" layoutY="375.0" mnemonicParsing="false" onAction="#onSaveResponder" text="save" />

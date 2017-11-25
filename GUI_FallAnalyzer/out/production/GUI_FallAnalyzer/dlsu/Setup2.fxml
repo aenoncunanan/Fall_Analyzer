@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -36,7 +37,7 @@
                   <Label id="fieldsLabelLabel" stylesheets="@style.css" text="Contact Number:" GridPane.rowIndex="2" />
                   <TextField fx:id="age" prefHeight="25.0" prefWidth="162.0" promptText="age" GridPane.columnIndex="1" />
                   <TextField fx:id="address" promptText="address" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="contactNumber" prefHeight="25.0" prefWidth="117.0" promptText="contact number" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="contactNumber" prefHeight="25.0" prefWidth="97.0" promptText="contact number" text="+639" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="120.0" />

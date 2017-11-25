@@ -126,13 +126,47 @@ public class setUp1Controller implements Initializable {
     }
 
     public void onThird(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup3.fxml", "style.css", actionEvent, "Fall Analyzer | Responders Setup");
+        if(password.getText().equals(confirm.getText())){
+            feedbackLabel.setText("");
+            BufferedWriter writer = null;
+
+            try{
+                writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "login.txt"), "utf-8"));
+                writer.write(username.getText());
+                writer.newLine();
+                writer.write(password.getText());
+                writer.close();
+            }catch(Exception e){
+            }
+
+            changeScene changeScene = new changeScene();
+            changeScene.setScene("Setup3.fxml", "style.css", actionEvent, "Fall Analyzer | Responders Setup");
+
+        }else {
+            feedbackLabel.setText("Your passwords doesn't match!");
+        }
     }
 
     public void onFourth(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
+        if(password.getText().equals(confirm.getText())){
+            feedbackLabel.setText("");
+            BufferedWriter writer = null;
+
+            try{
+                writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "login.txt"), "utf-8"));
+                writer.write(username.getText());
+                writer.newLine();
+                writer.write(password.getText());
+                writer.close();
+            }catch(Exception e){
+            }
+
+            changeScene changeScene = new changeScene();
+            changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
+
+        }else {
+            feedbackLabel.setText("Your passwords doesn't match!");
+        }
     }
 
     public void onFinish(ActionEvent actionEvent) {

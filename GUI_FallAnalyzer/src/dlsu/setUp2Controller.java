@@ -1,5 +1,6 @@
 package dlsu;
 
+import dlsu.Utils.checkContactNumber;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
@@ -91,17 +92,6 @@ public class setUp2Controller implements Initializable {
     }
 
     public void onFirst(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
-    }
-
-    public void onSecond(ActionEvent actionEvent) {
-    }
-
-    public void onThird(ActionEvent actionEvent) throws IOException {
-        if(firstName.getText().isEmpty() || LastName.getText().isEmpty() || age.getText().isEmpty() || address.getText().isEmpty() || contactNumber.getText().isEmpty()){
-            feedbackLabel.setText("All fields are required!");
-        } else{
             try{
                 Integer.parseInt(age.getText());
 
@@ -127,14 +117,83 @@ public class setUp2Controller implements Initializable {
             }finally {
                 feedbackLabel.setText("");
                 changeScene changeScene = new changeScene();
-                changeScene.setScene("Setup3.fxml", "style.css", actionEvent,"Fall Analyzer | Responders Setup");
+                changeScene.setScene("Setup1.fxml", "style.css", actionEvent, "Fall Analyzer | Login Credentials");
             }
+    }
+
+    public void onSecond(ActionEvent actionEvent) {
+    }
+
+    public void onThird(ActionEvent actionEvent) throws IOException {
+        if(checkContactNumber.validContactNumber(contactNumber.getText())) {
+            if (firstName.getText().isEmpty() || LastName.getText().isEmpty() || age.getText().isEmpty() || address.getText().isEmpty() || contactNumber.getText().isEmpty()) {
+                feedbackLabel.setText("All fields are required!");
+            } else {
+                try {
+                    Integer.parseInt(age.getText());
+
+                    BufferedWriter writer = null;
+                    try {
+                        writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "profile.txt"), "utf-8"));
+                        writer.write(firstName.getText());
+                        writer.newLine();
+                        writer.write(LastName.getText());
+                        writer.newLine();
+                        writer.write(gender.getValue().toString());
+                        writer.newLine();
+                        writer.write(age.getText());
+                        writer.newLine();
+                        writer.write(address.getText());
+                        writer.newLine();
+                        writer.write(contactNumber.getText());
+                        writer.close();
+                    } catch (Exception e) {
+                    }
+                } catch (Exception e) {
+                    feedbackLabel.setText("Your age is invalid!");
+                } finally {
+                    feedbackLabel.setText("");
+                    changeScene changeScene = new changeScene();
+                    changeScene.setScene("Setup3.fxml", "style.css", actionEvent, "Fall Analyzer | Responders Setup");
+                }
+            }
+        } else {
+            feedbackLabel.setText("Your contact number is invalid!");
         }
     }
 
     public void onFourth(ActionEvent actionEvent) throws IOException {
-        changeScene changeScene = new changeScene();
-        changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
+        if(checkContactNumber.validContactNumber(contactNumber.getText())) {
+            try{
+                Integer.parseInt(age.getText());
+
+                BufferedWriter writer = null;
+                try{
+                    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "profile.txt"), "utf-8"));
+                    writer.write(firstName.getText());
+                    writer.newLine();
+                    writer.write(LastName.getText());
+                    writer.newLine();
+                    writer.write(gender.getValue().toString());
+                    writer.newLine();
+                    writer.write(age.getText());
+                    writer.newLine();
+                    writer.write(address.getText());
+                    writer.newLine();
+                    writer.write(contactNumber.getText());
+                    writer.close();
+                } catch(Exception e){
+                }
+            }catch(Exception e){
+                feedbackLabel.setText("Your age is invalid!");
+            }finally {
+                feedbackLabel.setText("");
+                changeScene changeScene = new changeScene();
+                changeScene.setScene("Setup4.fxml", "style.css", actionEvent, "Fall Analyzer | Finish Setup");
+            }
+        } else {
+            feedbackLabel.setText("Your contact number is invalid!");
+        }
     }
 
     public void onFinish(ActionEvent actionEvent) {

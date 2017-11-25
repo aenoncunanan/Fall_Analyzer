@@ -67,9 +67,26 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dlsu/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="119">
+              <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#706#707#0" expanded="false" />
+                <element signature="e#734#735#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setUp2Controller.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/dlsu/setUp2Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="160" column="12" lean-forward="false" selection-start-line="160" selection-start-column="12" selection-end-line="160" selection-end-column="69" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#onFirst#0;class#setUp2Controller#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,8 +94,8 @@
       <file leaf-file-name="exploreController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/dlsu/exploreController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="583" column="0" lean-forward="true" selection-start-line="583" selection-start-column="0" selection-end-line="583" selection-end-column="0" />
+            <state relative-caret-position="166">
+              <caret line="479" column="64" lean-forward="true" selection-start-line="479" selection-start-column="64" selection-end-line="479" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#activities#0;class#activities#0;class#exploreController#0" expanded="false" />
@@ -94,24 +111,20 @@
                 <element signature="method#saveResponder#0;class#exploreController#0" expanded="false" />
                 <element signature="method#onSaveResponder#0;class#exploreController#0" expanded="false" />
                 <element signature="method#onDeleteResponder#0;class#exploreController#0" expanded="false" />
-                <element signature="method#onEditResponder#0;class#exploreController#0" expanded="false" />
-                <element signature="method#onAddResponder#0;class#exploreController#0" expanded="false" />
                 <element signature="method#saveLog#0;class#exploreController#0" expanded="false" />
                 <element signature="method#onDeleteData#0;class#exploreController#0" expanded="false" />
                 <element signature="method#onDeleteAllData#0;class#exploreController#0" expanded="false" />
+                <element signature="method#onExportData#0;class#exploreController#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Explore.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dlsu/Explore.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
-          </provider>
+      <file leaf-file-name="checkContactNumber.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/dlsu/Utils/checkContactNumber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2924">
-              <caret line="172" column="27" lean-forward="false" selection-start-line="172" selection-start-column="27" selection-end-line="172" selection-end-column="27" />
+            <state relative-caret-position="153">
+              <caret line="9" column="15" lean-forward="false" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -134,6 +147,7 @@
       <find>helloLabel</find>
       <find>fee</find>
       <find>feedbackData</find>
+      <find>pi</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -163,10 +177,7 @@
         <option value="$PROJECT_DIR$/src/dlsu/setUpController.java" />
         <option value="$PROJECT_DIR$/src/dlsu/Main.java" />
         <option value="$PROJECT_DIR$/src/dlsu/setUpFinishController.java" />
-        <option value="$PROJECT_DIR$/src/dlsu/setUp4Controller.java" />
         <option value="$PROJECT_DIR$/src/dlsu/setUpHomeController.java" />
-        <option value="$PROJECT_DIR$/src/dlsu/setUp1Controller.java" />
-        <option value="$PROJECT_DIR$/src/dlsu/setUp2Controller.java" />
         <option value="$PROJECT_DIR$/src/dlsu/SelectCard.fxml" />
         <option value="$PROJECT_DIR$/src/dlsu/SetupHome.fxml" />
         <option value="$PROJECT_DIR$/src/dlsu/Setup1.fxml" />
@@ -174,15 +185,21 @@
         <option value="$PROJECT_DIR$/src/dlsu/Setup3.fxml" />
         <option value="$PROJECT_DIR$/src/dlsu/Setup4.fxml" />
         <option value="$PROJECT_DIR$/src/dlsu/getExternalDevices.java" />
-        <option value="$PROJECT_DIR$/src/dlsu/logInDialog.java" />
-        <option value="$PROJECT_DIR$/src/dlsu/setUp3Controller.java" />
         <option value="$PROJECT_DIR$/src/dlsu/Utils/changeScene.java" />
         <option value="$PROJECT_DIR$/src/dlsu/changeScene.java" />
         <option value="$PROJECT_DIR$/src/dlsu/SetupFinish.fxml" />
         <option value="$PROJECT_DIR$/src/dlsu/Utils/getExternalDevices.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/selectCardController.java" />
         <option value="$PROJECT_DIR$/src/dlsu/style.css" />
         <option value="$PROJECT_DIR$/src/dlsu/Explore.fxml" />
-        <option value="$PROJECT_DIR$/src/dlsu/selectCardController.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/setUp1Controller.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/setUp4Controller.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/logInDialog.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/Utils/logInDialog.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/checkContactNumber.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/setUp2Controller.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/setUp3Controller.java" />
+        <option value="$PROJECT_DIR$/src/dlsu/Utils/checkContactNumber.java" />
         <option value="$PROJECT_DIR$/src/dlsu/exploreController.java" />
       </list>
     </option>
@@ -212,7 +229,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -282,6 +298,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -298,9 +315,11 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/stax-api-1.0.1.jar/stax-api-1.0.1.jar!/" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.splitter.proportion" value="0.23212537" />
   </component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
@@ -311,16 +330,16 @@
       <recent name="dlsu" />
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\aenon\OneDrive\Documents\DLSU\7th Year 1st Term\Thesis2\Fall Analyzer\GUI_FallAnalyzer\src\dlsu" />
-      <recent name="C:\Users\aenon\OneDrive\Documents\DLSU\7th Year 1st Term\Thesis2\Fall Analyzer\GUI_FallAnalyzer\src\dlsu\controllers" />
-      <recent name="C:\Users\aenon\OneDrive\Documents\DLSU\7th Year 1st Term\Thesis2\Fall Analyzer\GUI_FallAnalyzer\src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="dlsu" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\aenon\OneDrive\Documents\DLSU\7th Year 1st Term\Thesis2\Fall Analyzer\GUI_FallAnalyzer\src\dlsu" />
+      <recent name="C:\Users\aenon\OneDrive\Documents\DLSU\7th Year 1st Term\Thesis2\Fall Analyzer\GUI_FallAnalyzer\src\dlsu\controllers" />
+      <recent name="C:\Users\aenon\OneDrive\Documents\DLSU\7th Year 1st Term\Thesis2\Fall Analyzer\GUI_FallAnalyzer\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -682,7 +701,7 @@
           <properties />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="11" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -691,21 +710,15 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/dlsu/selectCardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="1" lean-forward="true" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="11" column="59" lean-forward="false" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#706#707#0" expanded="false" />
+            <element signature="e#734#735#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -727,21 +740,25 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/SelectCard.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="59" lean-forward="true" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#706#707#0" expanded="false" />
+            <element signature="e#734#735#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -756,14 +773,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/SelectCard.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/style.css">
@@ -777,7 +794,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="14" column="36" lean-forward="false" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#706#707#0" expanded="false" />
+            <element signature="e#734#735#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -799,21 +820,25 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/SelectCard.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="36" column="158" lean-forward="false" selection-start-line="36" selection-start-column="158" selection-end-line="36" selection-end-column="158" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#706#707#0" expanded="false" />
+            <element signature="e#734#735#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -835,21 +860,25 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/SelectCard.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="37" lean-forward="true" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#706#707#0" expanded="false" />
+            <element signature="e#734#735#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -864,33 +893,37 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/SelectCard.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="166" lean-forward="false" selection-start-line="12" selection-start-column="166" selection-end-line="12" selection-end-column="166" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#706#707#0" expanded="false" />
+            <element signature="e#734#735#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/SelectCard.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/selectCardController.java">
@@ -926,26 +959,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/setUp4Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1853">
-          <caret line="109" column="112" lean-forward="false" selection-start-line="109" selection-start-column="112" selection-end-line="109" selection-end-column="112" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Main.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/setUpFinishController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/setUpHomeController.java">
@@ -955,124 +971,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/setUp2Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="105" column="33" lean-forward="true" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/setUp1Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="57" column="9" lean-forward="false" selection-start-line="35" selection-start-column="8" selection-end-line="57" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/SetupHome.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="19" lean-forward="false" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/Setup1.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/Setup1.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="19" lean-forward="false" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Setup2.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="19" lean-forward="false" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Setup3.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="19" lean-forward="false" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/Setup4.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="19" lean-forward="false" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/Utils/logInDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/setUp3Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="141" column="9" lean-forward="true" selection-start-line="141" selection-start-column="9" selection-end-line="141" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/SelectCard.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/SelectCard.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/SetupFinish.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/SetupFinish.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_73/javafx-src.zip!/javafx/event/EventHandler.java">
@@ -1082,17 +1055,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/Utils/getExternalDevices.java">
+    <entry file="file://$PROJECT_DIR$/src/dlsu/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="24" column="71" lean-forward="false" selection-start-line="24" selection-start-column="71" selection-end-line="24" selection-end-column="71" />
+        <state relative-caret-position="255">
+          <caret line="15" column="32" lean-forward="false" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/style.css">
+    <entry file="file://$PROJECT_DIR$/src/dlsu/setUp4Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="13" lean-forward="false" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="13" />
+        <state relative-caret-position="289">
+          <caret line="46" column="42" lean-forward="true" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/setUp1Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="94" column="4" lean-forward="true" selection-start-line="94" selection-start-column="4" selection-end-line="94" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/Explore.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="221" column="169" lean-forward="false" selection-start-line="221" selection-start-column="24" selection-end-line="221" selection-end-column="169" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/setUpFinishController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1100,34 +1101,81 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlsu/Explore.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/Utils/logInDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2924">
-          <caret line="172" column="27" lean-forward="false" selection-start-line="172" selection-start-column="27" selection-end-line="172" selection-end-column="27" />
+        <state relative-caret-position="82">
+          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/selectCardController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1187">
-          <caret line="102" column="5" lean-forward="true" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
+        <state relative-caret-position="187">
+          <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/Utils/getExternalDevices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" column="71" lean-forward="false" selection-start-line="24" selection-start-column="71" selection-end-line="24" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#706#707#0" expanded="false" />
+            <element signature="e#734#735#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/setUp3Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="150" column="13" lean-forward="false" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
+          <folding>
+            <element signature="class#responders#0;class#setUp3Controller#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/Utils/checkContactNumber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="15" lean-forward="false" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlsu/setUp2Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="160" column="12" lean-forward="false" selection-start-line="160" selection-start-column="12" selection-end-line="160" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onFirst#0;class#setUp2Controller#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/dlsu/exploreController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="583" column="0" lean-forward="true" selection-start-line="583" selection-start-column="0" selection-end-line="583" selection-end-column="0" />
+        <state relative-caret-position="166">
+          <caret line="479" column="64" lean-forward="true" selection-start-line="479" selection-start-column="64" selection-end-line="479" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#activities#0;class#activities#0;class#exploreController#0" expanded="false" />
@@ -1143,11 +1191,10 @@
             <element signature="method#saveResponder#0;class#exploreController#0" expanded="false" />
             <element signature="method#onSaveResponder#0;class#exploreController#0" expanded="false" />
             <element signature="method#onDeleteResponder#0;class#exploreController#0" expanded="false" />
-            <element signature="method#onEditResponder#0;class#exploreController#0" expanded="false" />
-            <element signature="method#onAddResponder#0;class#exploreController#0" expanded="false" />
             <element signature="method#saveLog#0;class#exploreController#0" expanded="false" />
             <element signature="method#onDeleteData#0;class#exploreController#0" expanded="false" />
             <element signature="method#onDeleteAllData#0;class#exploreController#0" expanded="false" />
+            <element signature="method#onExportData#0;class#exploreController#0" expanded="false" />
           </folding>
         </state>
       </provider>
