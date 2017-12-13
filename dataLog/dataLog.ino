@@ -7,8 +7,8 @@ SdFile root;
 
 const int chipSelect = 4;    
 
-void setup()
-{
+void setup() {
+  
  // Open serial communications and wait for port to open:
   Serial.begin(9600);
    while (!Serial) {
@@ -16,7 +16,7 @@ void setup()
   }
 
   Serial.print("\nInitializing SD card...");
-
+  
   // we'll use the initialization code from the utility libraries
   // since we're just testing if the card is working!
   if (!card.init(SPI_HALF_SPEED, chipSelect) || !SD.begin(4)) {

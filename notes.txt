@@ -44,6 +44,12 @@ MOSI		--->	D11
 GND		--->	GND
 VCC		--->	5V
 
+RTC to Genuino:
+SCL		--->	A5
+SDA		--->	A4
+VCC		--->	5v
+GND		--->	GND
+
 LCD to Genuino:
 DO	--->	12
 D1	--->	11
