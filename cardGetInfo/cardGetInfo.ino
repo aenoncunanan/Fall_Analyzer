@@ -15,7 +15,6 @@ void setup()
     ; // wait for serial port to connect. Needed for Leonardo only
   }
 
-
   Serial.print("\nInitializing SD card...");
   // On the Ethernet Shield, CS is pin 4. It's set as an output by default.
   // Note that even if it's not used as the CS pin, the hardware SS pin 
@@ -35,6 +34,12 @@ void setup()
   } else {
    Serial.println("Wiring is correct and a card is present."); 
   }
+
+
+    // initialize the SD card at SPI_HALF_SPEED to avoid bus errors with
+  // breadboards.  use SPI_FULL_SPEED for better performance.
+  if (!sd.begin(iSDPin, SPI_HALF_SPEED))
+    sd.initErrorHalt();
 
   // print the type of card
   Serial.print("\nCard type: ");
@@ -77,14 +82,11 @@ void setup()
   volumesize /= 1024;
   Serial.println(volumesize);
 
-  
   Serial.println("\nFiles found on the card (name, date and size in bytes): ");
   root.openRoot(volume);
   
   // list all files in the card with date and size
   root.ls(LS_R | LS_DATE | LS_SIZE);
-}
-
 
 void loop(void) {
   
