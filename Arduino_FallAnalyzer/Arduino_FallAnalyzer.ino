@@ -7,6 +7,31 @@
 #include "MPU6050.h"
 #include "Wire.h"
 
+//Libraries for SD Card
+#include <SPI.h>
+#include "SdFat.h"
+
+// Set USE_SDIO to zero for SPI card access
+#define USE_SDIO 0
+
+//Default SD Chip select is the SPI SS pin
+const uint8_t SD_CHIP_SELECT = SS;
+
+//Set DISABLE_CHIP_SELECT to disable a second SPI device
+const int8_t DISABLE_CHIP_SELECT = -1;
+
+#if USE_SDIO
+  // Use faster SdioCardEX
+  SdFatSdioEX sd;
+#else // USE_SDIO
+  SdFat sd;
+#endif  // USE_SDIO
+
+// global for card size
+uint32_t cardSize;
+
+File myFile;  
+
 MPU6050 accelgyro;
 
 int16_t ax, ay, az;
@@ -26,6 +51,7 @@ void setup() {
   
   initMainBoard();
   initExtAccel();
+  initSDCard();
   
   // Prompt a welcome message  
   Serial.println("Device is ready!"); 
@@ -85,6 +111,42 @@ void initExtAccel(){
   accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_4);
 }
 
+void initSDCard(){
+  #if USE_SDIO
+    if (!sd.cardBegin()) {
+      Serial.println("\ncardBegin failed");
+      return;
+    }
+    if (!sd.begin(SD_CHIP_SELECT)){
+      Serial.println("initialization failed");
+      return;
+    }
+  #else  // USE_SDIO
+    // Initialize at the highest speed supported by the board that is
+    // not over 50 MHz. Try a lower speed if SPI errors occur.
+    if (!sd.cardBegin(SD_CHIP_SELECT, SD_SCK_MHZ(50))) {
+      Serial.println("cardBegin failed");
+      return;
+    }
+    if (!sd.begin(SD_CHIP_SELECT, SD_SCK_MHZ(50))){
+      Serial.println("initialization failed");
+      return;
+    }
+  #endif  // USE_SDIO 
+
+  cardSize = sd.card()->cardSize();
+  
+  if (cardSize == 0) {
+    Serial.println("cardSize failed");
+    return;
+  }
+  
+  if (!sd.fsBegin()) {
+    Serial.println("\nFile System initialization failed.\n");
+    return;
+  }  
+}
+
 String onBoardFall = ""; 
 int lastOrient = -1; //Previous orientation of the user (for comparison)
 
@@ -95,6 +157,8 @@ void loop() {
   String extAccel = ""; 
 
   int orientation = -1;
+
+  checkSpace();
   
   onBoardAccel = onBoardAccelerometer();
   extAccel = externalAccelerometer();  
@@ -118,18 +182,62 @@ void loop() {
 
   // if the orientation has changed, print out a description:
   if (orientation != lastOrient) {
-    Serial.println("User Orientation: " + userOrientation);
     lastOrient = orientation;
-    //logData here!
-    //get Date through RTC module
-    //get Time through RTC module
-    //get Activity through userOrientation
-//    if (userOrientation == "Falling!"){
-//      //get Location using GSM module
-//    }
-    //add "-end_of_activity-" string every after activity
+    logData(userOrientation);
   } 
 
+  // if falling, begin a countdown and wait if user will respond
+
+}
+
+void checkSpace(){
+  float fs = 0.000512*sd.vol()->freeClusterCount()*sd.vol()->blocksPerCluster();
+  
+  float percentage = 0.1 * (0.000512 * cardSize);
+  if (fs <= percentage){
+    //Make a noise thru buzzer
+    //Delete old datalog file
+    Serial.println("LOW MEMORY SPACE!");
+    Serial.print("Remaining Space: ");
+    Serial.println(fs);
+    Serial.println(" MB (MB = 1,000,000 bytes)");    
+  }  
+}
+
+void deleteData(){
+  Serial.println("Removing...");
+  if (!sd.remove("test.txt")){
+    Serial.println("ERROR removing file.");
+  } else {
+    Serial.println("Done.");
+  }  
+}
+
+void readFile(){
+  myFile = sd.open("test.txt");
+  if (myFile){
+    Serial.println("Reading...");
+    while(myFile.available()){
+      Serial.write(myFile.read());
+    }
+    Serial.println("Done.");
+    myFile.close();
+  } else {
+    Serial.println("error opening file");
+  }  
+}
+
+void logData(String userOrientation){
+  Serial.println("User Orientation: " + userOrientation);
+
+  myFile = sd.open("activity.txt", FILE_WRITE);
+  if (myFile){
+    myFile.println("DATE");
+    myFile.println("TIME");
+    myFile.println(userOrientation);
+    myFile.println("LOCATION");
+    myFile.println("-end_of_activity-");
+  }  
 }
 
 String onBoardAccelerometer() {
