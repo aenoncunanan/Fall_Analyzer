@@ -5,7 +5,7 @@ RTC_DS1307 RTC;
 
 void setup () {
     Serial.begin(9600);
-    Wire.begin();
+    Wire.begin(1101000);
     RTC.begin();
   // Check to see if the RTC is keeping time.  If it is, load the time from your computer.
   if (! RTC.isrunning()) {

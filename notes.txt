@@ -30,6 +30,9 @@ Z_UP ; Z_UP	--->	Lying Position (Facing right, on left)
 Pins:
 
 Accelerometer to Genuino:
+orig: (Accel I2C Address: 0x68 or 1101000 or 104)
+when AD0 is connected to 5v: (Accel I2C Address: 0x69 or 1101001 or 105)
+
 VCC	--->	5v
 GND	--->	GND
 SCL	--->	A5
@@ -44,7 +47,7 @@ MOSI		--->	D11
 GND		--->	GND
 VCC		--->	5V
 
-RTC to Genuino:
+RTC to Genuino: (RTC I2C Address: 0x68 or 1101000 or 104)
 SCL		--->	A5
 SDA		--->	A4
 VCC		--->	5v

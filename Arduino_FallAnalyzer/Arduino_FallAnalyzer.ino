@@ -58,6 +58,52 @@ void setup() {
   delay(3000);
 }
 
+String onBoardFall = ""; 
+int lastOrient = -1; //Previous orientation of the user (for comparison)
+
+void loop() { 
+ 
+  String userOrientation = "";
+  String onBoardAccel = "";
+  String extAccel = ""; 
+
+  int orientation = -1;
+
+  checkSpace();
+  
+  onBoardAccel = onBoardAccelerometer();
+  extAccel = externalAccelerometer();  
+  onBoardFallSense();
+  
+  if (onBoardAccel == "X_UP" && extAccel == "X_UP"){
+    userOrientation = "Sitting Position";
+    orientation = 0;
+  } else if (onBoardAccel == "X_UP" && extAccel == "X_DOWN"){
+    userOrientation = "Sitting Position";
+    orientation = 1;
+  } else if (onBoardAccel == "X_UP" && extAccel == "Y_UP"){
+    userOrientation = "Standing Position";
+    orientation = 2;
+  } else {
+    userOrientation = "UNKNOWN";
+    orientation = 3;
+  }
+  
+  if (onBoardFall == "Falling!"){
+    userOrientation = "Falling!";
+    orientation = 4;
+  }
+
+  // if the orientation has changed, print out a description:
+  if (orientation != lastOrient) {
+    lastOrient = orientation;
+    logData(userOrientation);
+  } 
+
+  // if falling, begin a countdown and wait if user will respond
+
+}
+
 void initMainBoard(){
   // Initialize the devices
   Serial.println("Initializing IMU device...");
@@ -147,61 +193,23 @@ void initSDCard(){
   }  
 }
 
-String onBoardFall = ""; 
-int lastOrient = -1; //Previous orientation of the user (for comparison)
-
-void loop() { 
- 
-  String userOrientation = "";
-  String onBoardAccel = "";
-  String extAccel = ""; 
-
-  int orientation = -1;
-
-  checkSpace();
-  
-  onBoardAccel = onBoardAccelerometer();
-  extAccel = externalAccelerometer();  
-  onBoardFallSense();
-  
-  if (onBoardAccel == "X_UP" && extAccel == "X_UP"){
-    userOrientation = "Sitting Position";
-    orientation = 0;
-  } else if (onBoardAccel == "X_UP" && extAccel == "X_DOWN"){
-    userOrientation = "Sitting Position";
-    orientation = 1;
-  } else if (onBoardAccel == "X_UP" && extAccel == "Y_UP"){
-    userOrientation = "Standing Position";
-    orientation = 2;
-  }
-  
-  if (onBoardFall == "Falling!"){
-    userOrientation = "Falling!";
-    orientation = 3;
-  }
-
-  // if the orientation has changed, print out a description:
-  if (orientation != lastOrient) {
-    lastOrient = orientation;
-    logData(userOrientation);
-  } 
-
-  // if falling, begin a countdown and wait if user will respond
-
-}
-
 void checkSpace(){
   float fs = 0.000512*sd.vol()->freeClusterCount()*sd.vol()->blocksPerCluster();
   
   float percentage = 0.1 * (0.000512 * cardSize);
-  if (fs <= percentage){
-    //Make a noise thru buzzer
-    //Delete old datalog file
-    Serial.println("LOW MEMORY SPACE!");
-    Serial.print("Remaining Space: ");
-    Serial.println(fs);
-    Serial.println(" MB (MB = 1,000,000 bytes)");    
-  }  
+  float fsPercent = fs/100;
+  Serial.print("10% of Total Memory: ");
+  Serial.println(percentage);
+  Serial.print("Remaining Space in Percentage: ");
+  Serial.println(fsPercent);
+//  if (fsPercent <= percentage){
+//    //Make a noise thru buzzer
+//    //Delete old datalog file
+//    Serial.println("LOW MEMORY SPACE!");
+//    Serial.print("Remaining Space: ");
+//    Serial.println(fs);
+//    Serial.println(" MB (MB = 1,000,000 bytes)");    
+//  }  
 }
 
 void deleteData(){
@@ -228,16 +236,24 @@ void readFile(){
 }
 
 void logData(String userOrientation){
-  Serial.println("User Orientation: " + userOrientation);
-
   myFile = sd.open("activity.txt", FILE_WRITE);
   if (myFile){
     myFile.println("DATE");
     myFile.println("TIME");
     myFile.println(userOrientation);
     myFile.println("LOCATION");
-    myFile.println("-end_of_activity-");
-  }  
+    myFile.print("-end_of_activity-");
+
+    Serial.println("DATE");
+    Serial.println("TIME");
+    Serial.println("User Orientation: " + userOrientation);
+    Serial.println("LOCATION");
+    Serial.println("-end_of_activity-");
+
+    myFile.close();
+  } else{
+    Serial.println("Error Opening File");  
+  }
 }
 
 String onBoardAccelerometer() {

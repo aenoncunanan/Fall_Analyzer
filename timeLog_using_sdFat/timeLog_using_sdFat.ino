@@ -124,7 +124,7 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 
-  Wire.begin();
+  Wire.begin(1101000);
   RTC.begin();
   // Check to see if the RTC is keeping time.  If it is, load the time from your computer.
   if (! RTC.isrunning()) {
