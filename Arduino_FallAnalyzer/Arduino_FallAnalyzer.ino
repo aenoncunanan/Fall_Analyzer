@@ -17,9 +17,6 @@
 //Default SD Chip select is the SPI SS pin
 const uint8_t SD_CHIP_SELECT = SS;
 
-//Set DISABLE_CHIP_SELECT to disable a second SPI device
-const int8_t DISABLE_CHIP_SELECT = -1;
-
 #if USE_SDIO
   // Use faster SdioCardEX
   SdFatSdioEX sd;
@@ -28,7 +25,7 @@ const int8_t DISABLE_CHIP_SELECT = -1;
 #endif  // USE_SDIO
 
 // global for card size
-uint32_t cardSize;
+float cardSize;
 
 File myFile;  
 
@@ -130,7 +127,7 @@ void initExtAccel(){
   #endif
   
   //Initialize I2C device
-  Serial.println("Initializing I2C devices...");
+  Serial.println("Initializing I2C device...");
   accelgyro.initialize();
   delay(1000);
 
@@ -158,25 +155,30 @@ void initExtAccel(){
 }
 
 void initSDCard(){
+  Serial.println("Initializing Sd Card...");
   #if USE_SDIO
     if (!sd.cardBegin()) {
       Serial.println("\ncardBegin failed");
-      return;
+      Serial.println("Re-initializing Sd Card...");
+      initSDCard();
     }
     if (!sd.begin(SD_CHIP_SELECT)){
       Serial.println("initialization failed");
-      return;
+      Serial.println("Re-initializing Sd Card...");
+      initSDCard();      
     }
   #else  // USE_SDIO
     // Initialize at the highest speed supported by the board that is
     // not over 50 MHz. Try a lower speed if SPI errors occur.
     if (!sd.cardBegin(SD_CHIP_SELECT, SD_SCK_MHZ(50))) {
       Serial.println("cardBegin failed");
-      return;
+      Serial.println("Re-initializing Sd Card...");
+      initSDCard();      
     }
     if (!sd.begin(SD_CHIP_SELECT, SD_SCK_MHZ(50))){
       Serial.println("initialization failed");
-      return;
+      Serial.println("Re-initializing Sd Card...");
+      initSDCard();      
     }
   #endif  // USE_SDIO 
 
@@ -184,32 +186,30 @@ void initSDCard(){
   
   if (cardSize == 0) {
     Serial.println("cardSize failed");
-    return;
+    Serial.println("Re-initializing Sd Card...");
+    initSDCard();    
   }
   
   if (!sd.fsBegin()) {
     Serial.println("\nFile System initialization failed.\n");
-    return;
+    Serial.println("Re-initializing Sd Card...");
+    initSDCard();    
   }  
 }
 
 void checkSpace(){
-  float fs = 0.000512*sd.vol()->freeClusterCount()*sd.vol()->blocksPerCluster();
+  float totalSize = 0.000512 * cardSize;
+  float freeSize = 0.000512*sd.vol()->freeClusterCount()*sd.vol()->blocksPerCluster();
   
-  float percentage = 0.1 * (0.000512 * cardSize);
-  float fsPercent = fs/100;
-  Serial.print("10% of Total Memory: ");
-  Serial.println(percentage);
-  Serial.print("Remaining Space in Percentage: ");
-  Serial.println(fsPercent);
-//  if (fsPercent <= percentage){
-//    //Make a noise thru buzzer
-//    //Delete old datalog file
-//    Serial.println("LOW MEMORY SPACE!");
-//    Serial.print("Remaining Space: ");
-//    Serial.println(fs);
-//    Serial.println(" MB (MB = 1,000,000 bytes)");    
-//  }  
+  float lowLevel = 0.1 * totalSize; //10% of total size
+  if (freeSize <= lowLevel){
+    //Make a noise thru buzzer
+    //Delete old datalog file
+    Serial.println("LOW MEMORY SPACE!");
+    Serial.print("Remaining Space: ");
+    Serial.print(freeSize);
+    Serial.println(" MB (MB = 1,000,000 bytes)");    
+  }  
 }
 
 void deleteData(){
@@ -238,16 +238,12 @@ void readFile(){
 void logData(String userOrientation){
   myFile = sd.open("activity.txt", FILE_WRITE);
   if (myFile){
-    myFile.println("DATE");
-    myFile.println("TIME");
+    myFile.println("DATE-TIME-LATITUDE-LONGHITUDE");
     myFile.println(userOrientation);
-    myFile.println("LOCATION");
     myFile.print("-end_of_activity-");
 
-    Serial.println("DATE");
-    Serial.println("TIME");
+    Serial.println("DATE-TIME-LATITUDE-LONGHITUDE");
     Serial.println("User Orientation: " + userOrientation);
-    Serial.println("LOCATION");
     Serial.println("-end_of_activity-");
 
     myFile.close();

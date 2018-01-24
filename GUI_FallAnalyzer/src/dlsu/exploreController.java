@@ -19,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import java.io.*;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -169,6 +170,110 @@ public class exploreController implements Initializable{
         initActivityTab();
     }
 
+    private String getDate(String year, String month, String day){
+        switch (month){
+            case "01":
+                month = "January";
+                break;
+            case "02":
+                month = "February";
+                break;
+            case "03":
+                month = "March";
+                break;
+            case "04":
+                month = "April";
+                break;
+            case "05":
+                month = "May";
+                break;
+            case "06":
+                month = "June";
+                break;
+            case "07":
+                month = "July";
+                break;
+            case "08":
+                month = "August";
+                break;
+            case "09":
+                month = "September";
+                break;
+            case "10":
+                month = "October";
+                break;
+            case "11":
+                month = "November";
+                break;
+            case "12":
+                month = "December";
+                break;
+        }
+
+        String date = month + " " + day + ", " + year;
+        return  date;
+    }
+
+    private String getTime(String hour, String min, String sec){
+        String time = "";
+        if (Integer.parseInt(hour) >= 13){ //13 to 24
+            switch (Integer.parseInt(hour)){
+                case 13:
+                    hour = "01";
+                    break;
+                case 14:
+                    hour = "02";
+                    break;
+                case 15:
+                    hour = "03";
+                    break;
+                case 16:
+                    hour = "04";
+                    break;
+                case 17:
+                    hour = "05";
+                    break;
+                case 18:
+                    hour = "06";
+                    break;
+                case 19:
+                    hour = "07";
+                    break;
+                case 20:
+                    hour = "08";
+                    break;
+                case 21:
+                    hour = "09";
+                    break;
+                case 22:
+                    hour = "10";
+                    break;
+                case 23:
+                    hour = "11";
+                    break;
+                case 24:
+                    hour = "12";
+                    break;
+            }
+
+            if (Integer.parseInt(hour) == 12){
+                time = time + hour + ":" + min + ":" + sec + " M.N.";
+            } else{
+                time = time + hour + ":" + min + ":" + sec + " P.M.";
+            }
+        } else if (Integer.parseInt(hour) <= 12) {
+            if (Integer.parseInt(hour) == 12) {
+                time = time + hour + ":" + min + ":" + sec + " N.N.";
+            } else if (Integer.parseInt(hour) == 0) {
+                time = time + "12" + ":" + min + ":" + sec + " A.M.";
+            } else {
+                time = time + hour + ":" + min + ":" + sec + " A.M.";
+            }
+        }
+
+        return time;
+    }
+
     private void initActivityTab() {
         BufferedReader br = null;
         try {
@@ -178,19 +283,85 @@ public class exploreController implements Initializable{
             String time = "";
             String activity = "";
             String location = "";
+            String toExtract = "";
 
             while((line = br.readLine()) != null){
                 if (line.equals("-end_of_activity-")){
                     //do nothing
                 } else {
-                    date = line;
-                    time = br.readLine();
+                    //extract rtc and coordinates here.
+                    String rtc = "";
+                    String latitude = "";
+                    String longitude = "";
+
+                    toExtract = line;
+
+                    int comma = 0;
+                    int g = 0;
+
+                    while(comma < 5){
+                        if (toExtract.charAt(g) == ','){
+                            comma++;
+                            g++;
+                        }
+                        if (comma == 2){
+                            rtc = rtc + toExtract.charAt(g);
+                        }
+                        if (comma == 3){
+                            longitude = longitude + toExtract.charAt(g);
+                        }
+                        if (comma == 4){
+                            latitude = latitude + toExtract.charAt(g);
+                        }
+
+                        g++;
+                    }
+
+                    String year = "";
+                    String month = "";
+                    String day = "";
+
+                    String hour = "";
+                    String min = "";
+                    String sec = "";
+
+                    //extract date and time here.
+                    for (int i = 0; i < 14; i++){
+                        if (i < 8){
+                            if (i < 4){
+                                year = year + rtc.charAt(i);
+                            }
+                            if (i > 3 && i < 6){
+                                month = month + rtc.charAt(i);
+                            }
+                            if (i > 5 && i < 8){
+                                day = day + rtc.charAt(i);
+                            }
+                        } else{
+                            if (i == 8 || i == 9){
+                                hour = hour + rtc.charAt(i);
+                            } else if (i == 10 || i == 11){
+                                min = min + rtc.charAt(i);
+                            } else if (i == 12 || i == 13){
+                                sec = sec + rtc.charAt(i);
+                            }
+                        }
+                    }
+
+                    //convert numbered months to words:
+                    date = getDate(year, month, day);
+
+                    //convert 24hour format to 12hour format (AM, PM, NN, MN)here:
+                    time = getTime(hour, min, sec);
+
+                    //combine coordinates here:
+                    location = longitude + ", " + latitude;
+
                     activity = br.readLine();
                     if(activity.equals("Falling!")){
                         fallTimes++;
                         numberOfFalls.setText(String.valueOf(fallTimes));
                     }
-                    location = br.readLine();
                     log.add(new activities(date, time, activity, location));
                     dateCell.setCellValueFactory(new PropertyValueFactory<activities, String>("date"));
                     timeCell.setCellValueFactory(new PropertyValueFactory<activities, String>("time"));

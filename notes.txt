@@ -47,6 +47,12 @@ MOSI		--->	D11
 GND		--->	GND
 VCC		--->	5V
 
+GSM/GPS/RTC Shield to Genuino:
+5V	--->	5V
+GND	--->	GND
+D7	--->	D7
+D8	--->	D8
+
 RTC to Genuino: (RTC I2C Address: 0x68 or 1101000 or 104)
 SCL		--->	A5
 SDA		--->	A4

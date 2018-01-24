@@ -27,26 +27,30 @@ const int8_t DISABLE_CHIP_SELECT = -1;
 #endif  // USE_SDIO
 
 // global for card size
-uint32_t cardSize;
+float cardSize;
 
 File myFile;
 
 void getSpace() {
+  float totalSize = 0.000512*cardSize;
+  float freeSize = 0.000512*sd.vol()->freeClusterCount()*sd.vol()->blocksPerCluster();
+  
   Serial.print("Volume is FAT");
   Serial.println(sd.vol()->fatType());
 
+  Serial.print("cardSize: ");
+  Serial.println(cardSize);
+
   Serial.print("Total Space: ");
-  Serial.print(0.000512*cardSize);
+  Serial.print(totalSize);
   Serial.println(" MB (MB = 1,000,000 bytes)");
   
-  float fs = 0.000512*sd.vol()->freeClusterCount()*sd.vol()->blocksPerCluster();
-
   Serial.print("Free Space: ");
-  Serial.print(fs);
+  Serial.print(freeSize);
   Serial.println(" MB (MB = 1,000,000 bytes)");
 
-  float percentage = 0.1 * (0.000512 * cardSize);
-  if (fs <= percentage){
+  float lowLevel = 0.1 * totalSize;
+  if (freeSize <= lowLevel){
     Serial.print("LOW MEMORY SPACE!");
   }
   
@@ -135,14 +139,16 @@ void setup() {
   Serial.println();
   getSpace();
   Serial.println();
-  writeFile();
-  Serial.println();
-  readFile();
-  Serial.println();
-  removeFile();
-  Serial.println();
-  readFile();
+//  writeFile();
+//  Serial.println();
+//  readFile();
+//  Serial.println();
+//  removeFile();
+//  Serial.println();
+//  readFile();
 }
 
 void loop() {
+  getSpace();
+  delay(5000);
 }

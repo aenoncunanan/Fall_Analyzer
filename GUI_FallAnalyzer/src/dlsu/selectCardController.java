@@ -98,6 +98,7 @@ public class selectCardController implements Initializable{
 
         } catch (Exception e){
             feedbackLabel.setText(messages.get(0));
+            System.out.println(e);
         }
 
     }
