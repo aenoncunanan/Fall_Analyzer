@@ -1,5 +1,6 @@
 package dlsu;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import dlsu.Utils.checkContactNumber;
 import dlsu.Utils.logInDialog;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,6 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import javax.sound.midi.Soundbank;
 import java.io.*;
 import java.net.URL;
 import java.text.DateFormat;
@@ -170,110 +172,6 @@ public class exploreController implements Initializable{
         initActivityTab();
     }
 
-    private String getDate(String year, String month, String day){
-        switch (month){
-            case "01":
-                month = "January";
-                break;
-            case "02":
-                month = "February";
-                break;
-            case "03":
-                month = "March";
-                break;
-            case "04":
-                month = "April";
-                break;
-            case "05":
-                month = "May";
-                break;
-            case "06":
-                month = "June";
-                break;
-            case "07":
-                month = "July";
-                break;
-            case "08":
-                month = "August";
-                break;
-            case "09":
-                month = "September";
-                break;
-            case "10":
-                month = "October";
-                break;
-            case "11":
-                month = "November";
-                break;
-            case "12":
-                month = "December";
-                break;
-        }
-
-        String date = month + " " + day + ", " + year;
-        return  date;
-    }
-
-    private String getTime(String hour, String min, String sec){
-        String time = "";
-        if (Integer.parseInt(hour) >= 13){ //13 to 24
-            switch (Integer.parseInt(hour)){
-                case 13:
-                    hour = "01";
-                    break;
-                case 14:
-                    hour = "02";
-                    break;
-                case 15:
-                    hour = "03";
-                    break;
-                case 16:
-                    hour = "04";
-                    break;
-                case 17:
-                    hour = "05";
-                    break;
-                case 18:
-                    hour = "06";
-                    break;
-                case 19:
-                    hour = "07";
-                    break;
-                case 20:
-                    hour = "08";
-                    break;
-                case 21:
-                    hour = "09";
-                    break;
-                case 22:
-                    hour = "10";
-                    break;
-                case 23:
-                    hour = "11";
-                    break;
-                case 24:
-                    hour = "12";
-                    break;
-            }
-
-            if (Integer.parseInt(hour) == 12){
-                time = time + hour + ":" + min + ":" + sec + " M.N.";
-            } else{
-                time = time + hour + ":" + min + ":" + sec + " P.M.";
-            }
-        } else if (Integer.parseInt(hour) <= 12) {
-            if (Integer.parseInt(hour) == 12) {
-                time = time + hour + ":" + min + ":" + sec + " N.N.";
-            } else if (Integer.parseInt(hour) == 0) {
-                time = time + "12" + ":" + min + ":" + sec + " A.M.";
-            } else {
-                time = time + hour + ":" + min + ":" + sec + " A.M.";
-            }
-        }
-
-        return time;
-    }
-
     private void initActivityTab() {
         BufferedReader br = null;
         try {
@@ -294,7 +192,8 @@ public class exploreController implements Initializable{
                     String latitude = "";
                     String longitude = "";
 
-                    toExtract = line;
+                    br.readLine();
+                    toExtract = br.readLine();
 
                     int comma = 0;
                     int g = 0;
@@ -348,6 +247,11 @@ public class exploreController implements Initializable{
                         }
                     }
 
+                    System.out.println(year + " " + month + " " + day);
+                    System.out.println(hour + " " + min + " " + sec);
+                    System.out.println("Long: " + longitude);
+                    System.out.println("Lat: " + latitude);
+
                     //convert numbered months to words:
                     date = getDate(year, month, day);
 
@@ -357,8 +261,12 @@ public class exploreController implements Initializable{
                     //combine coordinates here:
                     location = longitude + ", " + latitude;
 
+                    br.readLine();
+                    br.readLine();
+                    br.readLine();
                     activity = br.readLine();
-                    if(activity.equals("Falling!")){
+
+                    if(activity.contains("Falling!")){
                         fallTimes++;
                         numberOfFalls.setText(String.valueOf(fallTimes));
                     }
@@ -480,6 +388,110 @@ public class exploreController implements Initializable{
             data.pieValueProperty().addListener((observable, oldValue, newValue) ->
                     tooltip.setText(newValue + "%"));
         });
+    }
+
+    private String getDate(String year, String month, String day){
+        switch (month){
+            case "01":
+                month = "January";
+                break;
+            case "02":
+                month = "February";
+                break;
+            case "03":
+                month = "March";
+                break;
+            case "04":
+                month = "April";
+                break;
+            case "05":
+                month = "May";
+                break;
+            case "06":
+                month = "June";
+                break;
+            case "07":
+                month = "July";
+                break;
+            case "08":
+                month = "August";
+                break;
+            case "09":
+                month = "September";
+                break;
+            case "10":
+                month = "October";
+                break;
+            case "11":
+                month = "November";
+                break;
+            case "12":
+                month = "December";
+                break;
+        }
+
+        String date = month + " " + day + ", " + year;
+        return  date;
+    }
+
+    private String getTime(String hour, String min, String sec){
+        String time = "";
+        if (Integer.parseInt(hour) >= 13){ //13 to 24
+            switch (Integer.parseInt(hour)){
+                case 13:
+                    hour = "01";
+                    break;
+                case 14:
+                    hour = "02";
+                    break;
+                case 15:
+                    hour = "03";
+                    break;
+                case 16:
+                    hour = "04";
+                    break;
+                case 17:
+                    hour = "05";
+                    break;
+                case 18:
+                    hour = "06";
+                    break;
+                case 19:
+                    hour = "07";
+                    break;
+                case 20:
+                    hour = "08";
+                    break;
+                case 21:
+                    hour = "09";
+                    break;
+                case 22:
+                    hour = "10";
+                    break;
+                case 23:
+                    hour = "11";
+                    break;
+                case 24:
+                    hour = "12";
+                    break;
+            }
+
+            if (Integer.parseInt(hour) == 12){
+                time = time + hour + ":" + min + ":" + sec + " M.N.";
+            } else{
+                time = time + hour + ":" + min + ":" + sec + " P.M.";
+            }
+        } else if (Integer.parseInt(hour) <= 12) {
+            if (Integer.parseInt(hour) == 12) {
+                time = time + hour + ":" + min + ":" + sec + " N.N.";
+            } else if (Integer.parseInt(hour) == 0) {
+                time = time + "12" + ":" + min + ":" + sec + " A.M.";
+            } else {
+                time = time + hour + ":" + min + ":" + sec + " A.M.";
+            }
+        }
+
+        return time;
     }
 
     public void onEditLogin(ActionEvent actionEvent) {
@@ -696,7 +708,7 @@ public class exploreController implements Initializable{
         int selectedIndex = activityTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0){
             if (logInDialog.logIn()){
-                if(activityCell.getCellObservableValue(selectedIndex).getValue().equals("Falling!")){
+                if(activityCell.getCellObservableValue(selectedIndex).getValue().toString().contains("Falling!")){
                     fallTimes--;
                     numberOfFalls.setText(String.valueOf(fallTimes));
                 }

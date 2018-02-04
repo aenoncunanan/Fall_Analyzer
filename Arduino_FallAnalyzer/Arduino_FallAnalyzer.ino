@@ -87,7 +87,15 @@ void loop() {
   }
   
   if (onBoardFall == "Falling!"){
-    userOrientation = "Falling!";
+    if (onBoardAccel == "Z_UP"){
+      userOrientation = "Falling! : Sideways";
+    } else if (onBoardAccel == "Z_DOWN"){
+      userOrientation = "Falling! : Sideways";
+    } else if (onBoardAccel == "Y_DOWN"){
+      userOrientation = "Falling! : Forward";
+    } else if (onBoardAccel == "Y_UP"){
+      userOrientation = "Falling! : Backwards";
+    }       
     orientation = 4;
   }
 
@@ -95,6 +103,7 @@ void loop() {
   if (orientation != lastOrient) {
     lastOrient = orientation;
     logData(userOrientation);
+    Serial.println(userOrientation);
   } 
 
   // if falling, begin a countdown and wait if user will respond

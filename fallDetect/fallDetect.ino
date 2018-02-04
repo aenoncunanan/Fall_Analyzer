@@ -95,7 +95,15 @@ void loop() {
   }
   
   if (onBoardFall == "Falling!"){
-    userOrientation = "Falling!";
+    if (onBoardAccel == "Z_UP"){
+      userOrientation = "Falling! : Sideways";
+    } else if (onBoardAccel == "Z_DOWN"){
+      userOrientation = "Falling! : Sideways";
+    } else if (onBoardAccel == "Y_DOWN"){
+      userOrientation = "Falling! : Forward";
+    } else if (onBoardAccel == "Y_UP"){
+      userOrientation = "Falling! : Backwards";
+    }    
     orientation = 3;
   }
 
@@ -110,7 +118,7 @@ void loop() {
 static void onBoardFallSense(){
     //Check if falling
   loopTime = millis();
-  if(abs(loopTime -interruptsTime) < 1000 ){    
+  if(abs(loopTime -interruptsTime) < 1000 ){   
     onBoardFall = "Falling!";
   } else {
     onBoardFall = "";
