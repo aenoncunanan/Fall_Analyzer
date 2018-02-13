@@ -7,7 +7,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,6 +29,20 @@ public class setUpFinishController implements Initializable {
 
     @FXML
     private void onFinish(ActionEvent actionEvent) throws IOException {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectCardController.driveLetter + "filelog.txt"), "utf-8"));
+            writer.write("actFileCount = 0");
+            writer.newLine();
+            writer.write("actCounter = 0");
+            writer.newLine();
+            writer.close();
+        } catch (Exception e){
+        }
+
+        File dir = new File(selectCardController.driveLetter + "Activities");
+        dir.mkdir();
+
         Stage stage = (Stage) onFinish.getScene().getWindow();
         stage.close();
     }

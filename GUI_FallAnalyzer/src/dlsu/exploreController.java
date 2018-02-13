@@ -247,11 +247,6 @@ public class exploreController implements Initializable{
                         }
                     }
 
-                    System.out.println(year + " " + month + " " + day);
-                    System.out.println(hour + " " + min + " " + sec);
-                    System.out.println("Long: " + longitude);
-                    System.out.println("Lat: " + latitude);
-
                     //convert numbered months to words:
                     date = getDate(year, month, day);
 
