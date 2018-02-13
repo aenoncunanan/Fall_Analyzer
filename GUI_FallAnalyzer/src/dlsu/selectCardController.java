@@ -71,12 +71,13 @@ public class selectCardController implements Initializable{
             File loginFile = new File(driveLetter + "login.txt");
             File profileFile = new File(driveLetter + "profile.txt");
             File respondentsFile = new File(driveLetter + "respondents.txt");
-            File activityFile = new File(driveLetter + "activity.txt");
-            if (loginFile.exists() && profileFile.exists() && respondentsFile.exists() && activityFile.exists()) {
+            File activityFile = new File(driveLetter + "Activities\\" + "activity.txt");
+            File fileLog = new File(driveLetter + "filelog.txt");
+            if (loginFile.exists() && profileFile.exists() && respondentsFile.exists() && activityFile.exists() && fileLog.exists()) {
                 feedbackLabel.setText("");
                 changeScene changeScene = new changeScene();
                 changeScene.setScene("Explore.fxml", "style.css", actionEvent, "Fall Analyzer");
-            } else if (!loginFile.exists() && !profileFile.exists() && !respondentsFile.exists() && !activityFile.exists()){
+            } else if (!loginFile.exists() && !profileFile.exists() && !respondentsFile.exists() && !activityFile.exists() && !fileLog.exists()){
                 feedbackLabel.setText("");
                 changeScene changeScene = new changeScene();
                 changeScene.setScene("SetupHome.fxml", "style.css", actionEvent, "Fall Analyzer | Home Setup");

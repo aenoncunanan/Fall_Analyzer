@@ -173,115 +173,126 @@ public class exploreController implements Initializable{
     }
 
     private void initActivityTab() {
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(selectCardController.driveLetter + "activity.txt"));
-            String line = "";
-            String date = "";
-            String time = "";
-            String activity = "";
-            String location = "";
-            String toExtract = "";
+        File dir = new File(selectCardController.driveLetter + "Activities");
+        if (dir.isDirectory()){
+            for(File file : dir.listFiles()){
+                if (file.isFile()){
+                    BufferedReader br = null;
+                    try {
+                        br = new BufferedReader(new FileReader(selectCardController.driveLetter + "Activities\\" + file.getName()));
+                        String line = "";
+                        String date = "";
+                        String time = "";
+                        String activity = "";
+                        String location = "";
+                        String toExtract = "";
 
-            while((line = br.readLine()) != null){
-                if (line.equals("-end_of_activity-")){
-                    //do nothing
+                        while((line = br.readLine()) != null){
+                            if (line.equals("-end_of_activity-")){
+                                //do nothing
+                            } else {
+                                //extract rtc and coordinates here.
+                                String rtc = "";
+                                String latitude = "";
+                                String longitude = "";
+
+                                br.readLine();
+                                toExtract = br.readLine();
+
+                                int comma = 0;
+                                int g = 0;
+
+                                while(comma < 5){
+                                    if (toExtract.charAt(g) == ','){
+                                        comma++;
+                                        g++;
+                                    }
+                                    if (comma == 2){
+                                        rtc = rtc + toExtract.charAt(g);
+                                    }
+                                    if (comma == 3){
+                                        longitude = longitude + toExtract.charAt(g);
+                                    }
+                                    if (comma == 4){
+                                        latitude = latitude + toExtract.charAt(g);
+                                    }
+
+                                    g++;
+                                }
+
+                                String year = "";
+                                String month = "";
+                                String day = "";
+
+                                String hour = "";
+                                String min = "";
+                                String sec = "";
+
+                                //extract date and time here.
+                                for (int i = 0; i < 14; i++){
+                                    if (i < 8){
+                                        if (i < 4){
+                                            year = year + rtc.charAt(i);
+                                        }
+                                        if (i > 3 && i < 6){
+                                            month = month + rtc.charAt(i);
+                                        }
+                                        if (i > 5 && i < 8){
+                                            day = day + rtc.charAt(i);
+                                        }
+                                    } else{
+                                        if (i == 8 || i == 9){
+                                            hour = hour + rtc.charAt(i);
+                                        } else if (i == 10 || i == 11){
+                                            min = min + rtc.charAt(i);
+                                        } else if (i == 12 || i == 13){
+                                            sec = sec + rtc.charAt(i);
+                                        }
+                                    }
+                                }
+
+                                //convert numbered months to words:
+                                date = getDate(year, month, day);
+
+                                //convert 24hour format to 12hour format (AM, PM, NN, MN)here:
+                                time = getTime(hour, min, sec);
+
+                                //combine coordinates here:
+                                location = longitude + ", " + latitude;
+
+                                br.readLine();
+                                br.readLine();
+                                br.readLine();
+                                activity = br.readLine();
+
+                                if(activity.contains("Falling!")){
+                                    fallTimes++;
+                                    numberOfFalls.setText(String.valueOf(fallTimes));
+                                }
+                                log.add(new activities(date, time, activity, location));
+                                dateCell.setCellValueFactory(new PropertyValueFactory<activities, String>("date"));
+                                timeCell.setCellValueFactory(new PropertyValueFactory<activities, String>("time"));
+                                activityCell.setCellValueFactory(new PropertyValueFactory<activities, String>("activity"));
+                                locationCell.setCellValueFactory(new PropertyValueFactory<activities, String>("location"));
+                                activityTable.getItems().setAll(this.log);
+                            }
+                        }
+
+                    } catch (IOException e) {
+                        System.out.println(e);
+                    } finally {
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            System.out.println(e);
+                        }
+                    }
                 } else {
-                    //extract rtc and coordinates here.
-                    String rtc = "";
-                    String latitude = "";
-                    String longitude = "";
-
-                    br.readLine();
-                    toExtract = br.readLine();
-
-                    int comma = 0;
-                    int g = 0;
-
-                    while(comma < 5){
-                        if (toExtract.charAt(g) == ','){
-                            comma++;
-                            g++;
-                        }
-                        if (comma == 2){
-                            rtc = rtc + toExtract.charAt(g);
-                        }
-                        if (comma == 3){
-                            longitude = longitude + toExtract.charAt(g);
-                        }
-                        if (comma == 4){
-                            latitude = latitude + toExtract.charAt(g);
-                        }
-
-                        g++;
-                    }
-
-                    String year = "";
-                    String month = "";
-                    String day = "";
-
-                    String hour = "";
-                    String min = "";
-                    String sec = "";
-
-                    //extract date and time here.
-                    for (int i = 0; i < 14; i++){
-                        if (i < 8){
-                            if (i < 4){
-                                year = year + rtc.charAt(i);
-                            }
-                            if (i > 3 && i < 6){
-                                month = month + rtc.charAt(i);
-                            }
-                            if (i > 5 && i < 8){
-                                day = day + rtc.charAt(i);
-                            }
-                        } else{
-                            if (i == 8 || i == 9){
-                                hour = hour + rtc.charAt(i);
-                            } else if (i == 10 || i == 11){
-                                min = min + rtc.charAt(i);
-                            } else if (i == 12 || i == 13){
-                                sec = sec + rtc.charAt(i);
-                            }
-                        }
-                    }
-
-                    //convert numbered months to words:
-                    date = getDate(year, month, day);
-
-                    //convert 24hour format to 12hour format (AM, PM, NN, MN)here:
-                    time = getTime(hour, min, sec);
-
-                    //combine coordinates here:
-                    location = longitude + ", " + latitude;
-
-                    br.readLine();
-                    br.readLine();
-                    br.readLine();
-                    activity = br.readLine();
-
-                    if(activity.contains("Falling!")){
-                        fallTimes++;
-                        numberOfFalls.setText(String.valueOf(fallTimes));
-                    }
-                    log.add(new activities(date, time, activity, location));
-                    dateCell.setCellValueFactory(new PropertyValueFactory<activities, String>("date"));
-                    timeCell.setCellValueFactory(new PropertyValueFactory<activities, String>("time"));
-                    activityCell.setCellValueFactory(new PropertyValueFactory<activities, String>("activity"));
-                    locationCell.setCellValueFactory(new PropertyValueFactory<activities, String>("location"));
-                    activityTable.getItems().setAll(this.log);
+                    System.out.println("NOT A FILE!");
                 }
             }
-
-        } catch (IOException e) {
-            System.out.println(e);
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                System.out.println(e);
-            }
+        } else {
+            System.out.println("NOT A DIRECTORY!");
         }
 
         setStorageChart();
