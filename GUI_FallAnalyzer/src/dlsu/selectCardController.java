@@ -71,7 +71,7 @@ public class selectCardController implements Initializable{
             File loginFile = new File(driveLetter + "login.txt");
             File profileFile = new File(driveLetter + "profile.txt");
             File respondentsFile = new File(driveLetter + "respondents.txt");
-            File activityFile = new File(driveLetter + "Activities\\" + "activity.txt");
+            File activityFile = new File(driveLetter + "Activities");
             File fileLog = new File(driveLetter + "filelog.txt");
             if (loginFile.exists() && profileFile.exists() && respondentsFile.exists() && activityFile.exists() && fileLog.exists()) {
                 feedbackLabel.setText("");
