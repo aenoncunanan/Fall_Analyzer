@@ -46,14 +46,19 @@
     #include <SoftwareSerial.h>
 
     #define DEBUG true
-    #define GPSready 5
+    #define GPSready A2
 
     SoftwareSerial mySerial(7, 8);
   //A4: END
 
   //A5: OTHER DECLARATIONS
-    #define DeviceReady 3
-    #define FallMemory 6
+    #define DeviceReady A1
+    #define FallMemory A0
+
+    #define falseAlarmButton A3
+
+    String lastKnownTimeLoc = "";
+    String userName = "";
 
     String onBoardFall = "";
     int lastOrient = -1; //Previous orientation of the user (for comparison)
@@ -67,8 +72,8 @@
 
   //A7: DECLARATIONS FOR TIMER
     #include "CurieTimerOne.h"
-    const int gpsTimer = 5000000; //5 second
-    const int memoryTimer = 10000000; //10 seconds
+    const int gpsTimer = 5000000; //5 seconds
+    const int memoryTimer = 9000000; //9 seconds
   //A7: END
  
 //A: END
@@ -138,14 +143,15 @@ void logData(String userOrientation){
     myFile = sd.open(fileName, FILE_WRITE);
 
     if (myFile){
-      myFile.println(sendData("AT+CGNSINF", 1000, DEBUG));
+      myFile.println(lastKnownTimeLoc);
       myFile.println(userOrientation);
       myFile.println("-end_of_activity-");
       myFile.close();
       actCounterR++;
 
       Serial.println(actCounterR);
-      Serial.println(sendData("AT+CGNSINF", 1000, DEBUG));
+//      Serial.println(sendData("AT+CGNSINF", 1000, DEBUG));
+      Serial.println(lastKnownTimeLoc);
       Serial.println("User Orientation: " + userOrientation);
       Serial.println("-end_of_activity-");
     } else{
@@ -392,30 +398,36 @@ void initSDCard(){
 
 void checkGPSConnection(){
     String response = sendData("AT+CGNSINF", 1000, DEBUG);
-    
+
     //Check if GPS is already connected/fixed
     if (response[25] == '1') {
       digitalWrite(GPSready, HIGH);
+      lastKnownTimeLoc = response;
       Serial.println("GPS READY!");
     } else {
       digitalWrite(GPSready, !digitalRead(GPSready));
       Serial.println("GPS Connecting...");
-      //memoryBuzz();
     }
+
+    Serial.println(response);
 }
 
 void fallBuzz(){
-  tone(6, 523, 300);
-  noTone(6);
-  tone(6, 523, 300);
-  noTone(6);
-  tone(6, 523, 300);
-  noTone(6);
+  tone(FallMemory, 400, 200);
+  delay(200);
+  noTone(FallMemory);
+  tone(FallMemory, 500, 200);
+  delay(200);
+  noTone(FallMemory);
+  tone(FallMemory, 600, 200);
+  delay(200);
+  noTone(FallMemory);
 }
 
 void memoryBuzz(){
-  tone(6, 523, 300);
-  noTone(6);  
+  tone(FallMemory, 300, 300);
+  delay(300);
+  noTone(FallMemory);  
 }
 
 void initGPSModule(){
@@ -425,6 +437,10 @@ void initGPSModule(){
   pinMode(GPSready, OUTPUT);
 
   onGPS();
+
+  while (lastKnownTimeLoc == ""){
+    checkGPSConnection();
+  }
 }
 
 void onGPS() {
@@ -461,58 +477,209 @@ void checkSpace(){
   
   float lowLevel = 0.1 * totalSize; //10% of total size
   if (freeSize <= lowLevel){
-    //memoryBuzz();
-    digitalWrite(FallMemory, HIGH);
-    digitalWrite(FallMemory, LOW);
+    memoryBuzz();
     deleteOldFiles();
     Serial.println("LOW MEMORY SPACE!");
     Serial.print("Remaining Space: ");
     Serial.print(freeSize);
     Serial.println(" MB (MB = 1,000,000 bytes)");    
   } else {
+    Serial.print("Remaining Space: ");
     Serial.println(freeSize);
   }
 }
 
-void SendTextMessage() {
-  offGPS();
+String setMessage(){
+  String message = userName;
+  message.concat(" has been fallen! at:  ");
+  String date = "";
+  String longitude = "";
+  String latitude = "";
+  int comma = 0;
+  int i = 0;
+  boolean gpsReady = 0;
+  
+  while (comma <= 5){
+    if (lastKnownTimeLoc[i] == ',' ){
+      comma++;
+      i++;
+    }  
+
+    if (comma == 2){
+      date = date + lastKnownTimeLoc[i];
+    }
+    if (comma == 3){
+      longitude = longitude + lastKnownTimeLoc[i];
+    }
+    if (comma == 4){
+      latitude = latitude + lastKnownTimeLoc[i];
+    }
+    i++;                    
+ 
+  }
+
+  message.concat("LONGITUDE: ");
+  message.concat(longitude);
+  message.concat("\n");
+  message.concat("LATITUDE: ");
+  message.concat(latitude);
+  message.concat("\n");
+  message.concat("TIME: ");
+  message.concat(date);                                      
+  message.concat(" \r");
+
+  return message;
+}
+
+void initUsername(){
+  myFile = sd.open("profile.txt");
+  if (myFile){
+    char buffer[15];
+    byte index = 0;
+    int lineCount = 0;
+    while(myFile.available() && lineCount < 3){
+      char c = myFile.read();
+      if (c == '\n' || c == '\r') { //Check for carriage return or line feed
+        userName.concat(buffer);
+        lineCount++;
+        index = 0;
+        buffer[index] = '\0'; //Keep buffer NULL terminated        
+      } else{
+          buffer[index++] = c;
+          buffer[index] = '\0'; //Keep buffer NULL terminated        
+      }
+    }
+    
+    myFile.close();
+  }else{
+    Serial.println("ERROR READING PROFILE!");
+  }
+}
+
+void SendTextMessage(){
+  offGPS(); //turn off GPS to prevent interruption
+
+  Serial.println("======================");
+  Serial.println("===SENDING MESSAGE!===");
+
+  String message = setMessage();
 
   myFile = sd.open("respondents.txt");
-  if (myFile) {
+  if(myFile){
     char buffer[15];
     byte index = 0;
 
-    while (myFile.available()) {
+    while(myFile.available()){
       char c = myFile.read();
-        if (c == '\n' || c == '\r') { //Check for carriage return or line feed
-             if(buffer[0] == '+'){
-                String toContact(buffer);
-                String a = "\"AT+CMGS=\"";
-                a.concat(toContact);
-                a.concat("\"\\r\""); 
-                Serial.println(a);
+      boolean sent = false;
+      if(c == '\n' || c == '\r') { //Check for carriage return or line feed
+        if(buffer[0] == '+'){
+          String toContact(buffer);
+          
+          Serial.print("CONTACT NUMBER: ");
+          Serial.println(toContact);
+          
+          while(sent == false){
+            String response = "";
+            String receiver = "AT+CMGS=\"";
+            receiver.concat(toContact);
+            receiver.concat("\"\r"); 
+            Serial.println(receiver);
+            
+            mySerial.print("\r");
+            mySerial.print("AT+CMGF=1\r");    //Because we want to send the SMS in text mode
+            mySerial.print(receiver);
+            delay(1000);
+            mySerial.print(message);
+            mySerial.write(0x1A);
 
-                mySerial.print("\r");
-                mySerial.print("AT+CMGF=1\r");    //Because we want to send the SMS in text mode
-                mySerial.print(a);
-                mySerial.print("USER IS FALLING!!! \r");
-                mySerial.write(0x1A);
-                delay(1000);
-             }
-               index = 0;
-               buffer[index] = '\0'; //Keep buffer NULL terminated
-        } else {
-                buffer[index++] = c;
-                buffer[index] = '\0'; //Keep buffer NULL terminated
-        }        
+            long int time = millis();
+            while((time + 1000) > millis()){
+              while(mySerial.available()){
+                response += char(mySerial.read());
+              }
+            }
+  
+            Serial.println("RESPONSE: ");
+            Serial.println(response);
+  
+            int bracketCount = 0;
+            for(int i = 0; i < response.length(); i++){
+              if(response[i] == '>'){
+                bracketCount++;
+              }
+            }
+            if (bracketCount >= 2){
+              sent = true;
+              Serial.println("===MESSAGE SENT!===");
+            }else{
+              Serial.println("===MESSAGE WAS NOT SENT!===");
+              Serial.println("Resending Message...");
+              sent = false;
+            }            
+          }
+          
+        }
+        index = 0;
+        buffer[index] = '\0'; //Keep buffer NULL terminated        
+      }else{
+        buffer[index++] = c;
+        buffer[index] = '\0'; //Keep buffer NULL terminated 
+      }
     }
     myFile.close();
-  } else {
-    Serial.println("ERROR READING FILE LOG!");
+  } else{
+    Serial.println("ERROR READING RESPONDENTS FILE!");
   }
 
-  delay(2000);
-  onGPS(); //turon on GPS again
+
+//  String toContact = "AT+CMGS=\"";
+//  toContact.concat("+639165200536");
+//  toContact.concat("\"\r");
+//  
+//  delay(1000);
+//  
+//  Serial.println("===Sending message===");
+//
+//  mySerial.print("\r");
+//  mySerial.print("AT+CMGF=1\r");    //Because we want to send the SMS in text mode    //Start accepting the text for the message
+//  mySerial.print(toContact);
+//  //to be sent to the number specified.
+//  //Replace this number with the target mobile number.
+//  delay(1000);
+//  mySerial.print(message);   //The text for the message
+//  mySerial.write(0x1A);  //Equivalent to sending Ctrl+Z
+//
+//  long int time = millis();
+//  while ( (time + 1000) > millis()) {
+//    while (mySerial.available()) {
+//      response += char(mySerial.read());
+//    }
+//  }
+//  
+//  Serial.println("RESPONSE: ");
+//  Serial.println(response);
+//
+//  int bracketCount = 0;
+//  boolean sent = false;
+////  unsigned int responseLength = response.length();
+//  for(int i = 0; i < response.length(); i++){
+//    if (response[i] == '>'){
+//      bracketCount++;
+//    }
+//  }
+//  if (bracketCount >= 2){
+//    sent = true;
+//    Serial.println("===SENT!===");
+//  } else{
+//    Serial.println("===MESSAGE WAS NOT SENT!===");
+//    SendTextMessage();
+//  }
+
+  Serial.println("===DONE!===");
+  Serial.println("======================");
+  delay(5000);
+  onGPS(); //turon on GPS again  
 }
 
 static void eventCallback(){
@@ -524,19 +691,21 @@ static void eventCallback(){
 void setup() {
   Serial.begin(38400);
   delay(1000);
-  //while(!Serial); //wait for serial port to connect
+  while(!Serial){} //wait for serial port to connect
 
   //Initialize the devices
   initMainBoard();
   initExtAccel();
   initSDCard();
   readFileLog();
-  initGPSModule();
+  initUsername();
+  initGPSModule();  
 
   pinMode(FallMemory, OUTPUT);
   pinMode(DeviceReady, OUTPUT);
+  pinMode(falseAlarmButton, INPUT_PULLUP);
 
-  CurieTimerOne.start(gpsTimer, &checkGPSConnection);
+  CurieTimerOne.start(memoryTimer, &checkSpace);
   
   //Prompt a welcome message
   Serial.println("Device is ready!");
@@ -546,7 +715,7 @@ void setup() {
 }
 
 void loop() {
-//  checkSpace();
+  checkGPSConnection();
 
   String userOrientation = "";
   String onBoardAccel = "";
@@ -558,13 +727,13 @@ void loop() {
   extAccel = externalAccelerometer();
   onBoardFallSense();
 
-  if (onBoardAccel == "X_UP" && extAccel == "X_UP"){
+  if (onBoardAccel == "X_UP" && extAccel == "Y_UP"){
     userOrientation = "Sitting Position";
     orientation = 0;
-  } else if (onBoardAccel == "X_UP" && extAccel == "X_DOWN"){
+  } else if (onBoardAccel == "X_UP" && extAccel == "Y_DOWN"){
     userOrientation = "Sitting Position";
     orientation = 1;
-  } else if (onBoardAccel == "X_UP" && extAccel == "Y_UP"){
+  } else if (onBoardAccel == "X_UP" && extAccel == "X_DOWN"){
     userOrientation = "Standing Position";
     orientation = 2;
   } else {
@@ -573,6 +742,8 @@ void loop() {
   }
   
   if (onBoardFall == "Falling!"){
+    unsigned long int fallStart = millis();
+    
     if (onBoardAccel == "Z_UP"){
       userOrientation = "Falling! : Sideways";
     } else if (onBoardAccel == "Z_DOWN"){
@@ -582,21 +753,33 @@ void loop() {
     } else if (onBoardAccel == "Y_UP"){
       userOrientation = "Falling! : Backwards";
     }       
-    digitalWrite(FallMemory, HIGH);
-    digitalWrite(FallMemory, LOW);
 
-    //unsigned long fallAlarmTime = millis();
-    //fallBuzz();
-    //if (countdown <= 0 && falseAlarmButton == HIGH){
-    //SendTextMessage();
-    //}
-    
     orientation = 4;
+
+    //check wether to send an alarm in 10 seconds
+    boolean flag = true;
+    while(flag == true){
+      if(millis() - fallStart <= 10000){
+        if (digitalRead(falseAlarmButton) == LOW){
+          Serial.println("False Alarm!");
+          flag = false;
+        } else{
+          Serial.println(millis() - fallStart);
+          fallBuzz();
+        }
+      } else{
+        SendTextMessage();
+        flag = false;
+      }      
+    }
+     
   }
 
   // if the orientation has changed, print out a description:
   if (orientation != lastOrient) {
     lastOrient = orientation;
-    logData(userOrientation);
+    if(userOrientation != "UNKNOWN"){
+      logData(userOrientation); 
+    }
   } 
 }

@@ -34,9 +34,12 @@ File myFile;
 
 void setup() {
   Serial.begin(38400);
+  while(!Serial){
+    
+  }
   mySerial.begin(38400);
   pinMode(GPSready, OUTPUT);
-  pinMode(powerKey, OUTPUT);
+  //pinMode(powerKey, OUTPUT);
 
   onGPS();
   initSDCard();
@@ -48,11 +51,16 @@ void setup() {
   digitalWrite(GPSready, HIGH);
   delay(1000);
   digitalWrite(GPSready, LOW);
+
+  delay(5000);
 }
 
 void loop() {
+  SendTextMessage();
+  delay(5000);
+  
   String response = sendData("AT+CGNSINF", 1000, DEBUG);
-  logData(response);
+  //logData(response);
 
   Serial.println(response);
   Serial.println("=======");
@@ -151,14 +159,27 @@ String sendData(String command, const int timeout, boolean debug) {
 void SendTextMessage() {
   offGPS(); //turn off GPS to prevent interruption
 
+  delay(1000);
+  
+  Serial.println("Sending message");
+
+  String b = "AT+CMGS=\"+639165200536\"\r";
+  String toContact = "+639165200536";
+  String a = "AT+CMGS=\"";
+  a.concat(toContact);
+  a.concat("\"\\r");
+  Serial.println(a);
+
   mySerial.print("\r");
   mySerial.print("AT+CMGF=1\r");    //Because we want to send the SMS in text mode
-  mySerial.print("AT+CMGS=\"09165200536\"\r");    //Start accepting the text for the message
+  mySerial.print(a);    //Start accepting the text for the message
   //to be sent to the number specified.
   //Replace this number with the target mobile number.
-  mySerial.print("it works \r");   //The text for the message
+  delay(1000);
+  mySerial.print("USER IS FALLING \r");   //The text for the message
   mySerial.write(0x1A);  //Equivalent to sending Ctrl+Z
 
-  delay(2000);
+  Serial.println("done");
+  delay(5000);
   onGPS(); //turon on GPS again
 }
