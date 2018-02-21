@@ -2,8 +2,11 @@
   //A1: DECLARATIONS FOR CURIEIMU
     #include "CurieIMU.h"
 
-    unsigned long loopTime = 0;          // get the time since program started
-    unsigned long interruptsTime = 0;    // get the time when free fall event is detected
+    int axIn, ayIn, azIn;
+
+    double vsumcurrentIn = 0;
+    double vsumcheckIn = 0;  
+    double vsumnewIn = 0;
   //A1: END
 
   //A2: DECLARATIONS FOR EXTERNAL ACCELEROMETER
@@ -16,11 +19,12 @@
 
     MPU6050 accelgyro;
 
-    int16_t ax, ay, az;
-    int16_t gx, gy, gz;
+    int16_t axEx, ayEx, azEx, gxEx, gyEx, gzEx;
+    double byEx, bxEx, bzEx;
     
-    int ax1,ay1,az1;
-    int gx1,gy1,gz1;
+    double vsumcurrentEx = 0;
+    double vsumcheckEx = 0; 
+    double vsumnewEx= 0 ;
   //A2: END
 
   //A3: DECLARATIONS FOR SDCARD MODULE
@@ -57,6 +61,8 @@
     #define FallMemory A0
 
     #define falseAlarmButton A3
+
+    double degreesdiff = 0;
 
     String lastKnownTimeLoc = "";
     String userName = "";
@@ -229,92 +235,10 @@ void deleteOldFiles() {
   delay(2000);
 }
 
-String onBoardAccelerometer() {
-  String mainOrientationString; // string for printing description of orientation  
-  
-  // Read accelerometer:
-  int x = CurieIMU.readAccelerometer(X_AXIS);
-  int y = CurieIMU.readAccelerometer(Y_AXIS);
-  int z = CurieIMU.readAccelerometer(Z_AXIS);
-
-  // Calculate the absolute values, to determine the largest
-  int absX = abs(x);
-  int absY = abs(y);
-  int absZ = abs(z);
-
-  if ( (absZ > absX) && (absZ > absY)) {
-    // base orientation on Z
-    if (z > 0) {
-      mainOrientationString = "Z_UP";
-    } else {
-      mainOrientationString = "Z_DOWN";
-    }
-  } else if ( (absY > absX) && (absY > absZ)) {
-    // base orientation on Y
-    if (y > 0) {
-      mainOrientationString = "Y_UP";     
-    } else {
-      mainOrientationString = "Y_DOWN"; 
-    }
-  } else {
-    // base orientation on X
-    if (x < 0) {
-      mainOrientationString = "X_UP";
-    } else {
-      mainOrientationString = "X_DOWN";            
-    }
-  } 
-
-  return mainOrientationString;
-}
-
-String externalAccelerometer(){
-  String extOrientationString; //string for printing the accelerometer sensor's orientation
-  
-  // Read raw external accel/gyro:
-  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-  ax1=ax/81;
-  ay1=ay/81;
-  az1=az/81;
-
-  if (ax1 <= 20 && ay1 <= 20 && az1 >= 89) { 
-    extOrientationString = "Z_UP";
-  } else if (ax1 <= 20 && ay1 <= 20 && az1 <= -89) { 
-    extOrientationString = "Z_DOWN";
-  } else if (ax1 <= 20 && ay1 >= 89 && az1 <= 20) { 
-    extOrientationString = "Y_UP";
-  } else if (ax1 <= 20 && ay1 <= -89 && az1 <= 20) { 
-    extOrientationString = "Y_DOWN";
-  } else if (ax1 >= 89 && ay1 <= 20 && az1 <= 20) { 
-    extOrientationString = "X_UP";
-  } else if (ax1 <= -89 && ay1 <= 20 && az1 <= 20) {
-    extOrientationString = "X_DOWN";
-  } 
-
-   return extOrientationString;
-}
-
-static void onBoardFallSense(){
-  //Check if falling
-  loopTime = millis();
-  if(abs(loopTime - interruptsTime) < 1000 ){    
-    onBoardFall = "Falling!";
-  } else {
-    onBoardFall = "";
-  }
-}
-
 void initMainBoard(){
   Serial.println("Initializing IMU device...");
   CurieIMU.begin();
-  delay(1000);
-  
-  CurieIMU.attachInterrupt(eventCallback);
-
-  // Enable Free Fall Detection
-  CurieIMU.setDetectionThreshold(CURIE_IMU_FREEFALL, 1000); // 1g=1000mg
-  CurieIMU.setDetectionDuration(CURIE_IMU_FREEFALL, 50);  // 50ms
-  CurieIMU.interrupts(CURIE_IMU_FREEFALL);   
+  delay(1000);   
   
   // Set the accelerometer range to 2G
   CurieIMU.setAccelerometerRange(2); 
@@ -345,9 +269,6 @@ void initExtAccel(){
     Serial.write(12);
     setup();
   }
-
-  // Change the accel/gyro offset values
-  accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_4);
 
   Serial.println("External Accelerometer initialization successful!");
 }
@@ -446,9 +367,11 @@ void initGPSModule(){
 
   onGPS();
 
-  while (lastKnownTimeLoc == ""){
+  //while (lastKnownTimeLoc == ""){
     checkGPSConnection();
-  }
+  //}
+  
+  delay(10000);
 }
 
 void onGPS() {
@@ -640,60 +563,10 @@ void SendTextMessage(){
     Serial.println("ERROR READING RESPONDENTS FILE!");
   }
 
-
-//  String toContact = "AT+CMGS=\"";
-//  toContact.concat("+639165200536");
-//  toContact.concat("\"\r");
-//  
-//  delay(1000);
-//  
-//  Serial.println("===Sending message===");
-//
-//  mySerial.print("\r");
-//  mySerial.print("AT+CMGF=1\r");    //Because we want to send the SMS in text mode    //Start accepting the text for the message
-//  mySerial.print(toContact);
-//  //to be sent to the number specified.
-//  //Replace this number with the target mobile number.
-//  delay(1000);
-//  mySerial.print(message);   //The text for the message
-//  mySerial.write(0x1A);  //Equivalent to sending Ctrl+Z
-//
-//  long int time = millis();
-//  while ( (time + 1000) > millis()) {
-//    while (mySerial.available()) {
-//      response += char(mySerial.read());
-//    }
-//  }
-//  
-//  Serial.println("RESPONSE: ");
-//  Serial.println(response);
-//
-//  int bracketCount = 0;
-//  boolean sent = false;
-////  unsigned int responseLength = response.length();
-//  for(int i = 0; i < response.length(); i++){
-//    if (response[i] == '>'){
-//      bracketCount++;
-//    }
-//  }
-//  if (bracketCount >= 2){
-//    sent = true;
-//    Serial.println("===SENT!===");
-//  } else{
-//    Serial.println("===MESSAGE WAS NOT SENT!===");
-//    SendTextMessage();
-//  }
-
   Serial.println("===DONE!===");
   Serial.println("======================");
   delay(5000);
   onGPS(); //turon on GPS again  
-}
-
-static void eventCallback(){
-  if (CurieIMU.getInterruptStatus(CURIE_IMU_FREEFALL)) {
-    interruptsTime = millis(); 
-  }
 }
 
 void setup() {
@@ -729,69 +602,93 @@ void setup() {
 void loop() {
   checkGPSConnection();
 
-  String userOrientation = "";
-  String onBoardAccel = "";
-  String extAccel = "";
+String dynamicm;
+String staticm;
+byEx = ayEx;
 
-  int orientation = -1;
+accelgyro.getMotion6(&axEx, &ayEx, &azEx, &gxEx, &gyEx, &gzEx); //mpu6050
+CurieIMU.readAccelerometer(axIn, ayIn, azIn); // curie
 
-  onBoardAccel = onBoardAccelerometer();
-  extAccel = externalAccelerometer();
-  onBoardFallSense();
+vsumcurrentEx = sqrt(pow(axEx,2)+pow(ayEx,2)+pow(azEx,2));
+vsumcheckEx = abs((abs(vsumnewEx)-abs(vsumcurrentEx))/(abs(vsumnewEx)))*100;
 
-  if (onBoardAccel == "X_UP" && extAccel == "Y_UP"){
-    userOrientation = "Sitting Position";
-    orientation = 0;
-  } else if (onBoardAccel == "X_UP" && extAccel == "Y_DOWN"){
-    userOrientation = "Sitting Position";
-    orientation = 1;
-  } else if (onBoardAccel == "X_UP" && extAccel == "X_DOWN"){
-    userOrientation = "Standing Position";
-    orientation = 2;
-  } else {
-    userOrientation = "UNKNOWN";
-    orientation = 3;
+vsumcurrentIn = sqrt(pow(axIn,2)+pow(ayIn,2)+pow(azIn,2));
+vsumcheckIn = abs((abs(vsumnewIn)-abs(vsumcurrentIn))/(abs(vsumnewIn)))*100;
+
+  if (abs(vsumcheckEx) >= 1.5 && abs(vsumcheckIn) >= 1.5) {
+    vsumnewEx = vsumcurrentEx;
+    vsumnewIn = vsumcurrentIn;
+    Serial.println(dynamicmode());
+  } else {      
+    vsumnewEx = (vsumnewEx + vsumcurrentEx)/2; //average vector sum
+    vsumnewIn = (vsumnewIn + vsumcurrentIn)/2; //average vector sum
+    Serial.println(staticmode());
   }
+
+// display tab-separated accelerometer x/y/z values
+  Serial.print("Internal accelerations:\t");
+  Serial.print(axIn);
+  Serial.print("\t");
+  Serial.print(ayIn);
+  Serial.print("\t");
+  Serial.print(azIn);
+  Serial.println();
+
+  Serial.print("External accelerations:\t");
+  Serial.print(axEx);
+  Serial.print("\t");
+  Serial.print(ayEx);
+  Serial.print("\t");
+  Serial.print(azEx);
+  Serial.println();
+}
+
+static String staticmode(){
+
+ String staticstr="Identifying....";
+
+ if (axEx <= -13900 && axIn <= -16000 && axIn >= -17500){
+  staticstr= "Standing Position";
+ }
+ else if (ayEx >= 14000 && axIn <= -12500){
+ staticstr= "Sitting Position";
+ }
+ else if ((abs(azIn) || abs(ayIn)) >=  13500 && (abs(azEx) || abs(ayEx)) >= 14500){
+    staticstr ="Lying Position";
+  }
+ 
+return staticstr;
+}
+
+static String dynamicmode(){
+String dynastr = "UNKNOWN";
   
-  if (onBoardFall == "Falling!"){
-    unsigned long int fallStart = millis();
-    
-    if (onBoardAccel == "Z_UP"){
-      userOrientation = "Falling! : Sideways";
-    } else if (onBoardAccel == "Z_DOWN"){
-      userOrientation = "Falling! : Sideways";
-    } else if (onBoardAccel == "Y_DOWN"){
-      userOrientation = "Falling! : Forward";
-    } else if (onBoardAccel == "Y_UP"){
-      userOrientation = "Falling! : Backwards";
-    }       
+degreesdiff = abs(((180/3.14)*(acos(ayEx/vsumnewEx)))-((180/3.14)*(acos(byEx/vsumnewEx))));
+  
+//  Serial.print((abs((vsumnew-abs(ayEx))/vsumnew))*9.8);
+//  Serial.println(" m/s^2");
+// 
 
-    orientation = 4;
+if (abs(vsumcheckEx) >= 25 || abs(vsumcheckIn) >= 25 ) {
+dynastr.concat(" FALL");
 
-    //check wether to send an alarm in 10 seconds
-    boolean flag = true;
-    while(flag == true){
-      if(millis() - fallStart <= 10000){
-        if (digitalRead(falseAlarmButton) == LOW){
-          Serial.println("False Alarm!");
-          flag = false;
-        } else{
-          Serial.println(millis() - fallStart);
-          fallBuzz();
-        }
-      } else{
-        SendTextMessage();
-        flag = false;
-      }      
-    }
-     
+  if (ayIn >= 13500 && ayEx >= 15900 && (abs(vsumcheckEx) >= 25 || abs(vsumcheckIn) >= 25 )){
+    dynastr = "Falling! : Backwards";
+  }
+  else if (ayIn <= -14000 && ayEx <= -15400 && (abs(vsumcheckEx) >= 25 || abs(vsumcheckIn) >= 25 )){
+    dynastr = "Falling! : Forward";
+  }
+  else if (abs(azIn) >=  15900 && abs(azEx) >= 15400 && (abs(vsumcheckEx) >= 25 || abs(vsumcheckIn) >= 25 )){
+    dynastr = "Falling! : Sideways";
   }
 
-  // if the orientation has changed, print out a description:
-  if (orientation != lastOrient) {
-    lastOrient = orientation;
-    if(userOrientation != "UNKNOWN"){
-      logData(userOrientation); 
-    }
-  } 
+//  Serial.print((abs(vsumcheck/100))*9.8); 
+//  Serial.println(" m/s^2");
+} else if (degreesdiff <= 70 && degreesdiff >= 10 && (abs(vsumcheckEx) >= 8 || abs(vsumcheckIn) >= 8 ) ){
+  dynastr = "Walking";
+} else{
+  dynastr.concat(" DYNAMIC");
+}
+
+return dynastr;
 }
