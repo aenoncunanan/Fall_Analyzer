@@ -442,60 +442,40 @@ public class exploreController implements Initializable{
 
     private String getTime(String hour, String min, String sec){
         String time = "";
-        if (Integer.parseInt(hour) >= 13){ //13 to 24
-            switch (Integer.parseInt(hour)){
-                case 13:
-                    hour = "01";
-                    break;
-                case 14:
-                    hour = "02";
-                    break;
-                case 15:
-                    hour = "03";
-                    break;
-                case 16:
-                    hour = "04";
-                    break;
-                case 17:
-                    hour = "05";
-                    break;
-                case 18:
-                    hour = "06";
-                    break;
-                case 19:
-                    hour = "07";
-                    break;
-                case 20:
-                    hour = "08";
-                    break;
-                case 21:
-                    hour = "09";
-                    break;
-                case 22:
-                    hour = "10";
-                    break;
-                case 23:
-                    hour = "11";
-                    break;
-                case 24:
-                    hour = "12";
-                    break;
+        int hh = Integer.parseInt(hour);
+
+        System.out.println("hh raw: " + hh);
+
+        if (hh > 12){
+            hh = hh - 12;
+        }
+
+        System.out.println("hh 12hr: " + hh);
+
+        hh = hh + 8; //convert to UTC+8:00
+
+        System.out.println("hh utc: " + hh);
+
+        if (hh > 12){
+            hh = hh - 12;
+
+            if (hh == 12){
+                time = time + hh + ":" + min + ":" + sec + " M.N.";
+            } else{
+                time = time + hh + ":" + min + ":" + sec + " P.M.";
             }
 
-            if (Integer.parseInt(hour) == 12){
-                time = time + hour + ":" + min + ":" + sec + " M.N.";
-            } else{
-                time = time + hour + ":" + min + ":" + sec + " P.M.";
-            }
-        } else if (Integer.parseInt(hour) <= 12) {
-            if (Integer.parseInt(hour) == 12) {
-                time = time + hour + ":" + min + ":" + sec + " N.N.";
-            } else if (Integer.parseInt(hour) == 0) {
+        } else if (hh < 13){
+            if (hh == 12) {
+                time = time + hh + ":" + min + ":" + sec + " N.N.";
+            } else if (hh == 0) {
                 time = time + "12" + ":" + min + ":" + sec + " A.M.";
             } else {
-                time = time + hour + ":" + min + ":" + sec + " A.M.";
+                time = time + hh + ":" + min + ":" + sec + " A.M.";
             }
         }
+
+        System.out.println("TIME: " + time);
 
         return time;
     }

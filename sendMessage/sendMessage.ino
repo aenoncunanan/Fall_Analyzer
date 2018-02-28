@@ -51,7 +51,7 @@ void checkGPSConnection(){
 }
 
 String setMessage(){
-  String message = userName;
+  String message = "aenon";
   message.concat(" has been fallen! \nDetails: \n");
   String date = "";
   String longitude = "";
@@ -322,8 +322,8 @@ void setup() {
   pinMode(FallMemory, OUTPUT);
   pinMode(DeviceReady, OUTPUT);
   
-  initSDCard();
-  initUsername();
+//  initSDCard();
+//  initUsername();
   initGPSModule();
 
   delay(3000);
