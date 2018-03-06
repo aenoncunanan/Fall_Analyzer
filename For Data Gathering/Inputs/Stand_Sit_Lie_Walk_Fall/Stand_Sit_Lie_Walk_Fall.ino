@@ -561,6 +561,29 @@ void SendTextMessage(){
   onGPS(); //turon on GPS again  
 }
 
+String getOrientation() {
+  byEx = ayEx;
+
+  accelgyro.getMotion6(&axEx, &ayEx, &azEx, &gxEx, &gyEx, &gzEx); //mpu6050
+  CurieIMU.readAccelerometer(axIn, ayIn, azIn); // curie
+
+  vsumcurrentEx = sqrt(pow(axEx, 2) + pow(ayEx, 2) + pow(azEx, 2));
+  vsumcheckEx = abs((abs(vsumnewEx) - abs(vsumcurrentEx)) / (abs(vsumnewEx))) * 100;
+
+  vsumcurrentIn = sqrt(pow(axIn, 2) + pow(ayIn, 2) + pow(azIn, 2));
+  vsumcheckIn = abs((abs(vsumnewIn) - abs(vsumcurrentIn)) / (abs(vsumnewIn))) * 100;
+
+  if (abs(vsumcheckEx) >= 1.5 && abs(vsumcheckIn) >= 1.5) {
+    vsumnewEx = vsumcurrentEx;
+    vsumnewIn = vsumcurrentIn;
+    return dynamicmode();
+  } else {
+    vsumnewEx = (vsumnewEx + vsumcurrentEx) / 2; //average vector sum
+    vsumnewIn = (vsumnewIn + vsumcurrentIn) / 2; //average vector sum
+    return staticmode();
+  }
+}
+
 void setup() {
   Serial.begin(38400);
   delay(1000);
@@ -589,104 +612,44 @@ boolean falling = false;
 int walkstep=0;
 void loop() {
 //  checkGPSConnection();
-  String currentOrientation = "";
+
   falling = false;
   //int prevswing =(ayEx/abs(ayEx));
-  byEx = ayEx;
-
-  accelgyro.getMotion6(&axEx, &ayEx, &azEx, &gxEx, &gyEx, &gzEx); //mpu6050
-  CurieIMU.readAccelerometer(axIn, ayIn, azIn); // curie
-  //int currentswing =(ayEx/abs(ayEx));
-  
-//  if(currentswing != prevswing){
-//    walkstep++;
-//    
-//  }
-  vsumcurrentEx = sqrt(pow(axEx,2)+pow(ayEx,2)+pow(azEx,2));
-  vsumcheckEx = abs((abs(vsumnewEx)-abs(vsumcurrentEx))/(abs(vsumnewEx)))*100;
-  
-  vsumcurrentIn = sqrt(pow(axIn,2)+pow(ayIn,2)+pow(azIn,2));
-  vsumcheckIn = abs((abs(vsumnewIn)-abs(vsumcurrentIn))/(abs(vsumnewIn)))*100;
-
-  
-  
-  if (abs(vsumcheckEx) >= 1.5 && abs(vsumcheckIn) >= 1.5) {
-    vsumnewEx = vsumcurrentEx;
-    vsumnewIn = vsumcurrentIn;
-    currentOrientation = dynamicmode();    
-  } else {      
-    vsumnewEx = (vsumnewEx + vsumcurrentEx)/2; //average vector sum
-    vsumnewIn = (vsumnewIn + vsumcurrentIn)/2; //average vector sum
-    currentOrientation = staticmode();
-  }
-
-//  Serial.print("LAST: ");
-//  Serial.println(lastOrientation);
-//  Serial.print("CURRENT: ");
-//  Serial.println(currentOrientation);
+    String currentOrientation = getOrientation();
 
   if(currentOrientation != "UNKNOWN"){
     if(currentOrientation != lastOrientation){
-//      //logData(currentOrientation);   
-//      
-//      Serial.println("");
-//      Serial.println("");
-//      Serial.println("");
-//      Serial.println("");
-//      Serial.println("");
-//      Serial.println("");
-//      Serial.println("");
-//      Serial.print("=====");
-//      Serial.print(currentOrientation);
-//      Serial.println("=====");  
-//      Serial.println("");
-//      
-//      lastOrientation = currentOrientation; 
-     
-      if(currentOrientation == "Walking"){
-        if(lastOrientation != "Sitting Position"){
-           //logData(currentOrientation);   
-          
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.print("=====");
-          Serial.print(currentOrientation);
-          Serial.println("=====");  
-          Serial.println("");
-          
-          lastOrientation = currentOrientation;           
-        }
-      } else{
-           //logData(currentOrientation);   
-          
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");
-          Serial.println("");          
-          Serial.print("=====");
-          Serial.print(currentOrientation);
-          Serial.println("=====");  
-          Serial.println("");
+    
+      if (currentOrientation == "Walking"){
+        if (lastOrientation == "Standing Position"){
+          delay(250);
+          Serial.println("getting temp");
+          String temp = getOrientation();
 
-          if(currentOrientation=="Walking"){
-            delay(2000);
+          if(temp == "Walking"){
+            Serial.println(temp);
+            currentOrientation = temp;
+            //logData(currentOrientation);
+            
+            Serial.println("");
+            Serial.print("=====");
+            Serial.print(currentOrientation);
+            Serial.println("=====");
+            Serial.println("");   
+
+            lastOrientation = currentOrientation;          
           }
-
+         }
+      } else{
+          //logData(currentOrientation);
           
-          lastOrientation = currentOrientation;         
+          Serial.println("");
+          Serial.print("=====");
+          Serial.print(currentOrientation);
+          Serial.println("=====");
+          Serial.println("");   
+
+          lastOrientation = currentOrientation;        
       }
  
     }
@@ -782,7 +745,7 @@ static String dynamicmode(){
     //  Serial.println(" m/s^2");
   } 
   //else if(walkstep >= 1){
-   if ((axIn <= -15000 && axIn >= -17500) && degreesdiff <= 55 && degreesdiff >= 10){
+   if ((axIn <= -15000 && axIn >= -17500) && degreesdiff <= 55 && degreesdiff >= 5){
     dynastr = "Walking";
    }  
   //}

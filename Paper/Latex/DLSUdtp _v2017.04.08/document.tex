@@ -16,9 +16,9 @@
 
 \Conctrue % comment to disable conclusions
 
-\Finishedtrue % comment to disable manuscript for final defense or binding/submission
+%\Finishedtrue % comment to disable manuscript for final defense or binding/submission
 
-\ApprovalSheetSignedtrue % comment to disable inclusion of the signed approval sheet
+%\ApprovalSheetSignedtrue % comment to disable inclusion of the signed approval sheet
 
 % \Gradtrue % comment to disable graduate school format
 
@@ -72,7 +72,7 @@
 \defineAuthor{surname1}{Ambion}
 \defineAuthor{firstname1}{Paulo Miguel M.}
 
-\defineAuthor{surname2}{Cunanan}
+\defineAuthor{surname2}{*Cunanan}
 \defineAuthor{firstname2}{Aenon Mari Viel T.}
 
 \defineAuthor{surname3}{Harris}
@@ -119,7 +119,7 @@ results_and_discussions,
 conclusions,
 %answers_to_questions,
 revisions_to_the_proposal,
-revisions_to_the_final,
+%revisions_to_the_final,
 program_codes,
 datasheets,
 %usage_examples,
@@ -287,12 +287,12 @@ Produced: \usdate\today, \currenttime \\
 \appto\appendix{\renewcommand\thechapter{\AlphAlph{\value{chapter}}}} % for increasing appendix chapters beyond Z, i.e. AA, AB, etc.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Student Research Ethics Clearance}
-\includepdf[pages={1},%
+\chapter{Student Research Ethics Checklist~A}
+\includepdf[pages={1-29},%
 offset=3.5mm -10mm,%
-scale=0.75,%
+scale=0.73,%
 pagecommand={},]
-{./figure/STUDENT_RESEARCH_ETHICS_CLEARANCE.pdf}
+{./reference/Checklist_A.pdf}
 \cleardoublepage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -322,13 +322,13 @@ pagecommand={},]
 \cleardoublepage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Usage Examples} 
-\label{ch:usage_examples}
+%\chapter{Usage Examples} 
+%\label{ch:usage_examples}
 %\startcontents[chapters]
 %\Mprintcontents  
-\include{usage_examples}
+%\include{usage_examples}
 %\stopcontents[chapters]
-\cleardoublepage
+%\cleardoublepage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Program} 

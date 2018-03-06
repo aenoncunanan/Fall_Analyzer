@@ -328,6 +328,7 @@ void checkGPSConnection() {
   } else {
     digitalWrite(GPSready, !digitalRead(GPSready));
     Serial.println("GPS Connecting...");
+
   }
 
   Serial.println(response);
@@ -664,15 +665,34 @@ void loop() {
 
   if (currentOrientation != "UNKNOWN") {
     if (currentOrientation != lastOrientation) {
-      logData(currentOrientation);
+      if (currentOrientation == "Walking"){
+        if (lastOrientation == "Standing Position"){
+          delay(250);
+          String temp = getOrientation();
+          if(temp == "Walking"){
+            currentOrientation = temp;
+            logData(currentOrientation);
+            
+            Serial.println("");
+            Serial.print("=====");
+            Serial.print(currentOrientation);
+            Serial.println("=====");
+            Serial.println("");   
+  
+            lastOrientation = currentOrientation;            
+          }
+         }
+      } else{
+          logData(currentOrientation);
+          
+          Serial.println("");
+          Serial.print("=====");
+          Serial.print(currentOrientation);
+          Serial.println("=====");
+          Serial.println("");   
 
-      Serial.println("");
-      Serial.print("=====");
-      Serial.print(currentOrientation);
-      Serial.println("=====");
-      Serial.println("");
-
-      lastOrientation = currentOrientation;
+          lastOrientation = currentOrientation;        
+      }
     }
   }
 

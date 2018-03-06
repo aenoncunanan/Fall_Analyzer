@@ -1,45 +1,44 @@
 \addvspace {10pt}
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Location of the device on the user\relax }}{9}{figure.caption.14}
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Initial User Setup\relax }}{10}{figure.caption.15}
-\contentsline {figure}{\numberline {1.3}{\ignorespaces User Setup, logging in and password setting\relax }}{11}{figure.caption.16}
-\contentsline {figure}{\numberline {1.4}{\ignorespaces Profile Setup\relax }}{11}{figure.caption.17}
-\contentsline {figure}{\numberline {1.5}{\ignorespaces Responder's Setting\relax }}{12}{figure.caption.18}
-\contentsline {figure}{\numberline {1.6}{\ignorespaces Confirmation of Identification and password\relax }}{12}{figure.caption.19}
-\contentsline {figure}{\numberline {1.7}{\ignorespaces Setup success page\relax }}{13}{figure.caption.20}
-\contentsline {figure}{\numberline {1.8}{\ignorespaces Storage Selection\relax }}{14}{figure.caption.21}
-\contentsline {figure}{\numberline {1.9}{\ignorespaces Profile Tab\relax }}{15}{figure.caption.22}
-\contentsline {figure}{\numberline {1.10}{\ignorespaces Responder's Tab\relax }}{15}{figure.caption.23}
-\contentsline {figure}{\numberline {1.11}{\ignorespaces Activity Log\relax }}{16}{figure.caption.24}
-\contentsline {figure}{\numberline {1.12}{\ignorespaces Prompt\relax }}{16}{figure.caption.25}
-\contentsline {figure}{\numberline {1.13}{\ignorespaces Estimated Work and Schedule (a)\relax }}{17}{figure.caption.26}
-\contentsline {figure}{\numberline {1.14}{\ignorespaces Estimated Work and Schedule (b)\relax }}{18}{figure.caption.27}
-\contentsline {figure}{\numberline {1.15}{\ignorespaces Estimated Work and Schedule (c)\relax }}{19}{figure.caption.28}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Location of the device on the user\relax }}{9}{figure.caption.11}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Initial User Setup\relax }}{10}{figure.caption.12}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces User Setup, logging in and password setting\relax }}{11}{figure.caption.13}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Profile Setup\relax }}{11}{figure.caption.14}
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Responder's Setting\relax }}{12}{figure.caption.15}
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Confirmation of Identification and password\relax }}{12}{figure.caption.16}
+\contentsline {figure}{\numberline {1.7}{\ignorespaces Setup success page\relax }}{13}{figure.caption.17}
+\contentsline {figure}{\numberline {1.8}{\ignorespaces Storage Selection\relax }}{14}{figure.caption.18}
+\contentsline {figure}{\numberline {1.9}{\ignorespaces Profile Tab\relax }}{15}{figure.caption.19}
+\contentsline {figure}{\numberline {1.10}{\ignorespaces Responder's Tab\relax }}{15}{figure.caption.20}
+\contentsline {figure}{\numberline {1.11}{\ignorespaces Activity Log\relax }}{16}{figure.caption.21}
+\contentsline {figure}{\numberline {1.12}{\ignorespaces Prompt\relax }}{16}{figure.caption.22}
+\contentsline {figure}{\numberline {1.13}{\ignorespaces Estimated Work and Schedule (a)\relax }}{17}{figure.caption.23}
+\contentsline {figure}{\numberline {1.14}{\ignorespaces Estimated Work and Schedule (b)\relax }}{18}{figure.caption.24}
+\contentsline {figure}{\numberline {1.15}{\ignorespaces Estimated Work and Schedule (c)\relax }}{19}{figure.caption.25}
 \addvspace {10pt}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Device on the user\relax }}{39}{figure.caption.29}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Device on the user\relax }}{39}{figure.caption.26}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Schematic Diagram of the Device\relax }}{44}{figure.caption.30}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Fall Analyzer Circuit Design\relax }}{45}{figure.caption.31}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces External Accelerometer and Arduino 101\relax }}{46}{figure.caption.32}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces MicroSD Card Module\relax }}{46}{figure.caption.33}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces GPS/GSM Shield\relax }}{47}{figure.caption.34}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Buzzer, LEDs and Override Button\relax }}{47}{figure.caption.35}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Device Proper\relax }}{48}{figure.caption.36}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Input Analyzation flowchart (a)\relax }}{50}{figure.caption.37}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Input Analyzation flowchart (b)\relax }}{51}{figure.caption.38}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Fall Detection Device\relax }}{52}{figure.caption.39}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Schematic Diagram of the Device\relax }}{44}{figure.caption.27}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Fall Analyzer Circuit Design\relax }}{45}{figure.caption.28}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces External Accelerometer and Arduino 101\relax }}{46}{figure.caption.29}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces MicroSD Card Module\relax }}{46}{figure.caption.30}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces GPS/GSM Shield\relax }}{47}{figure.caption.31}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Buzzer, LEDs and Override Button\relax }}{47}{figure.caption.32}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Device Proper\relax }}{48}{figure.caption.33}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Input Analyzation flowchart (a)\relax }}{50}{figure.caption.34}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Input Analyzation flowchart (b)\relax }}{51}{figure.caption.35}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Fall Detection Device\relax }}{52}{figure.caption.36}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {5.1}{\ignorespaces System Block Diagram\relax }}{54}{figure.caption.40}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces User Initialization\relax }}{56}{figure.caption.41}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces System Flowchart\relax }}{57}{figure.caption.42}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Waterfall Pattern\relax }}{58}{figure.caption.43}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Block Diagram\relax }}{59}{figure.caption.44}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Flow Chart\relax }}{61}{figure.caption.45}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Activity Log\relax }}{63}{figure.caption.46}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces System Block Diagram\relax }}{54}{figure.caption.37}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces User Initialization\relax }}{56}{figure.caption.38}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces System Flowchart\relax }}{57}{figure.caption.39}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Waterfall Pattern\relax }}{58}{figure.caption.40}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Block Diagram\relax }}{59}{figure.caption.41}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Flow Chart\relax }}{61}{figure.caption.42}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Activity Log\relax }}{63}{figure.caption.43}
 \addvspace {10pt}
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Notification Message\relax }}{70}{figure.caption.50}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Location of Fall from Google Maps\relax }}{71}{figure.caption.51}
-\addvspace {10pt}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Notification Message\relax }}{70}{figure.caption.47}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Location of Fall from Google Maps\relax }}{71}{figure.caption.48}
 \addvspace {10pt}
 \addvspace {10pt}
 \addvspace {10pt}

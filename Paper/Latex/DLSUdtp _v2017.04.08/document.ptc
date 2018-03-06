@@ -1,11 +1,10 @@
-\contentsline {chapter}{Thesis\ Approval Sheet }{ii}{section*.1}
-\contentsline {chapter}{Acknowledgment}{iv}{section*.3}
-\contentsline {chapter}{Abstract}{v}{section*.5}
-\contentsline {chapter}{Table of Contents}{vii}{section*.7}
-\contentsline {chapter}{List of Figures}{x}{section*.8}
-\contentsline {chapter}{List of Tables}{xii}{section*.9}
-\contentsline {chapter}{Abbreviations}{xiii}{section*.10}
-\contentsline {chapter}{Glossary}{xiv}{section*.12}
+\contentsline {chapter}{Oral Defense Recommendation Sheet}{ii}{section*.1}
+\contentsline {chapter}{Abstract}{iii}{section*.2}
+\contentsline {chapter}{Table of Contents}{v}{section*.4}
+\contentsline {chapter}{List of Figures}{viii}{section*.5}
+\contentsline {chapter}{List of Tables}{x}{section*.6}
+\contentsline {chapter}{Abbreviations}{xi}{section*.7}
+\contentsline {chapter}{Glossary}{xii}{section*.9}
 \contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase {Introduction}}{1}{chapter.1}
 \ttl@starttoc {chapters@1}
 \contentsline {section}{\numberline {1.1}Background of the Study}{2}{section.1.1}
@@ -77,12 +76,11 @@
 \contentsline {section}{\numberline {7.3}Recommendations}{74}{section.7.3}
 \contentsline {section}{\numberline {7.4}Future Prospects}{74}{section.7.4}
 \ttl@stoptoc {chapters@7}
-\contentsline {chapter}{References}{76}{section*.53}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase {Student Research Ethics Clearance}}{78}{appendix.A}
-\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase {Answers to Questions to this Thesis}}{80}{appendix.B}
-\contentsline {appendix}{\chapternumberline {C}\MakeTextUppercase {Revisions to the Proposal}}{81}{appendix.C}
-\contentsline {appendix}{\chapternumberline {D}\MakeTextUppercase {Revisions to the Final}}{83}{appendix.D}
-\contentsline {appendix}{\chapternumberline {E}\MakeTextUppercase {Usage Examples}}{89}{appendix.E}
-\contentsline {appendix}{\chapternumberline {F}\MakeTextUppercase {Program}}{90}{appendix.F}
-\contentsline {appendix}{\chapternumberline {G}\MakeTextUppercase {Datasheets}}{163}{appendix.G}
+\contentsline {chapter}{References}{76}{section*.50}
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase {Student Research Ethics Checklist\nobreakspace {}A}}{78}{appendix.A}
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase {Answers to Questions to this Thesis}}{108}{appendix.B}
+\contentsline {appendix}{\chapternumberline {C}\MakeTextUppercase {Revisions to the Proposal}}{109}{appendix.C}
+\contentsline {appendix}{\chapternumberline {D}\MakeTextUppercase {Revisions to the Final}}{111}{appendix.D}
+\contentsline {appendix}{\chapternumberline {E}\MakeTextUppercase {Program}}{89}{appendix.E}
+\contentsline {appendix}{\chapternumberline {F}\MakeTextUppercase {Datasheets}}{163}{appendix.F}
 \contentsfinish 
