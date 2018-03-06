@@ -1,0 +1,99 @@
+\section{Summary}
+
+This chapter discusses the consideration on making the design of fall analyzer. This chapter contains the discussion on the software and hardware that were used in creating the fall analyzer device.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1\textwidth]{"figure/Diagrams/Fall-Analyzer-Schematic-Diagram".jpg}
+	\caption{Schematic Diagram of the Device}
+	\label{fig:Fall-Analyzer-Schematic-Diagram}
+\end{figure}
+
+\section{Development of Fall Detector}
+
+\begin{figure}
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Diagrams/Fall-Analyzer-Circuit2".jpg}
+	\caption{Fall Analyzer Circuit Design}
+	\label{fig:Fall-Analyzer-Circuit}
+\end{figure}
+
+In Figure 4.2, the design of fall analyzer device is shown. It is composed of the combined modules such as Arduino 101 board, MicroSD Card Module, MPU6050 Accelerometer, GSM/ GPS Shield, false alarm button, buzzer, and power module.
+From Figure 4.2, the legends are as follows: (1) Arduino 101 board, (2) MicroSD Module, (3) MPU6050 Accelerometer, (4) GSM/GPS Shield, (5) False Alarm Button, (6) Buzzer, (7) \& (8) 300 Ohm resistor, (9) GPS status, (10) Deice status, (11) 9V DC Battery and (12) Power switch.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Parts/ExtAcc and Arduino101".jpg}
+	\caption{External Accelerometer and Arduino 101}
+	\label{fig:ExtAcc and Arduino101}
+\end{figure}
+
+Figure 4.3 shows the  MPU6050 accelerometer and it is connected to the Arduino 101 with the connection as follows: \acr{VCC} pin uses 5v pin of the Arduino and ground wiring is connected to \acr{GND} pin. The \acr{SCL} is connected to A5 while the \acr{SDA} is to A4 and \acr{INT} pin is to D2.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Parts/microSD module".jpg}
+	\caption{MicroSD Card Module}
+	\label{fig:microSD module}
+\end{figure}
+
+The MicroSD Module, Figure 4.4, is also connected to the Arduino with the connection as follows: \acr{MISO} pin is connected to D12, \acr{SCK} to D13, \acr{SS} to D4, \acr{MOSI} pin to D11 with ground to \acr{GND} and \acr{VCC} to 5v.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Parts/GSM GPS Module".jpg}
+	\caption{GPS/GSM Shield}
+	\label{fig:GSM GPS Module}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Parts/Buzzer Leds Button".jpg}
+	\caption{Buzzer, LEDs and Override Button}
+	\label{fig:Buzzer Leds Button}
+\end{figure}
+
+The GSM Shield in Figure 4.5, is stacked to be connected to Arduino while the Buzzer’s ground is connected to the Arduino’s GND pin and the positive pin of the buzzer to A0 pin of the Arduino. The device status and GPS status indicator using \acr{LED} and false alarm button are connected to the Arduino’s A1, A2 and A3 respectively while the ground the three components are connected to GND pin of the Arduino.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Parts/Device without case".jpg}
+	\caption{Device Proper}
+	\label{fig:Device without case}
+\end{figure}
+
+\subsection{Fall Analyzer and Motion Detection Using Accelerometers}
+
+Fall can be analyzed by the help of the built-in accelerometer from the Arduino 101, together with the MPU6050 accelerometer. These accelerometers can measure both static (gravity) and dynamic (motion or vibration) accelerations. \cite{Saf18} %(Safran Colibrys SA, 2018).
+Accelerometers were used to analyze the acceleration of the user so as the direction of the movement. Accelerometers are placed on the hip and the thigh of the user. The changes of the values from the result of the movement of the user with the help these accelerometers are computed which was used to identify and recognize whether the user moves statically, dynamically or if the user has fallen. On the other hand, as the user fall, the direction of the fall whether the user fell backwards, sideways or forward was also analyzed by the built-in accelerometer from the Genuino 101.
+
+From Figure 4.8 and 4.9, the flowchart on how the accelerometer works can be seen. The flow chart discusses the flow on how the accelerometer analyze the movements sequentially. The first step is to store the current y-vector to a previous y-vector container then get the new accelerometer inputs. The new inputs will be used to get the magnitude of the accelerations from x, y, z axis. After getting the magnitude, the percentage error between the current and previous values will be calculated. If the error is greater than 1.5\%, the magnitude of the current value will become the previous value because there is no consistency, meaning, it is in dynamic motions like walking and falling. Else, it is in static motions like standing, sitting, or lying.
+
+If it is in Dynamic motion, the difference between the current and previous angle of the y-vector will be calculated to determine if the magnitude error is greater than the gravity magnitude. If there is greater force than the gravity acting on the user, the device will check if it is lying position, if yes, the device will set the motion as forward, backward, or sideward fall. If no, the difference angle will be checked if it is in the walking angle range. It will then also check if the acceleration for walking is met. If the two parameters were satisfied, the device will set the motion as walking. If not, the current and previous value will be averaged and will be equal to the new previous value because the error is very minimal that makes it a static motion.
+
+If it is in Static motion, it will check whether the inputs are equal to the standing, sitting, or lying position. If it matches one of the three (3) possible positions, it will set the orientation as one of them, else, it will set the orientation as unknown.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Diagrams/Input Analization FlowChart a".jpg}
+	\caption{Input Analyzation flowchart (a)}
+	\label{fig:Input Analization FlowChart a}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Diagrams/Input Analization FlowChart b".jpg}
+	\caption{Input Analyzation flowchart (b)}
+	\label{fig:Input Analization FlowChart b}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Parts/Device".jpg}
+	\caption{Fall Detection Device}
+	\label{fig:Device}
+\end{figure}
+
+\section{Languages Used}
+
+In creating the fall analyzer device, different languages are used in the codes for better communication and ease of use of the user of the said device. The first language used is Java. Java was used in creating the \acr{GUI} of the device which was used for a user-friendly interaction of the user and the device. It was also used in creating the initialization page and data view page of the device. The \acr{CSS} was also used in the GUI for styling the scenes which helps for an ease of interaction of the device to the user. Lastly for creating the logic of the device, C language was used to create an algorithm to the Arduino.

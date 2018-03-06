@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane id="setupPane" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUpFinishController">
+    <children>
+        <Label id="header1Label" layoutX="379.0" layoutY="288.0" stylesheets="@style.css" text="Congratulations!" textAlignment="CENTER" />
+      <TilePane alignment="CENTER" layoutX="360.0" layoutY="347.0" prefHeight="67.0" prefWidth="183.0" vgap="5.0">
+         <children>
+              <Label id="header2Label" stylesheets="@style.css" text="You have successfully setup your card!" textAlignment="CENTER" />
+              <Label id="header2Label" stylesheets="@style.css" text="Please safely remove the card," textAlignment="CENTER" />
+            <Label id="header2Label" layoutX="114.0" layoutY="71.0" stylesheets="@style.css" text="and insert it to your device." textAlignment="CENTER" />
+         </children>
+      </TilePane>
+        <Button id="start" fx:id="onFinish" layoutX="468.0" layoutY="437.0" mnemonicParsing="false" onAction="#onFinish" prefHeight="38.0" prefWidth="88.0" stylesheets="@style.css" text="finish" />
+    </children>
+</Pane>

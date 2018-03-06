@@ -1,0 +1,98 @@
+\section{System Process}
+\label{sec:process}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.3\textwidth]{"figure/Diagrams/Block Diagram".png}
+	\caption{System Block Diagram}
+	\label{fig:Block Diagram}
+\end{figure}
+
+As seen in Figure 5.1, the system will have two initialization phases. First is the User Initialization where the user must insert the microSD card into a laptop and access the GUI to set its name, gender, age, address and contact number. The user must also set a username and password that will be used when modifying the activity log, deleting or adding new responders, and updating its profile. The user must input at least one (1) responder for the first initialization phase to be done. The first initialization phase is only done once, only when setting up the system. The second initialization phase will run every time the device is turned on. This is where the device turns on all the required modules connected on it. The second phase also accesses the microSD card to get the information like the username of the user, and file logs. After the initialization, the device will now continuously get the time and GPS coordinates, monitor the motion, and orientation of the user, and save it the data to the microSD card for future reference. When the device detects a sudden fall, it will send notification text message to the responders found in the microSD card if the false alarm button was not pressed after 10 seconds \cite{Kaz14}%(Kazi, Sikander, & Yousafzai, 2014).
+
+\subsection{Device Initialization}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.8\textwidth]{"figure/Diagrams/UserInitialization FlowChart".png}
+	\caption{User Initialization}
+	\label{fig:UserInitialization FlowChart}
+\end{figure}
+
+The User Initialization phase, which is run in the GUI, has four (4) steps. The user must first set its username and password. The system also asks for a confirmation password before proceeding to the next step. If the confirmation password and the password did not match, the user must re-enter it again. The second step takes the user’s first and last name, gender, age, address, and contact number. The user must enter a valid age and contact number or else, it cannot proceed to the third step. The third step is where the user sets its responder’s name and contact number. It must set at least one (1) responder or else, it cannot proceed to the last step. The last step for this initialization is to re-enter the username and password of the user, if it matches, the initialization is done, and the user must now attach the microSD card to the device.
+
+\subsection{Notification System}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.0\textwidth]{"figure/Diagrams/Whole System FlowChart".png}
+	\caption{System Flowchart}
+	\label{fig:Whole System FlowChart}
+\end{figure}
+
+Figure 5.3 shows the system flowchart in which the notification system is based. From the flowchart, the device continuously gets the time and user’s GPS coordinates, get the user’s orientation and motion, and save it to the microSD card. If the device detects a sudden fall motion, it will start a 10 seconds timer \cite{Kaz14} %(Kazi, Sikander, & Yousafzai, 2014).
+If the user did not press the false alarm seconds within 10 seconds, the device will get the contact number of the responders and send them a notification text message that includes the name of the user, time when sudden fall is detected, and its GPS coordinates.
+
+\section{Implementation}
+\label{sec:implement}
+
+The project follows the modified waterfall model, because each objective is important to proceed with the other objectives. The device’s process undergoes six phases and is also goal oriented. This makes each process to have an exact goal for each phase and will not be dependent on a concluding result.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.5\textwidth]{"figure/Diagrams/Waterfall Pattern".png}
+	\caption{Waterfall Pattern}
+	\label{fig:Waterfall Pattern}
+\end{figure}
+
+\subsection{Preparation, Setup, and Data Acquisition}
+
+\noindent \textit{Phase one – Algorithm development:}
+
+When the result is already satisfied, the main algorithm will be created to detect the posture and movements of the user.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.3\textwidth]{"figure/Diagrams/Block Diagram".png}
+	\caption{Block Diagram}
+	\label{fig:Block Diagram}
+\end{figure}
+
+As seen in figure 5.5, the device should be initialized first. In initialization, the user must connect the microSD Card first to a computer/laptop to set the user’s name, age, and address. The user must also set the contact details of the responder/s, specifically, their names and contact numbers. After the initialization, the device will then continuously monitor the motion and orientation of the user and analyze it to determine whether the user needs an assistance. The device will consider that the user needs an assistance if it detects that the user had a sudden fall and did not respond after 10 seconds. If the device detects that the user had a sudden fall, the device will automatically send a text message to the set responders.
+
+\noindent \textit{Phase two – Integration and General Algorithm development:}
+
+A system will be developed between different modules and sensors. The system will be shown in the development of the project on how the different components will react to each other.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/Diagrams/Whole System FlowChart".png}
+	\caption{Flow Chart}
+	\label{fig:Whole System FlowChart}
+\end{figure}
+
+After the initialization process, the device will continuously monitor and save the user's orientation and motion, until the device discovered a sudden fall. After the device detected that the user had a sudden fall, it will begin 10-second countdown. If the user didn’t hit the override alarm button within 10 seconds, it will get the user’s GPS coordinates and will automatically send a text message to set responders stating its current GPS coordinates, and get another input from the user’s body again.
+
+\noindent \textit{Phase three– General Calibration and initialization:}
+
+Accelerometers will be calibrated manually by adjusting the code of the sensors. Filters will be applied to improve the accuracy and remove unwanted noise. GPS technology of the project will also be tested.
+
+\acr{SMS} technology of the project is also tested by sending a message to a receiver. The project will be tweaking the built-in \acr{RTC} of the GPS/GSM shield to put timestamps on each activity of the user. Accelerometer will be used to analyze fall and the direction of fall such as forward, backward and sideward with 80\% of accuracy upon detection. An algorithm will be created which will allow the data to gather to be saved to the \acr{SD Card}.
+
+\noindent \textit{Phase four – Data Gathering:}
+
+Thirty people are needed on this phase. Following the statistical standards, 30 people will serve as the minimum number of data samples to gather. These participants are being used to identify the device’s working capability as it gathers information about the fall and motion of the subjects which can be further used in many applications in the future especially in the medical field upon innovation of the device.  Each person will be given an activity such as sitting, standing, walking, lying and falling. These activities will be recorded using two accelerometers that are attached on the upper body and lower body of the subject.  The accelerometers will gather the accelerations, and direction of the body upon falling.
+
+\section{Evaluation}
+\label{sec:evaluate}
+
+\noindent \textit{Phase five – Data Gathering:}
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{"figure/GUI/Explore/3-Activity_Log".PNG}
+	\caption{Activity Log}
+	\label{fig:3-Activity_Log}
+\end{figure}
+
+The collected data can be retrieved by the responder/s. This data includes the activities done by the user before the fall happened. Activities done by the user such as walking, standing, sitting and lying can be seen to better analyze the motion activity of the user before the fall. The data can also show the time of each movement so as the location and direction of the fall. From this data, the user’s time and location of fall was retrieved by the device and was used in sending a detailed notification system to the registered responder/s onto the device.

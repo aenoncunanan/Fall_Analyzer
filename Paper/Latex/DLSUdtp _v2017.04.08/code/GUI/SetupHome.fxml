@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane id="setupPane" prefHeight="575.5" prefWidth="1024" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dlsu.setUpHomeController">
+    <children>
+        <Label id="header1Label" layoutX="467.0" layoutY="288.0" stylesheets="@style.css" text="Hello!" />
+        <Label id="header2Label" layoutX="382.0" layoutY="337.0" stylesheets="@style.css" text="Thank you for using fall analyzer! " textAlignment="JUSTIFY" />
+        <Label id="header2Label" layoutX="383.0" layoutY="357.0" stylesheets="@style.css" text="To begin setup, please click start." textAlignment="JUSTIFY" />
+        <Button id="start" fx:id="onNext" layoutX="473.0" layoutY="411.0" mnemonicParsing="false" onAction="#onNext" prefHeight="38.0" prefWidth="81.0" stylesheets="@style.css" text="start" />
+    </children>
+</Pane>
