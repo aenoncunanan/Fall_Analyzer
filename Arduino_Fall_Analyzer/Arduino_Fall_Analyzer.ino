@@ -78,9 +78,13 @@ int actCounterR;   //activity counter per file
 
 //A7: DECLARATIONS FOR TIMER
 #include "CurieTimerOne.h"
-const int gpsTimer = 5000000; //5 seconds
 const int memoryTimer = 9000000; //9 seconds
 //A7: END
+
+//A8: GPS THREADING
+#include <Thread.h>
+Thread gpsThread = Thread();
+//A8: END
 
 //A: END
 
@@ -318,7 +322,8 @@ void initSDCard() {
 }
 
 void checkGPSConnection() {
-  String response = sendData("AT+CGNSINF", 1000, DEBUG);
+  //String response = sendData("AT+CGNSINF", 1000, DEBUG);
+  String response = sendData("AT+CGNSINF", 250, DEBUG);
 
   //Check if GPS is already connected/fixed
   if (response[25] == '1') {
@@ -330,7 +335,7 @@ void checkGPSConnection() {
     Serial.println("GPS Connecting...");
 
     //uncomment if not testing
-    //lastKnownTimeLoc = "1,1,20180228034035.000,14.253815,121.056955,84.500,0.43,292.5,1,,0.9,1.2,0.9,,11,9,,,34,,";
+    lastKnownTimeLoc = "+CGNSINF: 1,1,20180327050035.000,14.261893,121.043774,84.500,0.43,292.5,1,,0.9,1.2,0.9,,11,9,,,34,,";
   }
 
   Serial.println(response);
@@ -550,7 +555,8 @@ void SendTextMessage() {
           Serial.print("CONTACT NUMBER: ");
           Serial.println(toContact);
 
-          while (sent == false) {
+          int sendTrial = 3;
+          while (sent == false && sendTrial > 0) {
             String response = "";
             String receiver = "AT+CMGS=\"";
             receiver.concat(toContact);
@@ -586,7 +592,10 @@ void SendTextMessage() {
             } else {
               Serial.println("===MESSAGE WAS NOT SENT!===");
               Serial.println("Resending Message...");
+              sendTrial--;
               sent = false;
+              Serial.print("==NUMBER OF SEND LEFT: ");
+              Serial.println(sendTrial);
             }
           }
 
@@ -650,6 +659,9 @@ void setup() {
   pinMode(falseAlarmButton, INPUT_PULLUP);
 
   CurieTimerOne.start(memoryTimer, &checkSpace);
+  
+  gpsThread.onRun(checkGPSConnection);
+  gpsThread.setInterval(1000);
 
   //Prompt a welcome message
   Serial.println("Device is ready!");
@@ -659,9 +671,16 @@ void setup() {
 
 boolean falling = false;
 
-void loop() {
-  checkGPSConnection();
+unsigned long int sampleRate;
 
+void loop() {
+  sampleRate = 0;
+  sampleRate = millis();
+
+  if(gpsThread.shouldRun()) {
+    gpsThread.run();
+  }
+  
   falling = false;
   String currentOrientation = getOrientation();
 
@@ -673,7 +692,7 @@ void loop() {
           String temp = getOrientation();
           if(temp == "Walking"){
             currentOrientation = temp;
-            logData(currentOrientation);
+            //logData(currentOrientation);
             
             Serial.println("");
             Serial.print("=====");
@@ -685,7 +704,7 @@ void loop() {
           }
          }
       } else{
-          logData(currentOrientation);
+          //logData(currentOrientation);
           
           Serial.println("");
           Serial.print("=====");
@@ -701,34 +720,40 @@ void loop() {
   //if falling
 //  falling = true;         //just for testing
 //  fallStart = millis();   //just for testing
-  if (falling == true) {
-    //check wether to send an alarm in 10 seconds
-    boolean flag = true;
-    while (flag == true) {
-      if (millis() - fallStart <= 10000) {
-        if (digitalRead(falseAlarmButton) == LOW) {
-          Serial.println("False Alarm!");
-          flag = false;
-        } else {
-          //Serial.println(millis() - fallStart);
-          fallBuzz();
-        }
-      } else {
-        SendTextMessage();
-        //setMessage();
-        flag = false;
-      }
-    }
-  }
+//  if (falling == true) {
+//    //check wether to send an alarm in 10 seconds
+//    boolean flag = true;
+//    while (flag == true) {
+//      if (millis() - fallStart <= 10000) {
+//        if (digitalRead(falseAlarmButton) == LOW) {
+//          Serial.println("False Alarm!");
+//          flag = false;
+//        } else {
+//          //Serial.println(millis() - fallStart);
+//          fallBuzz();
+//        }
+//      } else {
+//        SendTextMessage();
+//        //setMessage();
+//        flag = false;
+//      }
+//    }
+//  }
+
+  sampleRate = millis() - sampleRate;
+  Serial.print("===");
+  Serial.print("SAMPLING RATE: ");
+  Serial.print(sampleRate);
+  Serial.println("ms ===");
 }
 
 static String staticmode() {
 
   String staticstr = "UNKNOWN";
 
-  if (axEx <= -13900 && axIn <= -16000 && axIn >= -17500) {
+  if (axEx <= -15000 && axIn <= -15000) {
     staticstr = "Standing Position";
-  } else if (ayEx >= 14000 && axIn <= -12500) {
+  } else if (ayEx >= 10000 && axIn <= -12500) {
     staticstr = "Sitting Position";
   } else if ((abs(azIn) >=  13500 || abs(ayIn) >=  13500) && (abs(azEx) >=  13500 || abs(ayEx) >=  13500)) {
     staticstr = "Lying Position";
@@ -750,18 +775,18 @@ static String dynamicmode() {
 
   int fallTreshold = 10;
 
-  if (abs(vsumcheckEx) >= fallTreshold || abs(vsumcheckIn) >= fallTreshold ) {
-    if (ayIn >= 13500 && ayEx >= 15900 && (abs(vsumcheckEx) >= fallTreshold || abs(vsumcheckIn) >= fallTreshold )) {
+  if (abs(vsumcheckEx) >= fallTreshold && abs(vsumcheckIn) >= fallTreshold ) {
+    if (ayIn >= 13500 && ayEx >= 15900) {
       fallStart = millis();
       dynastr = "Falling! : Backwards";
       falling = true;
     }
-    else if (ayIn <= -14000 && ayEx <= -15400 && (abs(vsumcheckEx) >= fallTreshold || abs(vsumcheckIn) >= fallTreshold )) {
+    else if (ayIn <= -14000 && ayEx <= -15400) {
       fallStart = millis();
       dynastr = "Falling! : Forward";
       falling = true;
     }
-    else if (abs(azIn) >=  15900 && abs(azEx) >= 15400 && (abs(vsumcheckEx) >= fallTreshold || abs(vsumcheckIn) >= fallTreshold )) {
+    else if (abs(azIn) >=  15900 && abs(azEx) >= 15400) {
       fallStart = millis();
       dynastr = "Falling! : Sideways";
       falling = true;
@@ -770,7 +795,7 @@ static String dynamicmode() {
     //  Serial.print((abs(vsumcheck/100))*9.8);
     //  Serial.println(" m/s^2");
   }
-  if ((axIn <= -15000 && axIn >= -17500) && degreesdiff <= 55 && degreesdiff >= 10) {
+  if ((axIn <= -15000 && axIn >= -17500) && degreesdiff <= 55 && degreesdiff >= 5) {
     dynastr = "Walking";
   }
   return dynastr;
